@@ -43,7 +43,7 @@ class DevicePolicy:
 
 
   def import_policy(self, policy_dict):
-    proto_map_path = schema_dir / "device_policy_proto_map.yaml"
+    proto_map_path = schema_dir / "manual_device_policy_proto_map.yaml"
     legacy_map_path = schema_dir / "legacy_device_policy_proto_map.yaml"
     proto_map = yaml.safe_load(proto_map_path.read_bytes())
     legacy_proto_map = yaml.safe_load(legacy_map_path.read_bytes())
