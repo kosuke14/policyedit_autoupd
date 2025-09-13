@@ -1,0 +1,47 @@
+name: Update Protobuf
+
+on:
+  workflow_dispatch: 
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl protobuf-compiler
+
+      - name: Download proto files
+        run: |
+          bash tools/download_proto.sh
+
+      - name: Download schemas
+        run: |
+          bash tools/download_schemas.sh
+
+      - name: Generate protobuf stubs
+        run: |
+          bash tools/generate_stubs.sh
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add -A
+            git commit -m "chore: update protobuf stubs [CI skip]"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
