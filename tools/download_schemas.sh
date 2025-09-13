@@ -6,7 +6,7 @@ mkdir -p $schema_dir
 
 tag="main"
 schema_paths=(
-  "components/policy/resources/templates/device_policy_proto_map.yaml"
+  "components/policy/resources/templates/manual_device_policy_proto_map.yaml"
   "components/policy/resources/templates/legacy_device_policy_proto_map.yaml"
 )
 
