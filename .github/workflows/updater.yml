@@ -1,4 +1,4 @@
-name: Update Protobuf
+name: Update Assets
 
 on:
   workflow_dispatch: 
@@ -40,7 +40,7 @@ jobs:
 
           if [[ -n "$(git status --porcelain)" ]]; then
             git add -A
-            git commit -m "chore: update protobuf stubs [CI skip]"
+            git commit -m "chore: update assets"
             git push origin main
           else
             echo "No changes to commit."
