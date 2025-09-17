@@ -22700,7 +22700,7 @@ message RendererAppContainerEnabledProto {
 //   True: Enable Renderer Code Integrity
 //   False: Disable Renderer Code Integrity
 //
-// Supported on: win
+// Supported on:
 message RendererCodeIntegrityEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool RendererCodeIntegrityEnabled = 2;
