@@ -7364,6 +7364,38 @@ message DevToolsGenAiSettingsProto {
   optional int64 DevToolsGenAiSettings = 2;
 }
 
+// Enable Google Developer Program Profiles in Chrome DevTools
+//
+// This policy controls the integration of the Google Developer Program with
+// Chrome DevTools. The user's Google Developer Program profile is shown in
+// Chrome DevTools, and users receive badges for performing specific actions
+// within Chrome DevTools.
+//
+// Setting the policy to 0 - 'Enabled', or not setting any policy value, allows
+// the integration of the Google Developer Program with Chrome DevTools, and
+// allows sharing of Chrome DevTools tool usage in order to be able to award
+// badges.
+//
+// Setting the policy to 1 - 'Enabled without badges', allows the integration of
+// the Google Developer Program with Chrome DevTools, but does not allow sharing
+// Chrome DevTools tool usage with the Google Developer Program. No badges will
+// be awarded.
+//
+// Setting the policy to 2 - 'Disabled', does not allow the integration of the
+// Google Developer Program with Chrome DevTools.
+//
+// Valid values:
+//   0: Enable Google Developer Program integration in Chrome DevTools.
+//   1: Enable Google Developer Program integration in Chrome DevTools, but
+// without sharing tool usage (for awarding badges).
+//   2: Do not enable Google Developer Program integration in Chrome DevTools.
+//
+// Supported on: chrome_os, linux, mac, win
+message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DevToolsGoogleDeveloperProgramProfileAvailability = 2;
+}
+
 // Control where Developer Tools can be used
 //
 // Setting the policy to 0 (the default) means you can access the developer
@@ -29900,6 +29932,7 @@ message ChromeSettingsSubProto1 {
   optional DeletingUndecryptablePasswordsEnabledProto DeletingUndecryptablePasswordsEnabled = 245;
   optional DeskAPIDeskSaveAndShareEnabledProto DeskAPIDeskSaveAndShareEnabled = 143;
   optional DevToolsGenAiSettingsProto DevToolsGenAiSettings = 188;
+  optional DevToolsGoogleDeveloperProgramProfileAvailabilityProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
   optional DeviceAttributesBlockedForOriginsProto DeviceAttributesBlockedForOrigins = 338;
   optional DirectSocketsAllowedForUrlsProto DirectSocketsAllowedForUrls = 191;
   optional DirectSocketsBlockedForUrlsProto DirectSocketsBlockedForUrls = 192;
