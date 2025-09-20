@@ -141,6 +141,8 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto HomeAndEndKeysModifier = 165;
   optional StringListPolicyProto HttpAllowlist = 42;
   optional BooleanPolicyProto HttpsUpgradesEnabled = 43;
+  optional StringListPolicyProto IncognitoModeAllowlist = 353;
+  optional StringListPolicyProto IncognitoModeBlocklist = 352;
   optional IntegerPolicyProto InsertKeyModifier = 167;
   optional StringListPolicyProto KioskBrowserPermissionsAllowedForOrigins = 233;
   optional BooleanPolicyProto LensOnGalleryEnabled = 234;
