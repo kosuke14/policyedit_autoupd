@@ -10145,7 +10145,8 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 "toolbar_pin": {
 //                     "enum": [
 //                         "force_pinned",
-//                         "default_unpinned"
+//                         "default_unpinned",
+//                         "default_pinned"
 //                     ],
 //                     "type": "string"
 //                 },
@@ -19614,6 +19615,50 @@ message PowerSmartDimEnabledProto {
 message PreconfiguredDeskTemplatesProto {
   optional PolicyOptions policy_options = 1;
   optional string PreconfiguredDeskTemplates = 2;
+}
+
+// Prefer specific key exchange algorithms for TLS
+//
+// This policy configures Google Chrome to order its preferred key agreement
+// algorithms (supported groups) in TLS 1.3 to reflect a preference for
+// algorithms that have been approved by a specific compliance regime.
+//
+// Setting this policy does not guarantee that any specific algorithms will be
+// negotiated.
+//
+// This policy exists to allow server operators who wish to support clients with
+// and without compliance requirements to differentiate between those clients,
+// and only use certain non-default algorithms with increased cryptographic
+// strength for those explicitly configured to prefer them.
+//
+// Setting the policy to 'cnsa2' configures Google Chrome to prefer key exchange
+// methods required for compliance with the Commercial National Security
+// Algorithm Suite 2.0 (CNSA 2.0).
+//
+// Not setting the policy configures Google Chrome to use its default key
+// exchange methods.
+//
+// If this policy is set to a value that would configure Google Chrome to prefer
+// a post-quantum key agreement algorithm but PostQuantumKeyAgreementEnabled is
+// Disabled, the setting of PostQuantumKeyAgreementEnabled takes precedence.
+//
+// Setting this policy is not required for security. The default cryptography
+// used by Google Chrome is strong enough to withstand a brute force attack
+// using the entire power of the Sun.
+//
+// Setting this policy will cause Google Chrome to be slower when accessing
+// websites.
+//
+// This policy only affects TLS 1.3 and QUIC; it does not affect earlier
+// versions of TLS.
+//
+// Valid values:
+//   cnsa2: Prefer key exchange methods satisfying the requirements of CNSA 2.0
+//
+// Supported on: android, chrome_os, linux, mac, win
+message PreferSlowKexAlgorithmsProto {
+  optional PolicyOptions policy_options = 1;
+  optional string PreferSlowKexAlgorithms = 2;
 }
 
 // Allow SpeculationRules prefetch to ServiceWorker-controlled URLs
@@ -30103,6 +30148,7 @@ message ChromeSettingsSubProto1 {
   optional PhysicalKeyboardPredictiveWritingProto PhysicalKeyboardPredictiveWriting = 79;
   optional PolicyTestPageEnabledProto PolicyTestPageEnabled = 72;
   optional PostQuantumKeyAgreementEnabledProto PostQuantumKeyAgreementEnabled = 77;
+  optional PreferSlowKexAlgorithmsProto PreferSlowKexAlgorithms = 354;
   optional PrefetchWithServiceWorkerEnabledProto PrefetchWithServiceWorkerEnabled = 325;
   optional PrefixedVideoFullscreenApiAvailabilityProto PrefixedVideoFullscreenApiAvailability = 194;
   optional PrintingLPACSandboxEnabledProto PrintingLPACSandboxEnabled = 248;

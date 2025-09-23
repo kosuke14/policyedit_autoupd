@@ -66,6 +66,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto WebPrintingBlockedForUrls = 181;
   optional StringListPolicyProto WindowManagementAllowedForUrls = 28;
   optional StringListPolicyProto WindowManagementBlockedForUrls = 29;
+  optional StringPolicyProto PreferSlowKexAlgorithms = 354;
   optional BooleanPolicyProto DeskAPIDeskSaveAndShareEnabled = 143;
   optional StringPolicyProto DriveFileSyncAvailable = 118;
   optional StringListPolicyProto MicrosoftOneDriveAccountRestrictions = 134;
