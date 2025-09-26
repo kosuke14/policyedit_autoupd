@@ -23990,7 +23990,7 @@ message SafeSitesFilterBehaviorProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SameOriginTabCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList SameOriginTabCaptureAllowedByOrigins = 2;
@@ -24204,7 +24204,7 @@ message ScreenBrightnessPercentProto {
 //   False: Do not allow sites to prompt the user to share a video stream of
 // their screen
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool ScreenCaptureAllowed = 2;
@@ -24230,7 +24230,7 @@ message ScreenCaptureAllowedProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ScreenCaptureAllowedByOrigins = 2;
@@ -26626,7 +26626,7 @@ message TLS13HardeningForLocalAnchorsEnabledProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message TabCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList TabCaptureAllowedByOrigins = 2;
@@ -29858,7 +29858,7 @@ message WifiSyncAndroidAllowedProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WindowCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList WindowCaptureAllowedByOrigins = 2;
