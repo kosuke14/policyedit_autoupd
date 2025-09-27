@@ -66,6 +66,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto WebPrintingBlockedForUrls = 181;
   optional StringListPolicyProto WindowManagementAllowedForUrls = 28;
   optional StringListPolicyProto WindowManagementBlockedForUrls = 29;
+  optional StringPolicyProto PreferSlowCiphers = 358;
   optional StringPolicyProto PreferSlowKexAlgorithms = 354;
   optional BooleanPolicyProto DeskAPIDeskSaveAndShareEnabled = 143;
   optional StringPolicyProto DriveFileSyncAvailable = 118;
@@ -180,6 +181,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto ShowGeminiIntroScreenEnabled = 249;
   optional BooleanPolicyProto ShowHumanPresenceSensorScreenEnabled = 129;
   optional BooleanPolicyProto ShowTouchpadScrollScreenEnabled = 40;
+  optional BooleanPolicyProto SilentPrintingEnabled = 357;
   optional StringPolicyProto SiteSearchSettings = 136;
   optional BooleanPolicyProto StandardizedBrowserZoomEnabled = 246;
   optional StringListPolicyProto SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 178;
