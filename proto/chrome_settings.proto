@@ -3431,12 +3431,11 @@ message CSSCustomStateDeprecatedSyntaxEnabledProto {
 // This policy allows administrators to encrypt http cache on disk.
 //
 // This policy allows the administrators to encrypt browser http cache on disk.
-// http cache on supported platforms.
+// Currently only supported on Windows.
 //
 // When this policy is Enabled, browser cache will be encrypted.
 //
-// When this policy is Disabled or not set, browser cache
-// will not be encrypted.
+// When this policy is Disabled or not set, browser cache will not be encrypted.
 //
 // Browser cache encryption may result in a performance impact.
 //
@@ -7444,6 +7443,10 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 // As of Google Chrome version 128, this setting will not control developer mode
 // on extensions page if ExtensionDeveloperModeSettings policy is set.
 //
+// If you want to restrict Developer Tools access based on the page URL, use the
+// DeveloperToolsAvailabilityBlocklist and DeveloperToolsAvailabilityAllowlist
+// policies.
+//
 // Valid values:
 //   0: Disallow usage of the Developer Tools on apps and extensions installed
 // by enterprise policy or, since version 114 and if this is a managed user,
@@ -7456,6 +7459,57 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 message DeveloperToolsAvailabilityProto {
   optional PolicyOptions policy_options = 1;
   optional int64 DeveloperToolsAvailability = 2;
+}
+
+// List of URL patterns for which Chrome DevTools are allowed to be opened
+//
+// This policy can be used to allow Chrome DevTools on specific URLs.
+//
+// URL patterns are matched against the URL of the page being inspected. If a
+// match is found, the Chrome DevTools are allowed. This applies even if the URL
+// also matches the DeveloperToolsAvailabilityBlocklist policy, even if the
+// DeveloperToolsAvailability policy is set to disallow (value 2). For
+// information on the URL format, see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Leaving the policy unset means this allowlist has no effect. Since Chrome
+// DevTools are available by default, they will only be blocked if specified in
+// the DeveloperToolsAvailabilityBlocklist policy.
+//
+// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+//
+// This policy also applies to Chrome DevTools opened for extensions and web
+// applications.
+//
+// This policy is limited to 1,000 entries.
+//
+// Supported on: chrome_os, linux, mac, win
+message DeveloperToolsAvailabilityAllowlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList DeveloperToolsAvailabilityAllowlist = 2;
+}
+
+// List of URL patterns for which Chrome DevTools are blocked
+//
+// URL patterns are matched against the URL of the page being inspected. If a
+// match is found, the Chrome DevTools are blocked. For information on the URL
+// format, see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// The DeveloperToolsAvailabilityAllowlist policy takes precedence over
+// DeveloperToolsAvailabilityBlocklist.
+//
+// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+//
+// This policy also applies to Chrome DevTools opened for extensions and web
+// applications.
+//
+// This policy is limited to 1,000 entries.
+//
+// Supported on: chrome_os, linux, mac, win
+message DeveloperToolsAvailabilityBlocklistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList DeveloperToolsAvailabilityBlocklist = 2;
 }
 
 // Disable Developer Tools
@@ -30148,6 +30202,8 @@ message ChromeSettingsSubProto1 {
   optional DeskAPIDeskSaveAndShareEnabledProto DeskAPIDeskSaveAndShareEnabled = 143;
   optional DevToolsGenAiSettingsProto DevToolsGenAiSettings = 188;
   optional DevToolsGoogleDeveloperProgramProfileAvailabilityProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
+  optional DeveloperToolsAvailabilityAllowlistProto DeveloperToolsAvailabilityAllowlist = 359;
+  optional DeveloperToolsAvailabilityBlocklistProto DeveloperToolsAvailabilityBlocklist = 360;
   optional DeviceAttributesBlockedForOriginsProto DeviceAttributesBlockedForOrigins = 338;
   optional DirectSocketsAllowedForUrlsProto DirectSocketsAllowedForUrls = 191;
   optional DirectSocketsBlockedForUrlsProto DirectSocketsBlockedForUrls = 192;

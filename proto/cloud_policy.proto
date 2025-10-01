@@ -125,6 +125,8 @@ message CloudPolicySubProto1 {
   optional StringPolicyProto DataControlsRules = 121;
   optional IntegerPolicyProto DeleteKeyModifier = 164;
   optional IntegerPolicyProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
+  optional StringListPolicyProto DeveloperToolsAvailabilityAllowlist = 359;
+  optional StringListPolicyProto DeveloperToolsAvailabilityBlocklist = 360;
   optional StringListPolicyProto DocumentScanAPITrustedExtensions = 182;
   optional BooleanPolicyProto DomainReliabilityAllowed = 18;
   optional BooleanPolicyProto EmojiPickerGifSupportEnabled = 82;
