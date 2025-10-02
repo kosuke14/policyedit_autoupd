@@ -1852,7 +1852,9 @@ message AutoOpenFileTypesProto {
 // "$URL_PATTERN", "filter" : $FILTER }, where $URL_PATTERN is a content setting
 // pattern. $FILTER restricts the client certificates the browser automatically
 // selects from. Independent of the filter, only certificates that match the
-// server's certificate request are selected.
+// server's certificate request are selected. On Android, Chrome can only select
+// client certificates that it has provisioned itself; it cannot access
+// certificates installed at the operating system level.
 //
 // Examples for the usage of the $FILTER section:
 //
