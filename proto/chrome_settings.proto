@@ -15163,6 +15163,41 @@ message LocalNetworkAccessRestrictionsEnabledProto {
   optional bool LocalNetworkAccessRestrictionsEnabled = 2;
 }
 
+// Specifies whether to (temporarily) opt out of Local Network Access
+// restrictions
+//
+// When this policy is set to Enabled, Local Network Access
+// requests will only display warnings in Chrome DevTools due to Local Network
+// Access checks failing.
+//
+// When this policy is set to Disabled or unset, Local Network Access requests
+// will use the
+// default handling of these requests.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// This enterprise policy is temporary, and will be removed after M146.
+//
+// Long term, the policy LocalNetworkAccessAllowedForUrls
+// can be used to allowlist URL patterns that should be automatically granted
+// the Local Network Access permission.
+//
+// Note that if the policy LocalNetworkAccessRestrictionsEnabled
+// is enabled, it will take precedence over this policy.
+//
+// Valid values:
+//   True: Temporarily opt out of restrictions on requests to local network
+// endpoints
+//   False: Use default behavior when determining if websites can make requests
+// to local network endpoints
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkAccessRestrictionsTemporaryOptOutProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool LocalNetworkAccessRestrictionsTemporaryOptOut = 2;
+}
+
 // Enable local user files
 //
 // This policy controls whether Google ChromeOS users can store data locally or
@@ -30299,6 +30334,7 @@ message ChromeSettingsSubProto1 {
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;
+  optional LocalNetworkAccessRestrictionsTemporaryOptOutProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional LocalUserFilesAllowedProto LocalUserFilesAllowed = 176;
   optional LocalUserFilesMigrationDestinationProto LocalUserFilesMigrationDestination = 232;
   optional LockScreenAutoStartOnlineReauthProto LockScreenAutoStartOnlineReauth = 217;

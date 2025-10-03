@@ -111,6 +111,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto LocalNetworkAccessAllowedForUrls = 331;
   optional StringListPolicyProto LocalNetworkAccessBlockedForUrls = 332;
   optional BooleanPolicyProto LocalNetworkAccessRestrictionsEnabled = 324;
+  optional BooleanPolicyProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional BooleanPolicyProto AllowBackForwardCacheForCacheControlNoStorePageEnabled = 74;
   optional BooleanPolicyProto AllowExcludeDisplayInMirrorMode = 259;
   optional StringListPolicyProto AllowedDomainsForAppsList = 172;
