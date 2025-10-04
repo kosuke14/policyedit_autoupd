@@ -11779,6 +11779,30 @@ message GaiaOfflineSigninTimeLimitDaysProto {
   optional int64 GaiaOfflineSigninTimeLimitDays = 2;
 }
 
+// Allows Gemini app integrations to directly act on web pages
+//
+// Controls if the Gemini app is allowed to take action on the web pages on
+// behalf of the user.
+//
+// 0/unset  = Gemini app is allowed to take action on the web pages.
+//
+// 1 = Gemini app is not allowed to take action on the web pages.
+//
+// If unset, its behavior is determined by GeminiSettings policy.
+//
+// For more information, please see
+// https://support.google.com/chrome/a/answer/16291696.
+//
+// Valid values:
+//   0: Allow the Gemini app to take action on the web pages.
+//   1: Disallow the Gemini app to take action on the web pages.
+//
+// Supported on: linux, mac, win
+message GeminiActOnWebSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 GeminiActOnWebSettings = 2;
+}
+
 // Settings for Gemini integration
 //
 // This setting allows Gemini app integrations.
@@ -30287,6 +30311,7 @@ message ChromeSettingsSubProto1 {
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
+  optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GenAIInlineImageSettingsProto GenAIInlineImageSettings = 306;
   optional GenAILocalFoundationalModelSettingsProto GenAILocalFoundationalModelSettings = 211;
