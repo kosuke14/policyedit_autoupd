@@ -26628,6 +26628,7 @@ message SyncTypesListDisabledProto {
 //   google_maps: Google Maps (supported since version 135)
 //   calculator: Calculator (supported since version 136)
 //   text_editor: Text Editor (supported since version 136)
+//   vids: Vids (supported since version 143)
 //
 // Supported on: chrome_os
 message SystemFeaturesDisableListProto {
