@@ -2376,7 +2376,7 @@ message BlockTruncatedCookiesProto {
 //   False: Disable bookmark bar
 //   None: Allow the user to decide
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message BookmarkBarEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool BookmarkBarEnabled = 2;
