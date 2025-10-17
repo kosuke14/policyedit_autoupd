@@ -25824,7 +25824,7 @@ message SigninInterceptionEnabledProto {
 //   True: Enable Silent Printing
 //   False: Disable Silent Printing
 //
-// Supported on: chrome_os
+// Supported on: chrome_os, linux, mac, win
 message SilentPrintingEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool SilentPrintingEnabled = 2;
