@@ -3433,7 +3433,6 @@ message CSSCustomStateDeprecatedSyntaxEnabledProto {
 // This policy allows administrators to encrypt http cache on disk.
 //
 // This policy allows the administrators to encrypt browser http cache on disk.
-// Currently only supported on Windows.
 //
 // When this policy is Enabled, browser cache will be encrypted.
 //
@@ -7085,20 +7084,20 @@ message DefaultWebHidGuardSettingProto {
 
 // Control use of the WebPrinting API
 //
-// Setting the policy to 2 automatically blocks sites from using the WebPrinting
-// API.
+// Setting the policy to 2 automatically blocks Isolated Web App origins from
+// using the WebPrinting API.
 //
-// Setting the policy to 3 will prompt the user when a site wants to use the
-// WebPrinting API.
+// Setting the policy to 3 will prompt the user when an Isolated Web App origin
+// wants to use the WebPrinting API.
 //
-// Leaving it unset lets websites ask for local printer access, but users can
-// change this setting.
+// Leaving it unset lets Isolated Web App origins ask for local printer access,
+// but users can change this setting.
 //
 // Valid values:
-//   2: Do not allow any site to request access to local printers via the
-// WebPrinting API
-//   3: Allow sites to ask the user to grant access to local printers via the
-// WebPrinting API
+//   2: Do not allow Isolated Web App origins to request access to local
+// printers via the WebPrinting API
+//   3: Allow Isolated Web App origins to ask the user to grant access to local
+// printers via the WebPrinting API
 //
 // Supported on: chrome_os
 message DefaultWebPrintingSettingProto {
@@ -29485,6 +29484,7 @@ message WebHidBlockedForUrlsProto {
 //
 // Setting the policy lets you list the URL patterns that specify which sites
 // are automatically granted access to local printers via the WebPrinting API.
+// Valid patterns are limited to Isolated Web Apps.
 //
 // Leaving the policy unset means DefaultWebPrintingSetting applies for all
 // sites, if it's set. If not, users' personal settings apply.
@@ -29506,6 +29506,7 @@ message WebPrintingAllowedForUrlsProto {
 //
 // Setting the policy lets you list the URL patterns that specify which sites
 // are automatically denied access to local printers via the WebPrinting API.
+// Valid patterns are limited to Isolated Web Apps.
 //
 // Leaving the policy unset means DefaultWebPrintingSetting applies for all
 // sites, if it's set. If not, users' personal settings apply.
