@@ -3444,7 +3444,7 @@ message CSSCustomStateDeprecatedSyntaxEnabledProto {
 //   True: Use the cache encryption.
 //   False: Do not use the cache encryption.
 //
-// Supported on: linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message CacheEncryptionEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CacheEncryptionEnabled = 2;
@@ -15051,6 +15051,42 @@ message LoadCryptoTokenExtensionProto {
   optional bool LoadCryptoTokenExtension = 2;
 }
 
+// Set minimum complexity for local PINs and passwords
+//
+// This policy configures the minimum complexity requirements for local
+// authentication factors (PINs and local passwords) set by users on Google
+// ChromeOS.
+//
+// If this policy is not set, default to complexity level None.
+//
+// This policy's requirements are enforced when a user sets up a new local
+// PIN/password or changes an existing one.
+//
+// The complexity levels are based on Android's password quality metrics (https:
+// //developers.google.com/android/management/reference/rest/v1/PasswordRequirem
+// ents), adapted for Google ChromeOS:
+// - 1 = None: A PIN/password is required, but there are no restrictions on its
+// content or length.
+// - 2 = Low: Basic complexity requirements.
+// - 3 = Medium: Stricter length and character-type requirements.
+// - 4 = High: Strongest complexity requirements, demanding multiple character
+// types.
+//
+// See the help center article for detailed explanations of what each level
+// entails for both PINs and passwords.
+//
+// Valid values:
+//   1: No Complexity
+//   2: Low Complexity
+//   3: Medium Complexity
+//   4: High Complexity
+//
+// Supported on: chrome_os
+message LocalAuthFactorsComplexityProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 LocalAuthFactorsComplexity = 2;
+}
+
 // Enable chrome://devices
 //
 // This policy controls access to controllable features in the local discovery
@@ -18400,7 +18436,7 @@ message ParentAccessCodeConfigProto {
 // https://crbug.com/new?component=1779870&amp;cc=awillia@chromium.org&amp;prior
 // ity=p1&amp;type=bug&amp;noWizard=true
 // explaining your use case. The policy is scheduled to be offered through
-// Google Chrome version 143, after which
+// Google Chrome version 146, after which
 // the old implementation will be removed.
 //
 // NOTE: Only newly-started renderer processes will reflect changes to this
@@ -30365,6 +30401,7 @@ message ChromeSettingsSubProto1 {
   optional ListenToThisPageEnabledProto ListenToThisPageEnabled = 149;
   optional LiveCaptionEnabledProto LiveCaptionEnabled = 334;
   optional LiveTranslateEnabledProto LiveTranslateEnabled = 278;
+  optional LocalAuthFactorsComplexityProto LocalAuthFactorsComplexity = 363;
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;

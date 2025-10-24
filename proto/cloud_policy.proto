@@ -120,6 +120,7 @@ message CloudPolicySubProto1 {
   optional StringPolicyProto AppLaunchAutomation = 54;
   optional IntegerPolicyProto ArcVmDataMigrationStrategy = 85;
   optional BooleanPolicyProto BuiltInAIAPIsEnabled = 317;
+  optional BooleanPolicyProto CacheEncryptionEnabled = 356;
   optional IntegerPolicyProto ChromeDataRegionSetting = 213;
   optional StringListPolicyProto ContextualGoogleIntegrationsConfiguration = 215;
   optional BooleanPolicyProto ContextualGoogleIntegrationsEnabled = 214;
@@ -232,6 +233,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto ScreensaverLockScreenImageDisplayIntervalSeconds = 21;
   optional StringListPolicyProto ScreensaverLockScreenImages = 22;
   optional IntegerPolicyProto TabGroupSharingSettings = 318;
+  optional IntegerPolicyProto LocalAuthFactorsComplexity = 363;
   optional BooleanPolicyProto LocalUserFilesAllowed = 176;
   optional StringPolicyProto LocalUserFilesMigrationDestination = 232;
   optional StringListPolicyProto ReportAppInventory = 62;
