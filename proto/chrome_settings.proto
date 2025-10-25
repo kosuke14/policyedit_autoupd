@@ -7911,7 +7911,7 @@ message DisableSafeBrowsingProceedAnywayProto {
 //   True: Do not allow users to take screenshots or video recordings
 //   False: Allow users to take screenshots and video recordings
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message DisableScreenshotsProto {
   optional PolicyOptions policy_options = 1;
   optional bool DisableScreenshots = 2;
@@ -16228,18 +16228,14 @@ message NTPSharepointCardVisibleProto {
   optional bool NTPSharepointCardVisible = 2;
 }
 
-// Setting shortcuts on the New Tab Page (Beta)
-//
-// In development: for early preview only.
+// Setting shortcuts on the New Tab Page
 //
 // Setting the policy pre-configures up to 10 custom shortcuts on the Google
 // Chrome New Tab page.
 //
-// If set, users will see these shortcuts by default and users can toggle
-// between “My shortcuts," "Most visited sites" or "My organization's shortcuts"
-// on the "Customize Chrome" panel. If empty or unset, the user will only be
-// able to toggle between “My shortcuts" or "Most visited sites" on the
-// "Customize Chrome" panel.
+// If set, users will see these shortcuts by default, in addition to their
+// personal shortcuts. Users can control visibility of their organization's
+// shortcuts on the "Customize Chrome" panel.
 //
 // Shortcut URLs must be unique.
 //
