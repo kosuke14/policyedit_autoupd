@@ -220,6 +220,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto PrivacySandboxPromptEnabled = 8;
   optional BooleanPolicyProto PrivacySandboxSiteEnabledAdsEnabled = 10;
   optional BooleanPolicyProto ProtectedContentIdentifiersAllowed = 341;
+  optional StringPolicyProto ProxyOverrideRules = 364;
   optional BooleanPolicyProto RelatedWebsiteSetsEnabled = 125;
   optional StringPolicyProto RelatedWebsiteSetsOverrides = 128;
   optional BooleanPolicyProto RemoteAccessHostAllowEnterpriseFileTransfer = 87;

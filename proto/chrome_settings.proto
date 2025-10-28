@@ -21525,6 +21525,91 @@ message ProxyModeProto {
   optional string ProxyMode = 2;
 }
 
+// Proxy override rules
+//
+// Setting this policy configures rules that select what proxy the browser uses
+// depending on the destination's URL and other conditions. This policy will
+// take precedence over proxy settings set from the ProxySettings policy, the
+// chrome.proxy extension API or manual user settings if any is set.
+//
+// Leaving the policy unset has no effect on other proxy policies or user
+// settings.
+//
+// When the browser needs to decide what proxy to use, entries of the
+// ProxyOverrideRules policy are evaluated in sequence until an entry has a
+// match for at least one of the URL hosts in DestinationMatchers and if all
+// entries in Conditions are met. The value in ProxyChain will be used as a
+// proxy for such a match. If no match is found, proxy settings will fall back
+// to what is set in the ProxySettings policy.
+//
+// The ProxyChain field entries correspond to string values of PAC files such
+// as:
+// * DIRECT
+// * PROXY host:port
+// * HTTPS host:port
+// The first reachable entry will be used as a proxy.
+//
+// The Conditions field contains a list of conditions that must all be met for
+// its override rule to be used to decide the proxy to use. If it is left unset,
+// the entry will be used as long as at least one host in DestinationMatchers is
+// matched.
+//
+// The DnsProbe condition checks if the provided DNS Host is able to resolve to
+// an IP address. If the value of Result is "resolves" then the condition is
+// considered as met. If the value is instead set to not_found, then the
+// condition is considered met if the resolution failed.
+//
+// Value schema:
+// {
+//     "items": {
+//         "properties": {
+//             "Conditions": {
+//                 "items": {
+//                     "properties": {
+//                         "DnsProbe": {
+//                             "properties": {
+//                                 "Host": {
+//                                     "type": "string"
+//                                 },
+//                                 "Result": {
+//                                     "enum": [
+//                                         "resolves",
+//                                         "not_found"
+//                                     ],
+//                                     "type": "string"
+//                                 }
+//                             },
+//                             "type": "object"
+//                         }
+//                     },
+//                     "type": "object"
+//                 },
+//                 "type": "array"
+//             },
+//             "DestinationMatchers": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             },
+//             "ProxyChain": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             }
+//         },
+//         "type": "object"
+//     },
+//     "type": "array"
+// }
+//
+// Supported on: android, chrome_os, linux, mac, win
+message ProxyOverrideRulesProto {
+  optional PolicyOptions policy_options = 1;
+  optional string ProxyOverrideRules = 2;
+}
+
 // URL to a proxy .pac file
 //
 // This policy is deprecated, please use ProxySettings instead.
@@ -30461,6 +30546,7 @@ message ChromeSettingsSubProto1 {
   optional ProvisionManagedClientCertificateForBrowserProto ProvisionManagedClientCertificateForBrowser = 294;
   optional ProvisionManagedClientCertificateForUserProto ProvisionManagedClientCertificateForUser = 175;
   optional ProvisionalNotificationsAllowedProto ProvisionalNotificationsAllowed = 311;
+  optional ProxyOverrideRulesProto ProxyOverrideRules = 364;
   optional QRCodeGeneratorEnabledProto QRCodeGeneratorEnabled = 241;
   optional QuickOfficeForceFileDownloadEnabledProto QuickOfficeForceFileDownloadEnabled = 111;
   optional RSAKeyUsageForLocalAnchorsEnabledProto RSAKeyUsageForLocalAnchorsEnabled = 70;
