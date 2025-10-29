@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag (例: v1.0.0)。空にすると draft-<run_number> が使われます'
+        description: 'Release tag (ex: v1.0.0) (default: draft-<run_number>)'
         required: false
 
 jobs:
@@ -121,7 +121,7 @@ jobs:
         # (on ubuntu-latest jq is preinstalled; if not, consider installing earlier)
         shell: bash
 
-      - name: List uploaded assets (note: this is just for logs)
+      - name: List uploaded assets for logging
         run: |
           echo "Uploaded files (from downloaded_artifacts):"
           find downloaded_artifacts -type f -maxdepth 5 -print -exec ls -lh {} \;
