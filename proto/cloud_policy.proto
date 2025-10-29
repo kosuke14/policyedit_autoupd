@@ -234,6 +234,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto ScreensaverLockScreenImageDisplayIntervalSeconds = 21;
   optional StringListPolicyProto ScreensaverLockScreenImages = 22;
   optional IntegerPolicyProto TabGroupSharingSettings = 318;
+  optional StringListPolicyProto LocalAuthFactors = 365;
   optional IntegerPolicyProto LocalAuthFactorsComplexity = 363;
   optional BooleanPolicyProto LocalUserFilesAllowed = 176;
   optional StringPolicyProto LocalUserFilesMigrationDestination = 232;

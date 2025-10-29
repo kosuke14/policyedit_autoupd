@@ -8913,6 +8913,21 @@ message EnableOnlineRevocationChecksProto {
   optional bool EnableOnlineRevocationChecks = 2;
 }
 
+// Controls which managed users can set the ProxyOverrideRules policy.
+//
+// When this policy is set to 0 or left unset, the ProxyOverrideRules policy
+// will only be applied at the user scope for affiliated users.
+// When this policy is set to 1, the ProxyOverrideRules policy will be applied
+// at the user scope, even that user is unaffiliated.
+// When this policy is set to 2, the ProxyOverrideRules policy will never be
+// applied when its source is a user.
+//
+// Supported on: linux, mac, win
+message EnableProxyOverrideRulesForAllUsersProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 EnableProxyOverrideRulesForAllUsers = 2;
+}
+
 // Allow SHA-1 signed certificates issued by local trust anchors
 //
 // When this setting is enabled, Google Chrome allows SHA-1 signed certificates
@@ -15049,6 +15064,34 @@ message LiveTranslateEnabledProto {
 message LoadCryptoTokenExtensionProto {
   optional PolicyOptions policy_options = 1;
   optional bool LoadCryptoTokenExtension = 2;
+}
+
+// Configure allowed local auth factors
+//
+// Setting the policy controls which local authentication factors can be used
+// for both login and reauthentication on Google ChromeOS.
+//
+// To allow:
+//
+// * Every local authentication factor, use ["ALL"] (includes factors added in
+// the future).
+//
+// * Only PIN, use ["PIN"].
+//
+// * Only Local Passwords, use ["LOCAL_PASSWORD"].
+//
+// If the policy is unset or set to an empty list, no local auth factors are
+// available for managed users.
+//
+// Valid values:
+//   ALL: All
+//   PIN: PIN
+//   LOCAL_PASSWORD: Local Password
+//
+// Supported on: chrome_os
+message LocalAuthFactorsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LocalAuthFactors = 2;
 }
 
 // Set minimum complexity for local PINs and passwords
@@ -30404,6 +30447,7 @@ message ChromeSettingsSubProto1 {
   optional DriveFileSyncAvailableProto DriveFileSyncAvailable = 118;
   optional DynamicCodeSettingsProto DynamicCodeSettings = 225;
   optional EmojiPickerGifSupportEnabledProto EmojiPickerGifSupportEnabled = 82;
+  optional EnableProxyOverrideRulesForAllUsersProto EnableProxyOverrideRulesForAllUsers = 366;
   optional EnableUnsafeSwiftShaderProto EnableUnsafeSwiftShader = 330;
   optional EnforceLocalAnchorConstraintsEnabledProto EnforceLocalAnchorConstraintsEnabled = 39;
   optional EnterpriseBadgingTemporarySettingProto EnterpriseBadgingTemporarySetting = 210;
@@ -30482,6 +30526,7 @@ message ChromeSettingsSubProto1 {
   optional ListenToThisPageEnabledProto ListenToThisPageEnabled = 149;
   optional LiveCaptionEnabledProto LiveCaptionEnabled = 334;
   optional LiveTranslateEnabledProto LiveTranslateEnabled = 278;
+  optional LocalAuthFactorsProto LocalAuthFactors = 365;
   optional LocalAuthFactorsComplexityProto LocalAuthFactorsComplexity = 363;
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
