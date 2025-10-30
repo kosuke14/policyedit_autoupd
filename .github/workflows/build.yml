@@ -47,7 +47,7 @@ jobs:
 
             chmod +x ./tools/build_pyinstaller.sh || true
 
-            ./tools/build_pyinstaller.sh \"${ENTRY}\" \"policyedit_autoupd\" \"${arch_name}\"
+            ./tools/build_pyinstaller.sh \"${ENTRY}\" \"policyedit_autoupd\" \"${ARCH_NAME}\"
           "
 
       - name: Upload build artifacts (per matrix platform)
