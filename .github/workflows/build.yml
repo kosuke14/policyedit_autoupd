@@ -33,12 +33,11 @@ jobs:
       - name: Build using container for ${{ matrix.platform }}
         env:
           ENTRY: main.py
+          DOCKER_PLATFORM: ${{ matrix.platform }}
+          ARCH_NAME: ${{ matrix.arch }}
         run: |
           set -eux
-          arch=$(echo "${{ matrix.platform }}" | awk -F/ '{print $2}')
-          if [ "$arch" = "amd64" ]; then arch_name="x86_64"; else arch_name="$arch"; fi
-
-          docker run --rm --platform=${{ matrix.platform }} \
+          docker run --rm --platform=${DOCKER_PLATFORM} \
             -v "${GITHUB_WORKSPACE}:/src" -w /src \
             python:3.11-slim bash -euxc "
             apt-get update -y
