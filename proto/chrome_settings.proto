@@ -21635,7 +21635,7 @@ message ProxyModeProto {
 //                 },
 //                 "type": "array"
 //             },
-//             "ProxyChain": {
+//             "ProxyList": {
 //                 "items": {
 //                     "type": "string"
 //                 },
