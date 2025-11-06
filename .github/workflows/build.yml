@@ -1,0 +1,59 @@
+name: Build executables (x86_64, arm64) and upload artifacts
+
+on:
+  push:
+    paths: ['.github/workflows/build.yml', 'inferfaces/**', 'proto/**', 'schema/**']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build per-architecture binaries (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux/amd64
+            arch: amd64
+            name: linux_amd64
+            runs_on: ubuntu-22.04
+          - platform: linux/arm64
+            arch: arm64
+            name: linux_arm64
+            runs_on: ubuntu-22.04-arm
+
+    runs-on: ${{ matrix.runs_on }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare artifact dir
+        run: mkdir -p artifacts
+
+      - name: Build using container for ${{ matrix.platform }}
+        env:
+          ENTRY: main.py
+          DOCKER_PLATFORM: ${{ matrix.platform }}
+          ARCH_NAME: ${{ matrix.arch }}
+        run: |
+          set -eux
+          docker run --rm --platform=${DOCKER_PLATFORM} \
+            -v "${GITHUB_WORKSPACE}:/src" -w /src \
+            python:3.11-slim bash -euxc "
+            apt-get update -y
+            apt-get install -y --no-install-recommends build-essential git gcc pkg-config libssl-dev ca-certificates
+            python -m pip install --upgrade pip setuptools wheel pyinstaller
+            if [ -f requirements.txt ]; then python -m pip install -r requirements.txt || true; fi
+
+            chmod +x ./tools/build_pyinstaller.sh || true
+
+            ./tools/build_pyinstaller.sh \"${ENTRY}\" \"policyedit_autoupd\" \"${ARCH_NAME}\"
+          "
+
+      - name: Upload build artifacts (per matrix platform)
+        uses: actions/upload-artifact@v4
+        with:
+          name: policyedit-${{ matrix.name }}
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 14

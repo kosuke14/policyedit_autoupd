@@ -1852,7 +1852,9 @@ message AutoOpenFileTypesProto {
 // "$URL_PATTERN", "filter" : $FILTER }, where $URL_PATTERN is a content setting
 // pattern. $FILTER restricts the client certificates the browser automatically
 // selects from. Independent of the filter, only certificates that match the
-// server's certificate request are selected.
+// server's certificate request are selected. On Android, Chrome can only select
+// client certificates that it has provisioned itself; it cannot access
+// certificates installed at the operating system level.
 //
 // Examples for the usage of the $FILTER section:
 //
@@ -2374,7 +2376,7 @@ message BlockTruncatedCookiesProto {
 //   False: Disable bookmark bar
 //   None: Allow the user to decide
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message BookmarkBarEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool BookmarkBarEnabled = 2;
@@ -3426,6 +3428,26 @@ message CORSNonWildcardRequestHeadersSupportProto {
 message CSSCustomStateDeprecatedSyntaxEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CSSCustomStateDeprecatedSyntaxEnabled = 2;
+}
+
+// This policy allows administrators to encrypt http cache on disk.
+//
+// This policy allows the administrators to encrypt browser http cache on disk.
+//
+// When this policy is Enabled, browser cache will be encrypted.
+//
+// When this policy is Disabled or not set, browser cache will not be encrypted.
+//
+// Browser cache encryption may result in a performance impact.
+//
+// Valid values:
+//   True: Use the cache encryption.
+//   False: Do not use the cache encryption.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message CacheEncryptionEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool CacheEncryptionEnabled = 2;
 }
 
 // Enable Google Calendar Integration
@@ -5777,7 +5799,7 @@ message DataCompressionProxyEnabledProto {
 //     "type": "array"
 // }
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on: android, chrome_os, ios, linux, mac, win
 message DataControlsRulesProto {
   optional PolicyOptions policy_options = 1;
   optional string DataControlsRules = 2;
@@ -7062,20 +7084,20 @@ message DefaultWebHidGuardSettingProto {
 
 // Control use of the WebPrinting API
 //
-// Setting the policy to 2 automatically blocks sites from using the WebPrinting
-// API.
+// Setting the policy to 2 automatically blocks Isolated Web App origins from
+// using the WebPrinting API.
 //
-// Setting the policy to 3 will prompt the user when a site wants to use the
-// WebPrinting API.
+// Setting the policy to 3 will prompt the user when an Isolated Web App origin
+// wants to use the WebPrinting API.
 //
-// Leaving it unset lets websites ask for local printer access, but users can
-// change this setting.
+// Leaving it unset lets Isolated Web App origins ask for local printer access,
+// but users can change this setting.
 //
 // Valid values:
-//   2: Do not allow any site to request access to local printers via the
-// WebPrinting API
-//   3: Allow sites to ask the user to grant access to local printers via the
-// WebPrinting API
+//   2: Do not allow Isolated Web App origins to request access to local
+// printers via the WebPrinting API
+//   3: Allow Isolated Web App origins to ask the user to grant access to local
+// printers via the WebPrinting API
 //
 // Supported on: chrome_os
 message DefaultWebPrintingSettingProto {
@@ -7364,6 +7386,38 @@ message DevToolsGenAiSettingsProto {
   optional int64 DevToolsGenAiSettings = 2;
 }
 
+// Enable Google Developer Program Profiles in Chrome DevTools
+//
+// This policy controls the integration of the Google Developer Program with
+// Chrome DevTools. The user's Google Developer Program profile is shown in
+// Chrome DevTools, and users receive badges for performing specific actions
+// within Chrome DevTools.
+//
+// Setting the policy to 0 - 'Enabled', or not setting any policy value, allows
+// the integration of the Google Developer Program with Chrome DevTools, and
+// allows sharing of Chrome DevTools tool usage in order to be able to award
+// badges.
+//
+// Setting the policy to 1 - 'Enabled without badges', allows the integration of
+// the Google Developer Program with Chrome DevTools, but does not allow sharing
+// Chrome DevTools tool usage with the Google Developer Program. No badges will
+// be awarded.
+//
+// Setting the policy to 2 - 'Disabled', does not allow the integration of the
+// Google Developer Program with Chrome DevTools.
+//
+// Valid values:
+//   0: Enable Google Developer Program integration in Chrome DevTools.
+//   1: Enable Google Developer Program integration in Chrome DevTools, but
+// without sharing tool usage (for awarding badges).
+//   2: Do not enable Google Developer Program integration in Chrome DevTools.
+//
+// Supported on: chrome_os, linux, mac, win
+message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DevToolsGoogleDeveloperProgramProfileAvailability = 2;
+}
+
 // Control where Developer Tools can be used
 //
 // Setting the policy to 0 (the default) means you can access the developer
@@ -7390,6 +7444,10 @@ message DevToolsGenAiSettingsProto {
 // As of Google Chrome version 128, this setting will not control developer mode
 // on extensions page if ExtensionDeveloperModeSettings policy is set.
 //
+// If you want to restrict Developer Tools access based on the page URL, use the
+// DeveloperToolsAvailabilityBlocklist and DeveloperToolsAvailabilityAllowlist
+// policies.
+//
 // Valid values:
 //   0: Disallow usage of the Developer Tools on apps and extensions installed
 // by enterprise policy or, since version 114 and if this is a managed user,
@@ -7402,6 +7460,57 @@ message DevToolsGenAiSettingsProto {
 message DeveloperToolsAvailabilityProto {
   optional PolicyOptions policy_options = 1;
   optional int64 DeveloperToolsAvailability = 2;
+}
+
+// List of URL patterns for which Chrome DevTools are allowed to be opened
+//
+// This policy can be used to allow Chrome DevTools on specific URLs.
+//
+// URL patterns are matched against the URL of the page being inspected. If a
+// match is found, the Chrome DevTools are allowed. This applies even if the URL
+// also matches the DeveloperToolsAvailabilityBlocklist policy, even if the
+// DeveloperToolsAvailability policy is set to disallow (value 2). For
+// information on the URL format, see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Leaving the policy unset means this allowlist has no effect. Since Chrome
+// DevTools are available by default, they will only be blocked if specified in
+// the DeveloperToolsAvailabilityBlocklist policy.
+//
+// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+//
+// This policy also applies to Chrome DevTools opened for extensions and web
+// applications.
+//
+// This policy is limited to 1,000 entries.
+//
+// Supported on: chrome_os, linux, mac, win
+message DeveloperToolsAvailabilityAllowlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList DeveloperToolsAvailabilityAllowlist = 2;
+}
+
+// List of URL patterns for which Chrome DevTools are blocked
+//
+// URL patterns are matched against the URL of the page being inspected. If a
+// match is found, the Chrome DevTools are blocked. For information on the URL
+// format, see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// The DeveloperToolsAvailabilityAllowlist policy takes precedence over
+// DeveloperToolsAvailabilityBlocklist.
+//
+// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+//
+// This policy also applies to Chrome DevTools opened for extensions and web
+// applications.
+//
+// This policy is limited to 1,000 entries.
+//
+// Supported on: chrome_os, linux, mac, win
+message DeveloperToolsAvailabilityBlocklistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList DeveloperToolsAvailabilityBlocklist = 2;
 }
 
 // Disable Developer Tools
@@ -7802,7 +7911,7 @@ message DisableSafeBrowsingProceedAnywayProto {
 //   True: Do not allow users to take screenshots or video recordings
 //   False: Allow users to take screenshots and video recordings
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message DisableScreenshotsProto {
   optional PolicyOptions policy_options = 1;
   optional bool DisableScreenshots = 2;
@@ -8804,6 +8913,21 @@ message EnableOnlineRevocationChecksProto {
   optional bool EnableOnlineRevocationChecks = 2;
 }
 
+// Controls which managed users can set the ProxyOverrideRules policy.
+//
+// When this policy is set to 0 or left unset, the ProxyOverrideRules policy
+// will only be applied at the user scope for affiliated users.
+// When this policy is set to 1, the ProxyOverrideRules policy will be applied
+// at the user scope, even that user is unaffiliated.
+// When this policy is set to 2, the ProxyOverrideRules policy will never be
+// applied when its source is a user.
+//
+// Supported on: linux, mac, win
+message EnableProxyOverrideRulesForAllUsersProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 EnableProxyOverrideRulesForAllUsers = 2;
+}
+
 // Allow SHA-1 signed certificates issued by local trust anchors
 //
 // When this setting is enabled, Google Chrome allows SHA-1 signed certificates
@@ -9750,6 +9874,48 @@ message ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrlsProto {
   optional StringList ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls = 2;
 }
 
+// Enable Force-installed Extensions With Non-Malware Violations
+//
+// Controls whether extensions that are taken down due to non-malware violations
+// can still be force installed in low-trust environments.
+//
+// More information about non-malware violations and taken down can be found
+// here. https://developer.chrome.com/docs/webstore/review-process#warning
+//
+// Once the non-malware violation has been resolved, the extension will remain
+// enabled and cannot be disabled or removed.
+//
+// On Microsoft® Windows®, this policy is not available on instances that are
+// joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
+// Active Directory® or enrolled in Chrome Enterprise Core`.
+//
+// On macOS, this policy is not available on instances that are managed via MDM,
+// joined to a domain via MCX or enrolled in Chrome Enterprise Core.
+//
+// Force-installed extensions with non-malware violations will remain enabled in
+// these instances.
+//
+// Currently, a force-installed extension with non-malware violations remains
+// installed and enabled in Chrome.
+//
+// Setting the policy to Enabled will cause force-installed extensions to behave
+// the same (i.e., remain enabled) regardless of non-malware violations.
+//
+// Setting the policy to Disabled or not setting the policy will cause force-
+// installed extensions with non-malware violations to be disabled.
+//
+// This policy will be available for 3 milestones.
+//
+// Valid values:
+//   True: Enable force-installed extensions with non-malware violations.
+//   False: Disable force-installed extensions with non-malware violations.
+//
+// Supported on: mac, win
+message ExtensionForceInstallWithNonMalwareViolationsEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool ExtensionForceInstallWithNonMalwareViolationsEnabled = 2;
+}
+
 // Configure extension installation allow list
 //
 // Setting the policy specifies which extensions are not subject to the
@@ -10113,7 +10279,8 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 "toolbar_pin": {
 //                     "enum": [
 //                         "force_pinned",
-//                         "default_unpinned"
+//                         "default_unpinned",
+//                         "default_pinned"
 //                     ],
 //                     "type": "string"
 //                 },
@@ -11626,6 +11793,37 @@ message GaiaOfflineSigninTimeLimitDaysProto {
   optional int64 GaiaOfflineSigninTimeLimitDays = 2;
 }
 
+// Allows Gemini app integrations to directly act on web pages
+//
+// Controls if the Gemini app is allowed to take action on the web pages on
+// behalf of the user.
+//
+// 0/unset  = Gemini app is allowed to take action on the web pages.
+//
+// 1 = Gemini app is not allowed to take action on the web pages.
+//
+// This policy has no effect when the Gemini app is disabled. For example, the
+// Gemini app can be disabled by GeminiSettings policy.
+//
+// For more information on Gemini in Chrome, please see
+// https://support.google.com/chrome/a/answer/16291696.
+//
+// Gemini's actuation is not available in all countries or all languages.
+// Setting this policy does not guarantee the feature will be enabled; it
+// remains subject to availability. For more info on the roll-out, check the
+// Enterprise Release Notes:
+// https://support.google.com/chrome/a/answer/7679408?hl=en
+//
+// Valid values:
+//   0: Allow the Gemini app to take action on the web pages.
+//   1: Disallow the Gemini app to take action on the web pages.
+//
+// Supported on: linux, mac, win
+message GeminiActOnWebSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 GeminiActOnWebSettings = 2;
+}
+
 // Settings for Gemini integration
 //
 // This setting allows Gemini app integrations.
@@ -11695,13 +11893,14 @@ message GenAIInlineImageSettingsProto {
 //
 // When the policy is set to Disabled (1), the model will not be downloaded.
 //
-// Model downloading can also be disabled by ComponentUpdatesEnabled.
+// On desktop platforms, model downloading can also be disabled by
+// ComponentUpdatesEnabled.
 //
 // Valid values:
 //   0: Downloads model automatically
 //   1: Do not download model
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message GenAILocalFoundationalModelSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GenAILocalFoundationalModelSettings = 2;
@@ -13078,6 +13277,29 @@ message IncognitoEnabledProto {
   optional bool IncognitoEnabled = 2;
 }
 
+// Allow access to a list of URLs in Incognito mode.
+//
+// Setting the policy provides access to the listed URLs in Incognito mode, as
+// exceptions to IncognitoModeBlocklist. For example, setting
+// IncognitoModeBlocklist to * will block all requests in Incognito mode, and
+// you can use this policy to allow access to a limited list of URLs. Use it to
+// open exceptions to certain schemes, subdomains of other domains, ports, or
+// specific paths, using the format specified at (
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
+// IncognitoModeAllowlist policy takes precedence over IncognitoModeBlocklist.
+// This policy is limited to 1,000 entries.
+//
+// Leaving the policy unset allows no exceptions to IncognitoModeBlocklist.
+//
+// This policy only affects Incognito mode. To allow URLs for all user profiles,
+// please use the URLAllowlist policy.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message IncognitoModeAllowlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IncognitoModeAllowlist = 2;
+}
+
 // Incognito mode availability
 //
 // Specifies whether the user may open pages in Incognito mode in Google Chrome.
@@ -13102,6 +13324,24 @@ message IncognitoEnabledProto {
 message IncognitoModeAvailabilityProto {
   optional PolicyOptions policy_options = 1;
   optional int64 IncognitoModeAvailability = 2;
+}
+
+// Block access to a list of URLs in Incognito mode.
+//
+// Setting the IncognitoModeBlocklist policy stops web pages with prohibited
+// URLs from loading in Incognito mode. Administrators can specify the list of
+// URL patterns to be blocked. If left unset, no URLs are blocked in the
+// Incognito mode. Up to 1,000 exceptions can be defined in
+// IncognitoModeAllowlist. See how to format a URL pattern (
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
+//
+// This policy only affects Incognito mode. To block URLs for all user profiles,
+// please use the URLBlocklist policy.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message IncognitoModeBlocklistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IncognitoModeBlocklist = 2;
 }
 
 // Allow insecure content on these sites
@@ -14826,6 +15066,70 @@ message LoadCryptoTokenExtensionProto {
   optional bool LoadCryptoTokenExtension = 2;
 }
 
+// Configure allowed local auth factors
+//
+// Setting the policy controls which local authentication factors can be used
+// for both login and reauthentication on Google ChromeOS.
+//
+// To allow:
+//
+// * Every local authentication factor, use ["ALL"] (includes factors added in
+// the future).
+//
+// * Only PIN, use ["PIN"].
+//
+// * Only Local Passwords, use ["LOCAL_PASSWORD"].
+//
+// If the policy is unset or set to an empty list, no local auth factors are
+// available for managed users.
+//
+// Valid values:
+//   ALL: All
+//   PIN: PIN
+//   LOCAL_PASSWORD: Local Password
+//
+// Supported on: chrome_os
+message LocalAuthFactorsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LocalAuthFactors = 2;
+}
+
+// Set minimum complexity for local PINs and passwords
+//
+// This policy configures the minimum complexity requirements for local
+// authentication factors (PINs and local passwords) set by users on Google
+// ChromeOS.
+//
+// If this policy is not set, default to complexity level None.
+//
+// This policy's requirements are enforced when a user sets up a new local
+// PIN/password or changes an existing one.
+//
+// The complexity levels are based on Android's password quality metrics (https:
+// //developers.google.com/android/management/reference/rest/v1/PasswordRequirem
+// ents), adapted for Google ChromeOS:
+// - 1 = None: A PIN/password is required, but there are no restrictions on its
+// content or length.
+// - 2 = Low: Basic complexity requirements.
+// - 3 = Medium: Stricter length and character-type requirements.
+// - 4 = High: Strongest complexity requirements, demanding multiple character
+// types.
+//
+// See the help center article for detailed explanations of what each level
+// entails for both PINs and passwords.
+//
+// Valid values:
+//   1: No Complexity
+//   2: Low Complexity
+//   3: Medium Complexity
+//   4: High Complexity
+//
+// Supported on: chrome_os
+message LocalAuthFactorsComplexityProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 LocalAuthFactorsComplexity = 2;
+}
+
 // Enable chrome://devices
 //
 // This policy controls access to controllable features in the local discovery
@@ -14966,6 +15270,41 @@ message LocalNetworkAccessBlockedForUrlsProto {
 message LocalNetworkAccessRestrictionsEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool LocalNetworkAccessRestrictionsEnabled = 2;
+}
+
+// Specifies whether to (temporarily) opt out of Local Network Access
+// restrictions
+//
+// When this policy is set to Enabled, Local Network Access
+// requests will only display warnings in Chrome DevTools due to Local Network
+// Access checks failing.
+//
+// When this policy is set to Disabled or unset, Local Network Access requests
+// will use the
+// default handling of these requests.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// This enterprise policy is temporary, and will be removed after M146.
+//
+// Long term, the policy LocalNetworkAccessAllowedForUrls
+// can be used to allowlist URL patterns that should be automatically granted
+// the Local Network Access permission.
+//
+// Note that if the policy LocalNetworkAccessRestrictionsEnabled
+// is enabled, it will take precedence over this policy.
+//
+// Valid values:
+//   True: Temporarily opt out of restrictions on requests to local network
+// endpoints
+//   False: Use default behavior when determining if websites can make requests
+// to local network endpoints
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkAccessRestrictionsTemporaryOptOutProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool LocalNetworkAccessRestrictionsTemporaryOptOut = 2;
 }
 
 // Enable local user files
@@ -15932,18 +16271,14 @@ message NTPSharepointCardVisibleProto {
   optional bool NTPSharepointCardVisible = 2;
 }
 
-// Setting shortcuts on the New Tab Page (Beta)
-//
-// In development: for early preview only.
+// Setting shortcuts on the New Tab Page
 //
 // Setting the policy pre-configures up to 10 custom shortcuts on the Google
 // Chrome New Tab page.
 //
-// If set, users will see these shortcuts by default and users can toggle
-// between “My shortcuts," "Most visited sites" or "My organization's shortcuts"
-// on the "Customize Chrome" panel. If empty or unset, the user will only be
-// able to toggle between “My shortcuts" or "Most visited sites" on the
-// "Customize Chrome" panel.
+// If set, users will see these shortcuts by default, in addition to their
+// personal shortcuts. Users can control visibility of their organization's
+// shortcuts on the "Customize Chrome" panel.
 //
 // Shortcut URLs must be unique.
 //
@@ -18140,7 +18475,7 @@ message ParentAccessCodeConfigProto {
 // https://crbug.com/new?component=1779870&amp;cc=awillia@chromium.org&amp;prior
 // ity=p1&amp;type=bug&amp;noWizard=true
 // explaining your use case. The policy is scheduled to be offered through
-// Google Chrome version 143, after which
+// Google Chrome version 146, after which
 // the old implementation will be removed.
 //
 // NOTE: Only newly-started renderer processes will reflect changes to this
@@ -19541,6 +19876,92 @@ message PowerSmartDimEnabledProto {
 message PreconfiguredDeskTemplatesProto {
   optional PolicyOptions policy_options = 1;
   optional string PreconfiguredDeskTemplates = 2;
+}
+
+// Prefer specific encryption cipher algorithms for TLS
+//
+// This policy configures Google Chrome to order its preferred encryption
+// ciphers in TLS 1.3 to reflect a preference for algorithms that have been
+// approved by a specific compliance regime.
+//
+// Setting this policy does not guarantee that any specific algorithms will be
+// negotiated.
+//
+// This policy exists to allow server operators who wish to support clients with
+// and without compliance requirements to differentiate between those clients,
+// and only use certain non-default algorithms with increased cryptographic
+// strength for those explicitly configured to prefer them.
+//
+// Setting the policy to 'cnsa' configures Google Chrome to prefer ciphers
+// required for compliance with the Commercial National Security Algorithm Suite
+// versions 1.0 and 2.0 (CNSA 1.0 and 2.0).
+//
+// Not setting the policy, or setting it to 'default', configures Google Chrome
+// to use its default ciphers.
+//
+// Setting this policy is not required for security. The default cryptography
+// used by Google Chrome is strong enough to withstand a brute force attack
+// using the entire power of the Sun.
+//
+// Setting this policy will cause Google Chrome to be slower when accessing
+// websites.
+//
+// This policy only affects TLS 1.3 and QUIC; it does not affect earlier
+// versions of TLS.
+//
+// Valid values:
+//   cnsa: Prefer ciphers satisfying the requirements of CNSA 1.0 and 2.0
+//   default: Use Google Chrome's default cipher order
+//
+// Supported on: android, chrome_os, linux, mac, win
+message PreferSlowCiphersProto {
+  optional PolicyOptions policy_options = 1;
+  optional string PreferSlowCiphers = 2;
+}
+
+// Prefer specific key exchange algorithms for TLS
+//
+// This policy configures Google Chrome to order its preferred key agreement
+// algorithms (supported groups) in TLS 1.3 to reflect a preference for
+// algorithms that have been approved by a specific compliance regime.
+//
+// Setting this policy does not guarantee that any specific algorithms will be
+// negotiated.
+//
+// This policy exists to allow server operators who wish to support clients with
+// and without compliance requirements to differentiate between those clients,
+// and only use certain non-default algorithms with increased cryptographic
+// strength for those explicitly configured to prefer them.
+//
+// Setting the policy to 'cnsa2' configures Google Chrome to prefer key exchange
+// methods required for compliance with the Commercial National Security
+// Algorithm Suite 2.0 (CNSA 2.0).
+//
+// Not setting the policy, or setting it to 'default', configures Google Chrome
+// to use its default key exchange methods.
+//
+// If this policy is set to a value that would configure Google Chrome to prefer
+// a post-quantum key agreement algorithm but PostQuantumKeyAgreementEnabled is
+// Disabled, the setting of PostQuantumKeyAgreementEnabled takes precedence.
+//
+// Setting this policy is not required for security. The default cryptography
+// used by Google Chrome is strong enough to withstand a brute force attack
+// using the entire power of the Sun.
+//
+// Setting this policy will cause Google Chrome to be slower when accessing
+// websites.
+//
+// This policy only affects TLS 1.3 and QUIC; it does not affect earlier
+// versions of TLS.
+//
+// Valid values:
+//   cnsa2: Prefer key exchange methods satisfying the requirements of CNSA 2.0
+//   default: Use Google Chrome's default supported groups
+//
+// Supported on: android, chrome_os, linux, mac, win
+message PreferSlowKexAlgorithmsProto {
+  optional PolicyOptions policy_options = 1;
+  optional string PreferSlowKexAlgorithms = 2;
 }
 
 // Allow SpeculationRules prefetch to ServiceWorker-controlled URLs
@@ -21147,6 +21568,91 @@ message ProxyModeProto {
   optional string ProxyMode = 2;
 }
 
+// Proxy override rules
+//
+// Setting this policy configures rules that select what proxy the browser uses
+// depending on the destination's URL and other conditions. This policy will
+// take precedence over proxy settings set from the ProxySettings policy, the
+// chrome.proxy extension API or manual user settings if any is set.
+//
+// Leaving the policy unset has no effect on other proxy policies or user
+// settings.
+//
+// When the browser needs to decide what proxy to use, entries of the
+// ProxyOverrideRules policy are evaluated in sequence until an entry has a
+// match for at least one of the URL hosts in DestinationMatchers and if all
+// entries in Conditions are met. The value in ProxyChain will be used as a
+// proxy for such a match. If no match is found, proxy settings will fall back
+// to what is set in the ProxySettings policy.
+//
+// The ProxyChain field entries correspond to string values of PAC files such
+// as:
+// * DIRECT
+// * PROXY host:port
+// * HTTPS host:port
+// The first reachable entry will be used as a proxy.
+//
+// The Conditions field contains a list of conditions that must all be met for
+// its override rule to be used to decide the proxy to use. If it is left unset,
+// the entry will be used as long as at least one host in DestinationMatchers is
+// matched.
+//
+// The DnsProbe condition checks if the provided DNS Host is able to resolve to
+// an IP address. If the value of Result is "resolves" then the condition is
+// considered as met. If the value is instead set to not_found, then the
+// condition is considered met if the resolution failed.
+//
+// Value schema:
+// {
+//     "items": {
+//         "properties": {
+//             "Conditions": {
+//                 "items": {
+//                     "properties": {
+//                         "DnsProbe": {
+//                             "properties": {
+//                                 "Host": {
+//                                     "type": "string"
+//                                 },
+//                                 "Result": {
+//                                     "enum": [
+//                                         "resolves",
+//                                         "not_found"
+//                                     ],
+//                                     "type": "string"
+//                                 }
+//                             },
+//                             "type": "object"
+//                         }
+//                     },
+//                     "type": "object"
+//                 },
+//                 "type": "array"
+//             },
+//             "DestinationMatchers": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             },
+//             "ProxyList": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             }
+//         },
+//         "type": "object"
+//     },
+//     "type": "array"
+// }
+//
+// Supported on: android, chrome_os, linux, mac, win
+message ProxyOverrideRulesProto {
+  optional PolicyOptions policy_options = 1;
+  optional string ProxyOverrideRules = 2;
+}
+
 // URL to a proxy .pac file
 //
 // This policy is deprecated, please use ProxySettings instead.
@@ -22700,7 +23206,7 @@ message RendererAppContainerEnabledProto {
 //   True: Enable Renderer Code Integrity
 //   False: Disable Renderer Code Integrity
 //
-// Supported on: win
+// Supported on:
 message RendererCodeIntegrityEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool RendererCodeIntegrityEnabled = 2;
@@ -23807,7 +24313,7 @@ message SafeSitesFilterBehaviorProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SameOriginTabCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList SameOriginTabCaptureAllowedByOrigins = 2;
@@ -24021,7 +24527,7 @@ message ScreenBrightnessPercentProto {
 //   False: Do not allow sites to prompt the user to share a video stream of
 // their screen
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool ScreenCaptureAllowed = 2;
@@ -24047,7 +24553,7 @@ message ScreenCaptureAllowedProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ScreenCaptureAllowedByOrigins = 2;
@@ -25468,6 +25974,27 @@ message SigninInterceptionEnabledProto {
   optional bool SigninInterceptionEnabled = 2;
 }
 
+// Enable Silent Printing
+//
+// Setting this policy to true enables silent printing, which immediately closes
+// print preview window when opened and prints to the default printer with
+// default options. If the default printer is 'Save as PDF', the file will be
+// saved to the Downloads folder.
+//
+// Not setting this policy or setting this policy to false disables silent
+// printing, which doesn't automatically close print preview window and requires
+// the user to make a selection as usual.
+//
+// Valid values:
+//   True: Enable Silent Printing
+//   False: Disable Silent Printing
+//
+// Supported on: chrome_os, linux, mac, win
+message SilentPrintingEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool SilentPrintingEnabled = 2;
+}
+
 // Require Site Isolation for every site
 //
 // Since Google Chrome 67, site isolation has been enabled by default on all
@@ -26266,6 +26793,7 @@ message SyncTypesListDisabledProto {
 //   google_maps: Google Maps (supported since version 135)
 //   calculator: Calculator (supported since version 136)
 //   text_editor: Text Editor (supported since version 136)
+//   vids: Vids (supported since version 143)
 //
 // Supported on: chrome_os
 message SystemFeaturesDisableListProto {
@@ -26443,7 +26971,7 @@ message TLS13HardeningForLocalAnchorsEnabledProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message TabCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList TabCaptureAllowedByOrigins = 2;
@@ -29122,6 +29650,7 @@ message WebHidBlockedForUrlsProto {
 //
 // Setting the policy lets you list the URL patterns that specify which sites
 // are automatically granted access to local printers via the WebPrinting API.
+// Valid patterns are limited to Isolated Web Apps.
 //
 // Leaving the policy unset means DefaultWebPrintingSetting applies for all
 // sites, if it's set. If not, users' personal settings apply.
@@ -29143,6 +29672,7 @@ message WebPrintingAllowedForUrlsProto {
 //
 // Setting the policy lets you list the URL patterns that specify which sites
 // are automatically denied access to local printers via the WebPrinting API.
+// Valid patterns are limited to Isolated Web Apps.
 //
 // Leaving the policy unset means DefaultWebPrintingSetting applies for all
 // sites, if it's set. If not, users' personal settings apply.
@@ -29675,7 +30205,7 @@ message WifiSyncAndroidAllowedProto {
 // policy only matches based on origin, so any path in the URL pattern is
 // ignored.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WindowCaptureAllowedByOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList WindowCaptureAllowedByOrigins = 2;
@@ -29863,6 +30393,7 @@ message ChromeSettingsSubProto1 {
   optional CAHintCertificatesProto CAHintCertificates = 153;
   optional CAPlatformIntegrationEnabledProto CAPlatformIntegrationEnabled = 156;
   optional CSSCustomStateDeprecatedSyntaxEnabledProto CSSCustomStateDeprecatedSyntaxEnabled = 220;
+  optional CacheEncryptionEnabledProto CacheEncryptionEnabled = 356;
   optional ChromeAppsWebViewPermissiveBehaviorAllowedProto ChromeAppsWebViewPermissiveBehaviorAllowed = 33;
   optional ChromeDataRegionSettingProto ChromeDataRegionSetting = 213;
   optional ChromeForTestingAllowedProto ChromeForTestingAllowed = 173;
@@ -29900,6 +30431,9 @@ message ChromeSettingsSubProto1 {
   optional DeletingUndecryptablePasswordsEnabledProto DeletingUndecryptablePasswordsEnabled = 245;
   optional DeskAPIDeskSaveAndShareEnabledProto DeskAPIDeskSaveAndShareEnabled = 143;
   optional DevToolsGenAiSettingsProto DevToolsGenAiSettings = 188;
+  optional DevToolsGoogleDeveloperProgramProfileAvailabilityProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
+  optional DeveloperToolsAvailabilityAllowlistProto DeveloperToolsAvailabilityAllowlist = 359;
+  optional DeveloperToolsAvailabilityBlocklistProto DeveloperToolsAvailabilityBlocklist = 360;
   optional DeviceAttributesBlockedForOriginsProto DeviceAttributesBlockedForOrigins = 338;
   optional DirectSocketsAllowedForUrlsProto DirectSocketsAllowedForUrls = 191;
   optional DirectSocketsBlockedForUrlsProto DirectSocketsBlockedForUrls = 192;
@@ -29913,6 +30447,7 @@ message ChromeSettingsSubProto1 {
   optional DriveFileSyncAvailableProto DriveFileSyncAvailable = 118;
   optional DynamicCodeSettingsProto DynamicCodeSettings = 225;
   optional EmojiPickerGifSupportEnabledProto EmojiPickerGifSupportEnabled = 82;
+  optional EnableProxyOverrideRulesForAllUsersProto EnableProxyOverrideRulesForAllUsers = 366;
   optional EnableUnsafeSwiftShaderProto EnableUnsafeSwiftShader = 330;
   optional EnforceLocalAnchorConstraintsEnabledProto EnforceLocalAnchorConstraintsEnabled = 39;
   optional EnterpriseBadgingTemporarySettingProto EnterpriseBadgingTemporarySetting = 210;
@@ -29926,6 +30461,7 @@ message ChromeSettingsSubProto1 {
   optional ExtensibleEnterpriseSSOBlocklistProto ExtensibleEnterpriseSSOBlocklist = 219;
   optional ExtensionDeveloperModeSettingsProto ExtensionDeveloperModeSettings = 231;
   optional ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrlsProto ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls = 34;
+  optional ExtensionForceInstallWithNonMalwareViolationsEnabledProto ExtensionForceInstallWithNonMalwareViolationsEnabled = 355;
   optional ExtensionInstallCloudPolicyChecksEnabledProto ExtensionInstallCloudPolicyChecksEnabled = 350;
   optional ExtensionInstallTypeBlocklistProto ExtensionInstallTypeBlocklist = 139;
   optional ExtensionOAuthRedirectUrlsProto ExtensionOAuthRedirectUrls = 109;
@@ -29945,6 +30481,7 @@ message ChromeSettingsSubProto1 {
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
+  optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GenAIInlineImageSettingsProto GenAIInlineImageSettings = 306;
   optional GenAILocalFoundationalModelSettingsProto GenAILocalFoundationalModelSettings = 211;
@@ -29966,6 +30503,8 @@ message ChromeSettingsSubProto1 {
   optional HttpAllowlistProto HttpAllowlist = 42;
   optional HttpsUpgradesEnabledProto HttpsUpgradesEnabled = 43;
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
+  optional IncognitoModeAllowlistProto IncognitoModeAllowlist = 353;
+  optional IncognitoModeBlocklistProto IncognitoModeBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
@@ -29987,9 +30526,12 @@ message ChromeSettingsSubProto1 {
   optional ListenToThisPageEnabledProto ListenToThisPageEnabled = 149;
   optional LiveCaptionEnabledProto LiveCaptionEnabled = 334;
   optional LiveTranslateEnabledProto LiveTranslateEnabled = 278;
+  optional LocalAuthFactorsProto LocalAuthFactors = 365;
+  optional LocalAuthFactorsComplexityProto LocalAuthFactorsComplexity = 363;
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;
+  optional LocalNetworkAccessRestrictionsTemporaryOptOutProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional LocalUserFilesAllowedProto LocalUserFilesAllowed = 176;
   optional LocalUserFilesMigrationDestinationProto LocalUserFilesMigrationDestination = 232;
   optional LockScreenAutoStartOnlineReauthProto LockScreenAutoStartOnlineReauth = 217;
@@ -30027,6 +30569,8 @@ message ChromeSettingsSubProto1 {
   optional PhysicalKeyboardPredictiveWritingProto PhysicalKeyboardPredictiveWriting = 79;
   optional PolicyTestPageEnabledProto PolicyTestPageEnabled = 72;
   optional PostQuantumKeyAgreementEnabledProto PostQuantumKeyAgreementEnabled = 77;
+  optional PreferSlowCiphersProto PreferSlowCiphers = 358;
+  optional PreferSlowKexAlgorithmsProto PreferSlowKexAlgorithms = 354;
   optional PrefetchWithServiceWorkerEnabledProto PrefetchWithServiceWorkerEnabled = 325;
   optional PrefixedVideoFullscreenApiAvailabilityProto PrefixedVideoFullscreenApiAvailability = 194;
   optional PrintingLPACSandboxEnabledProto PrintingLPACSandboxEnabled = 248;
@@ -30047,6 +30591,7 @@ message ChromeSettingsSubProto1 {
   optional ProvisionManagedClientCertificateForBrowserProto ProvisionManagedClientCertificateForBrowser = 294;
   optional ProvisionManagedClientCertificateForUserProto ProvisionManagedClientCertificateForUser = 175;
   optional ProvisionalNotificationsAllowedProto ProvisionalNotificationsAllowed = 311;
+  optional ProxyOverrideRulesProto ProxyOverrideRules = 364;
   optional QRCodeGeneratorEnabledProto QRCodeGeneratorEnabled = 241;
   optional QuickOfficeForceFileDownloadEnabledProto QuickOfficeForceFileDownloadEnabled = 111;
   optional RSAKeyUsageForLocalAnchorsEnabledProto RSAKeyUsageForLocalAnchorsEnabled = 70;
@@ -30087,6 +30632,7 @@ message ChromeSettingsSubProto1 {
   optional ShowGeminiIntroScreenEnabledProto ShowGeminiIntroScreenEnabled = 249;
   optional ShowHumanPresenceSensorScreenEnabledProto ShowHumanPresenceSensorScreenEnabled = 129;
   optional ShowTouchpadScrollScreenEnabledProto ShowTouchpadScrollScreenEnabled = 40;
+  optional SilentPrintingEnabledProto SilentPrintingEnabled = 357;
   optional SiteSearchSettingsProto SiteSearchSettings = 136;
   optional SmartCardConnectAllowedForUrlsProto SmartCardConnectAllowedForUrls = 280;
   optional SmartCardConnectBlockedForUrlsProto SmartCardConnectBlockedForUrls = 281;
