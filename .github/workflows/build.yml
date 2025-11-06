@@ -1,11 +1,7 @@
-name: Build executables (x86_64, arm64) and create Draft Release
+name: Build executables (x86_64, arm64) and upload artifacts
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Release tag (ex: v1.0.0) (default: draft-<run_number>)'
-        required: false
 
 jobs:
   build:
@@ -63,57 +59,5 @@ jobs:
         with:
           name: binaries-${{ matrix.name }}
           path: artifacts/*
-
-  create_release:
-    name: Create Draft Release and upload assets (each binary separately)
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout (for context)
-        uses: actions/checkout@v4
-
-      - name: Determine tag name
-        id: tag
-        run: |
-          TAG_INPUT="${{ github.event.inputs.tag }}"
-          if [ -z "$TAG_INPUT" ]; then
-            TAG="draft-${GITHUB_RUN_NUMBER}"
-          else
-            TAG="$TAG_INPUT"
-          fi
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-
-      - name: Download all built artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: downloaded_artifacts
-
-      - name: Create draft release
-        run: |
-          gh release create "${{ steps.tag.outputs.tag }}" \
-            --title "${{ steps.tag.outputs.tag }}" \
-            --notes "Automated draft release created by workflow run ${{ github.run_id }}." \
-            --draft \
-            --repo "${{ github.repository }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload each binary file to the Draft Release
-        run: |
-          set -eux
-          # Upload all files under downloaded_artifacts to the release
-          find downloaded_artifacts -type f -print0 | while IFS= read -r -d '' file; do
-            fname=$(basename "$file")
-            echo "Uploading $file as $fname ..."
-            gh release upload "${{ steps.tag.outputs.tag }}" "$file" \
-              --name "$fname" \
-              --repo "${{ github.repository }}"
-            echo "Uploaded $fname"
-          done
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: List uploaded assets for logging
-        run: |
-          echo "Uploaded files (from downloaded_artifacts):"
-          find downloaded_artifacts -type f -maxdepth 5 -print -exec ls -lh {} \;
+          if-no-files-found: error
+          retention-days: 14
