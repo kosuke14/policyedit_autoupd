@@ -17,6 +17,11 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
+        include:
+          - platform: linux/amd64
+            arch: amd64
+          - platform: linux/arm64
+            arch: arm64
             
     steps:
       - name: Checkout repository
@@ -82,44 +87,29 @@ jobs:
           path: downloaded_artifacts
 
       - name: Create draft release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          release_name: ${{ steps.tag.outputs.tag }}
-          draft: true
-          body: |
-            Automated draft release created by workflow run ${{ github.run_id }}.
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            --title "${{ steps.tag.outputs.tag }}" \
+            --notes "Automated draft release created by workflow run ${{ github.run_id }}." \
+            --draft \
+            --repo "${{ github.repository }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload each binary file to the Draft Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPLOAD_URL_TPL: ${{ steps.create_release.outputs.upload_url }}
         run: |
           set -eux
-
-          # Clean template from upload_url: remove "{?name,label}" if present
-          UPLOAD_URL="${UPLOAD_URL_TPL%\{*}"
-          echo "Upload base URL: $UPLOAD_URL"
-
-          # Find all files under downloaded_artifacts and upload each
-          # Use maxdepth to avoid extremely deep traversal; adjust if needed
+          # Upload all files under downloaded_artifacts to the release
           find downloaded_artifacts -type f -print0 | while IFS= read -r -d '' file; do
             fname=$(basename "$file")
             echo "Uploading $file as $fname ..."
-            # Content-Type: try to use application/octet-stream
-            curl --fail --show-error -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Content-Type: application/octet-stream" \
-              --data-binary @"$file" \
-              "$UPLOAD_URL?name=$(printf '%s' "$fname" | jq -s -R -r @uri)"
+            gh release upload "${{ steps.tag.outputs.tag }}" "$file" \
+              --name "$fname" \
+              --repo "${{ github.repository }}"
             echo "Uploaded $fname"
           done
-        # jq is used for URL-encoding the filename; install if not present
-        # (on ubuntu-latest jq is preinstalled; if not, consider installing earlier)
-        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List uploaded assets for logging
         run: |
