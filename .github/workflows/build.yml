@@ -20,8 +20,10 @@ jobs:
         include:
           - platform: linux/amd64
             arch: amd64
+            name: linux_amd64
           - platform: linux/arm64
             arch: arm64
+            name: linux_arm64
             
     steps:
       - name: Checkout repository
@@ -59,7 +61,7 @@ jobs:
       - name: Upload build artifacts (per matrix platform)
         uses: actions/upload-artifact@v4
         with:
-          name: binaries-${{ replace(matrix.platform, '/', '_') }}
+          name: binaries-${{ matrix.name }}
           path: artifacts/*
 
   create_release:
