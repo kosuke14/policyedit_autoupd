@@ -2,6 +2,9 @@
 
 This is a Python program which is able to modify the device policies on a Chrome OS system, based on [lilac](https://github.com/MercuryWorkshop/lilac).
 
+## Downloads:
+You can find the latest pyinstaller'd binaries at: [nightly.link](https://nightly.link/kosuke14/policyedit_autoupd/workflows/build/main).
+
 ## Installation:
 You must have Python 3 installed on Linux, with support for virtual environments and pip. 
 
