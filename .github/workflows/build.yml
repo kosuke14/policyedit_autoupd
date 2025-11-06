@@ -20,7 +20,7 @@ jobs:
           - platform: linux/arm64
             arch: arm64
             name: linux_arm64
-            
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
       - name: Upload build artifacts (per matrix platform)
         uses: actions/upload-artifact@v4
         with:
-          name: binaries-${{ matrix.name }}
+          name: policyedit-${{ matrix.name }}
           path: artifacts/*
           if-no-files-found: error
           retention-days: 14
