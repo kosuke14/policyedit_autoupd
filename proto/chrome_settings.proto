@@ -6363,6 +6363,30 @@ message DefaultHandlersForFileExtensionsProto {
   optional string DefaultHandlersForFileExtensions = 2;
 }
 
+// Default idle detection setting
+//
+// Allows you to set whether websites are allowed to use the Idle Detection API.
+//
+// When this policy is set to 1 - AllowIdleDetection, websites can use the API
+// without asking the user for permission.
+//
+// When this policy is set to 2 - BlockIdleDetection, websites can't use the
+// API, regardless of the user's permission.
+//
+// When this policy is set to 3 - AskIdleDetection or not set, websites can't
+// use the API without the user's permission.
+//
+// Valid values:
+//   1: Allow sites to detect idle state without asking the user
+//   2: Do not allow any site to detect the user's idle state
+//   3: Ask every time a site wants to detect the user's idle state
+//
+// Supported on: android, chrome_os, linux, mac, win
+message DefaultIdleDetectionSettingProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DefaultIdleDetectionSetting = 2;
+}
+
 // Default images setting
 //
 // Setting the policy to 1 lets all websites display images. Setting the policy
@@ -12948,6 +12972,50 @@ message IdleDelayACProto {
 message IdleDelayBatteryProto {
   optional PolicyOptions policy_options = 1;
   optional int64 IdleDelayBattery = 2;
+}
+
+// Allow idle detection on these sites
+//
+// Allows you to set a list of URL patterns that specify the sites that are
+// allowed to use the Idle Detection API witout asking the user. Blocklist
+// entries have higher priority than allowlist entries, which in turn have
+// higher priority than the configured default value.
+//
+// For detailed information on valid site url patterns, please see
+// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// Wildcards, *, are allowed. This policy only matches based on origin, so any
+// path in the URL pattern is ignored.
+//
+// If this policy is not set, the global default value will be used for all
+// sites, which is configured by the DefaultIdleDetectionSetting (Default idle
+// detection setting) policy, if set, or by the user's personal configuration
+// otherwise.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message IdleDetectionAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IdleDetectionAllowedForUrls = 2;
+}
+
+// Block idle detection on these sites
+//
+// Allows you to set a list of URL patterns that specify the sites that are not
+// allowed to use the Idle Detection API.
+//
+// For detailed information on valid site url patterns, please see
+// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// Wildcards, *, are allowed. This policy only matches based on origin, so any
+// path in the URL pattern is ignored.
+//
+// If this policy is not set, the global default value will be used for all
+// sites, which is configured by the DefaultIdleDetectionSetting (Default idle
+// detection setting) policy, if set, or by the user's personal configuration
+// otherwise.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message IdleDetectionBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IdleDetectionBlockedForUrls = 2;
 }
 
 // Delay before running idle actions
@@ -21581,12 +21649,11 @@ message ProxyModeProto {
 // When the browser needs to decide what proxy to use, entries of the
 // ProxyOverrideRules policy are evaluated in sequence until an entry has a
 // match for at least one of the URL hosts in DestinationMatchers and if all
-// entries in Conditions are met. The value in ProxyChain will be used as a
-// proxy for such a match. If no match is found, proxy settings will fall back
-// to what is set in the ProxySettings policy.
+// entries in Conditions are met. The value in ProxyList will be used as a proxy
+// for such a match. If no match is found, proxy settings will fall back to what
+// is set in the ProxySettings policy.
 //
-// The ProxyChain field entries correspond to string values of PAC files such
-// as:
+// The ProxyList field entries correspond to string values of PAC files such as:
 // * DIRECT
 // * PROXY host:port
 // * HTTPS host:port
@@ -30422,6 +30489,7 @@ message ChromeSettingsSubProto1 {
   optional DefaultDeviceAttributesSettingProto DefaultDeviceAttributesSetting = 337;
   optional DefaultDirectSocketsPrivateNetworkAccessSettingProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
   optional DefaultDirectSocketsSettingProto DefaultDirectSocketsSetting = 190;
+  optional DefaultIdleDetectionSettingProto DefaultIdleDetectionSetting = 367;
   optional DefaultJavaScriptOptimizerSettingProto DefaultJavaScriptOptimizerSetting = 237;
   optional DefaultSmartCardConnectSettingProto DefaultSmartCardConnectSetting = 315;
   optional DefaultThirdPartyStoragePartitioningSettingProto DefaultThirdPartyStoragePartitioningSetting = 50;
@@ -30503,6 +30571,8 @@ message ChromeSettingsSubProto1 {
   optional HttpAllowlistProto HttpAllowlist = 42;
   optional HttpsUpgradesEnabledProto HttpsUpgradesEnabled = 43;
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
+  optional IdleDetectionAllowedForUrlsProto IdleDetectionAllowedForUrls = 368;
+  optional IdleDetectionBlockedForUrlsProto IdleDetectionBlockedForUrls = 369;
   optional IncognitoModeAllowlistProto IncognitoModeAllowlist = 353;
   optional IncognitoModeBlocklistProto IncognitoModeBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;

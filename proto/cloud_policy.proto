@@ -44,6 +44,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto DefaultDeviceAttributesSetting = 337;
   optional IntegerPolicyProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
   optional IntegerPolicyProto DefaultDirectSocketsSetting = 190;
+  optional IntegerPolicyProto DefaultIdleDetectionSetting = 367;
   optional IntegerPolicyProto DefaultJavaScriptOptimizerSetting = 237;
   optional IntegerPolicyProto DefaultSmartCardConnectSetting = 315;
   optional IntegerPolicyProto DefaultThirdPartyStoragePartitioningSetting = 50;
@@ -54,6 +55,8 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto DirectSocketsBlockedForUrls = 192;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessAllowedForUrls = 264;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessBlockedForUrls = 265;
+  optional StringListPolicyProto IdleDetectionAllowedForUrls = 368;
+  optional StringListPolicyProto IdleDetectionBlockedForUrls = 369;
   optional StringListPolicyProto JavaScriptOptimizerAllowedForSites = 238;
   optional StringListPolicyProto JavaScriptOptimizerBlockedForSites = 239;
   optional IntegerPolicyProto LegacyCookieScopeEnabled = 342;
