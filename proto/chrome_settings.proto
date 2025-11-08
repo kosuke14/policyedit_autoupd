@@ -15329,6 +15329,9 @@ message LocalNetworkAccessBlockedForUrlsProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
+// This policy is deprecated because Local Network Access
+// has launched by default. The policy will be removed in a future release.
+//
 // Valid values:
 //   True: Apply restrictions to requests to local network endpoints
 //   False: Use default behavior when determining if websites can make requests
