@@ -55,6 +55,8 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto DirectSocketsBlockedForUrls = 192;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessAllowedForUrls = 264;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessBlockedForUrls = 265;
+  optional StringListPolicyProto GeolocationAllowedForUrls = 370;
+  optional StringListPolicyProto GeolocationBlockedForUrls = 371;
   optional StringListPolicyProto IdleDetectionAllowedForUrls = 368;
   optional StringListPolicyProto IdleDetectionBlockedForUrls = 369;
   optional StringListPolicyProto JavaScriptOptimizerAllowedForSites = 238;

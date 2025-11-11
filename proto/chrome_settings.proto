@@ -12154,6 +12154,44 @@ message GenAiDefaultSettingsProto {
   optional int64 GenAiDefaultSettings = 2;
 }
 
+// Allow geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are allowed to access the user's geolocation without first having to
+// request the user's permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message GeolocationAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeolocationAllowedForUrls = 2;
+}
+
+// Block geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are not allowed to access the user's geolocation, and are also prevented
+// from requesting user permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message GeolocationBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeolocationBlockedForUrls = 2;
+}
+
 // Enables auto-select for multi screen captures
 //
 // The getDisplayMediaSet API allows web applications to capture multiple
@@ -30562,6 +30600,8 @@ message ChromeSettingsSubProto1 {
   optional GenAIWallpaperSettingsProto GenAIWallpaperSettings = 223;
   optional GenAiChromeOsSmartActionsSettingsProto GenAiChromeOsSmartActionsSettings = 297;
   optional GenAiDefaultSettingsProto GenAiDefaultSettings = 256;
+  optional GeolocationAllowedForUrlsProto GeolocationAllowedForUrls = 370;
+  optional GeolocationBlockedForUrlsProto GeolocationBlockedForUrls = 371;
   optional GlanceablesEnabledProto GlanceablesEnabled = 91;
   optional GoogleLocationServicesEnabledProto GoogleLocationServicesEnabled = 174;
   optional GoogleSearchSidePanelEnabledProto GoogleSearchSidePanelEnabled = 67;
