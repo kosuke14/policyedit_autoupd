@@ -2059,7 +2059,7 @@ message AutomatedPasswordChangeSettingsProto {
 // call the API without a prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns.
 // Wildcards, *, are allowed.
 //
 // Origins matching both blocked and allowed policy patterns will be blocked.
@@ -2085,7 +2085,7 @@ message AutomaticFullscreenAllowedForUrlsProto {
 // from calling the API without a prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns.
 // Wildcards, *, are allowed.
 //
 // Origins matching both blocked and allowed policy patterns will be blocked.
@@ -4252,8 +4252,8 @@ message ClientCertificateManagementAllowedProto {
 // if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ClipboardAllowedForUrlsProto {
@@ -4273,8 +4273,8 @@ message ClipboardAllowedForUrlsProto {
 // if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ClipboardBlockedForUrlsProto {
@@ -4954,8 +4954,8 @@ message ContextualSuggestionsEnabledProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, linux, mac, win
 message ControlledFrameAllowedForUrlsProto {
@@ -4981,8 +4981,8 @@ message ControlledFrameAllowedForUrlsProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, linux, mac, win
 message ControlledFrameBlockedForUrlsProto {
@@ -5015,8 +5015,8 @@ message ControlledFrameBlockedForUrlsProto {
 // it is unspecified which policy takes precedence.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message CookiesAllowedForUrlsProto {
@@ -5037,8 +5037,8 @@ message CookiesAllowedForUrlsProto {
 // conflict.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message CookiesBlockedForUrlsProto {
@@ -5061,8 +5061,8 @@ message CookiesBlockedForUrlsProto {
 // CookiesAllowedForUrls. URL patterns among these 3 policies must not conflict.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message CookiesSessionOnlyForUrlsProto {
@@ -6363,6 +6363,30 @@ message DefaultHandlersForFileExtensionsProto {
   optional string DefaultHandlersForFileExtensions = 2;
 }
 
+// Default idle detection setting
+//
+// Allows you to set whether websites are allowed to use the Idle Detection API.
+//
+// When this policy is set to 1 - AllowIdleDetection, websites can use the API
+// without asking the user for permission.
+//
+// When this policy is set to 2 - BlockIdleDetection, websites can't use the
+// API, regardless of the user's permission.
+//
+// When this policy is set to 3 - AskIdleDetection or not set, websites can't
+// use the API without the user's permission.
+//
+// Valid values:
+//   1: Allow sites to detect idle state without asking the user
+//   2: Do not allow any site to detect the user's idle state
+//   3: Ask every time a site wants to detect the user's idle state
+//
+// Supported on: android, chrome_os, linux, mac, win
+message DefaultIdleDetectionSettingProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DefaultIdleDetectionSetting = 2;
+}
+
 // Default images setting
 //
 // Setting the policy to 1 lets all websites display images. Setting the policy
@@ -7554,8 +7578,8 @@ message DeveloperToolsDisabledProto {
 // https://wicg.github.io/WebApiDevice/device_attributes.
 //
 // For detailed information on valid url patterns (since version 127), please
-// see https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. *
-// is not an accepted value for this policy.
+// see https://chromeenterprise.google/policies/url-patterns. * is not an
+// accepted value for this policy.
 //
 // Supported on: chrome_os
 message DeviceAttributesAllowedForOriginsProto {
@@ -7574,8 +7598,8 @@ message DeviceAttributesAllowedForOriginsProto {
 // https://wicg.github.io/WebApiDevice/device_attributes.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os
 message DeviceAttributesBlockedForOriginsProto {
@@ -7675,8 +7699,8 @@ message DictationEnabledProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, linux, mac, win
 message DirectSocketsAllowedForUrlsProto {
@@ -7701,8 +7725,8 @@ message DirectSocketsAllowedForUrlsProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, linux, mac, win
 message DirectSocketsBlockedForUrlsProto {
@@ -7734,8 +7758,8 @@ message DirectSocketsBlockedForUrlsProto {
 // precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Note that this policy only applies if the origin is allowed to use the Direct
 // Sockets API.
@@ -7771,8 +7795,8 @@ message DirectSocketsPrivateNetworkAccessAllowedForUrlsProto {
 // precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Note that this policy only applies if the origin is allowed to use the Direct
 // Sockets API.
@@ -10728,8 +10752,8 @@ message FetchKeepaliveDurationSecondsOnShutdownProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on:
 message FileHandlingAllowedForUrlsProto {
@@ -10753,8 +10777,8 @@ message FileHandlingAllowedForUrlsProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on:
 message FileHandlingBlockedForUrlsProto {
@@ -10823,8 +10847,8 @@ message FilePickerChooseFromDriveSettingsProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message FileSystemReadAskForUrlsProto {
@@ -10845,8 +10869,8 @@ message FileSystemReadAskForUrlsProto {
 // takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message FileSystemReadBlockedForUrlsProto {
@@ -10890,8 +10914,8 @@ message FileSystemSyncAccessHandleAsyncInterfaceEnabledProto {
 // policy takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message FileSystemWriteAskForUrlsProto {
@@ -10912,8 +10936,8 @@ message FileSystemWriteAskForUrlsProto {
 // takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message FileSystemWriteBlockedForUrlsProto {
@@ -12130,6 +12154,44 @@ message GenAiDefaultSettingsProto {
   optional int64 GenAiDefaultSettings = 2;
 }
 
+// Allow geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are allowed to access the user's geolocation without first having to
+// request the user's permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message GeolocationAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeolocationAllowedForUrls = 2;
+}
+
+// Block geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are not allowed to access the user's geolocation, and are also prevented
+// from requesting user permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message GeolocationBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeolocationBlockedForUrls = 2;
+}
+
 // Enables auto-select for multi screen captures
 //
 // The getDisplayMediaSet API allows web applications to capture multiple
@@ -12950,6 +13012,50 @@ message IdleDelayBatteryProto {
   optional int64 IdleDelayBattery = 2;
 }
 
+// Allow idle detection on these sites
+//
+// Allows you to set a list of URL patterns that specify the sites that are
+// allowed to use the Idle Detection API witout asking the user. Blocklist
+// entries have higher priority than allowlist entries, which in turn have
+// higher priority than the configured default value.
+//
+// For detailed information on valid site url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
+//
+// If this policy is not set, the global default value will be used for all
+// sites, which is configured by the DefaultIdleDetectionSetting (Default idle
+// detection setting) policy, if set, or by the user's personal configuration
+// otherwise.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message IdleDetectionAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IdleDetectionAllowedForUrls = 2;
+}
+
+// Block idle detection on these sites
+//
+// Allows you to set a list of URL patterns that specify the sites that are not
+// allowed to use the Idle Detection API.
+//
+// For detailed information on valid site url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
+//
+// If this policy is not set, the global default value will be used for all
+// sites, which is configured by the DefaultIdleDetectionSetting (Default idle
+// detection setting) policy, if set, or by the user's personal configuration
+// otherwise.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message IdleDetectionBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IdleDetectionBlockedForUrls = 2;
+}
+
 // Delay before running idle actions
 //
 // Triggers an action when the computer is idle.
@@ -13101,8 +13207,8 @@ message IdleWarningDelayBatteryProto {
 // it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Note that previously this policy was erroneously enabled on Android, but this
 // functionality has never been fully supported on Android.
@@ -13122,8 +13228,8 @@ message ImagesAllowedForUrlsProto {
 // it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Note that previously this policy was erroneously enabled on Android, but this
 // functionality has never been fully supported on Android.
@@ -13356,8 +13462,8 @@ message IncognitoModeBlocklistProto {
 // allowed to set exceptions to allow it for specific sites.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message InsecureContentAllowedForUrlsProto {
@@ -13377,8 +13483,8 @@ message InsecureContentAllowedForUrlsProto {
 // allowed to set exceptions to allow it for specific sites.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message InsecureContentBlockedForUrlsProto {
@@ -13830,8 +13936,8 @@ message IsolatedWebAppInstallForceListProto {
 // sites, if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message JavaScriptAllowedForUrlsProto {
@@ -13848,8 +13954,8 @@ message JavaScriptAllowedForUrlsProto {
 // sites, if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Note that this policy blocks JavaScript based on whether the origin of the
 // top-level document (usually the page URL that is also displayed in the
@@ -13874,8 +13980,8 @@ message JavaScriptBlockedForUrlsProto {
 // allowed to run JavaScript with JIT (Just In Time) compiler enabled.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // JavaScript JIT policy exceptions will only be enforced at a site granularity
 // (eTLD+1). A policy set for only subdomain.site.com will not correctly apply
@@ -13911,8 +14017,8 @@ message JavaScriptJitAllowedForSitesProto {
 // web content in a more secure configuration.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // JavaScript JIT policy exceptions will only be enforced at a site granularity
 // (eTLD+1). A policy set for only subdomain.site.com will not correctly apply
@@ -13943,7 +14049,7 @@ message JavaScriptJitBlockedForSitesProto {
 // advanced JavaScript optimizations are enabled.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns.
 // Wildcards, *, are allowed.
 //
 // JavaScript optimization policy exceptions will only be enforced at a site
@@ -13982,7 +14088,7 @@ message JavaScriptOptimizerAllowedForSitesProto {
 // web content more slowly.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns.
 // Wildcards, *, are allowed.
 //
 // JavaScript optimization policy exceptions will only be enforced at a site
@@ -14385,8 +14491,8 @@ message KeyboardFocusableScrollersEnabledProto {
 // user's personal configuration otherwise.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on:
 message KeygenAllowedForUrlsProto {
@@ -14405,8 +14511,8 @@ message KeygenAllowedForUrlsProto {
 // user's personal configuration otherwise.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on:
 message KeygenBlockedForUrlsProto {
@@ -14814,7 +14920,7 @@ message LegacySameSiteCookieBehaviorEnabledProto {
 // user's personal configuration.
 //
 // For detailed information on valid patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns.
 //
 // Note that patterns you list here are treated as domains, not URLs, so you
 // should not specify a scheme or port.
@@ -15159,9 +15265,9 @@ message LocalDiscoveryEnabledProto {
 // see information about local fonts.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultLocalFontsSetting applies to the site, if set, otherwise the
@@ -15181,9 +15287,9 @@ message LocalFontsAllowedForUrlsProto {
 // information about local fonts.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultLocalFontsSetting applies to the site, if set, otherwise the
@@ -15209,7 +15315,7 @@ message LocalFontsBlockedForUrlsProto {
 // configuration will apply.
 //
 // For detailed information on valid URL patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
@@ -15236,7 +15342,7 @@ message LocalNetworkAccessAllowedForUrlsProto {
 // configuration will apply.
 //
 // For detailed information on valid URL patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
@@ -15260,6 +15366,9 @@ message LocalNetworkAccessBlockedForUrlsProto {
 //
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
+//
+// This policy is deprecated because Local Network Access
+// has launched by default. The policy will be removed in a future release.
 //
 // Valid values:
 //   True: Apply restrictions to requests to local network endpoints
@@ -16839,8 +16948,8 @@ message NoteTakingAppsLockScreenWhitelistProto {
 // sites, if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message NotificationsAllowedForUrlsProto {
@@ -16857,8 +16966,8 @@ message NotificationsAllowedForUrlsProto {
 // sites, if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message NotificationsBlockedForUrlsProto {
@@ -18857,6 +18966,28 @@ message PdfViewerOutOfProcessIframeEnabledProto {
   optional bool PdfViewerOutOfProcessIframeEnabled = 2;
 }
 
+// Enable support for XFA forms in PDF documents
+//
+// Controls whether the PDF viewer in Google Chrome supports XFA forms in PDF
+// documents.
+//
+// If this policy is set to True, support for XFA forms is enabled.
+// If this policy is set to False, support for XFA forms is disabled.
+// If this policy is not set, the default Chrome behavior is used, which may
+// also be influenced by the `#pdf-xfa-forms` flag. When this policy is set, it
+// takes precedence over the `#pdf-xfa-forms` flag.
+//
+// Valid values:
+//   False: PDF XFA Forms support disabled
+//   True: PDF XFA Forms support enabled
+//   None: Use the default Chrome browser behavior
+//
+// Supported on: chrome_os
+message PdfXfaFormsEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool PdfXfaFormsEnabled = 2;
+}
+
 // Per-App Time Limits
 //
 // Allows to set per-app usage restrictions.
@@ -19402,9 +19533,9 @@ message PluginVmUserIdProto {
 // if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// However, starting in M85, patterns with '*' and '[*.]' wildcards in the host
-// are no longer supported for this policy.
+// https://chromeenterprise.google/policies/url-patterns. However, starting in
+// M85, patterns with '*' and '[*.]' wildcards in the host are no longer
+// supported for this policy.
 //
 // Supported on:
 message PluginsAllowedForUrlsProto {
@@ -19422,9 +19553,9 @@ message PluginsAllowedForUrlsProto {
 // if it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// However, starting in M85, patterns with '*' and '[*.]' wildcards in the host
-// are no longer supported for this policy.
+// https://chromeenterprise.google/policies/url-patterns. However, starting in
+// M85, patterns with '*' and '[*.]' wildcards in the host are no longer
+// supported for this policy.
 //
 // Supported on:
 message PluginsBlockedForUrlsProto {
@@ -19581,8 +19712,8 @@ message PolicyTestPageEnabledProto {
 // it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message PopupsAllowedForUrlsProto {
@@ -19599,8 +19730,8 @@ message PopupsAllowedForUrlsProto {
 // it's set. If not, the user's personal setting applies.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message PopupsBlockedForUrlsProto {
@@ -21581,12 +21712,11 @@ message ProxyModeProto {
 // When the browser needs to decide what proxy to use, entries of the
 // ProxyOverrideRules policy are evaluated in sequence until an entry has a
 // match for at least one of the URL hosts in DestinationMatchers and if all
-// entries in Conditions are met. The value in ProxyChain will be used as a
-// proxy for such a match. If no match is found, proxy settings will fall back
-// to what is set in the ProxySettings policy.
+// entries in Conditions are met. The value in ProxyList will be used as a proxy
+// for such a match. If no match is found, proxy settings will fall back to what
+// is set in the ProxySettings policy.
 //
-// The ProxyChain field entries correspond to string values of PAC files such
-// as:
+// The ProxyList field entries correspond to string values of PAC files such as:
 // * DIRECT
 // * PROXY host:port
 // * HTTPS host:port
@@ -25176,8 +25306,8 @@ message SendMouseEventsDisabledFormControlsEnabledProto {
 // or light sensors will be blocked.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SensorsAllowedForUrlsProto {
@@ -25198,8 +25328,8 @@ message SensorsAllowedForUrlsProto {
 // or light sensors will be blocked.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SensorsBlockedForUrlsProto {
@@ -25308,8 +25438,8 @@ message SerialAllowUsbDevicesForUrlsProto {
 // If URL patterns conflict with SerialBlockedForUrls they will be ignored.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SerialAskForUrlsProto {
@@ -25333,8 +25463,8 @@ message SerialAskForUrlsProto {
 // precedence.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SerialBlockedForUrlsProto {
@@ -27248,9 +27378,8 @@ message ThirdPartyPasswordManagersAllowedProto {
 // the URL patterns, DefaultThirdPartyStoragePartitioningSetting will apply.
 //
 // For detailed information on valid patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Note
-// that patterns you list here are treated as origins, not URLs, so you should
-// not specify a path.
+// https://chromeenterprise.google/policies/url-patterns. Note that patterns you
+// list here are treated as origins, not URLs, so you should not specify a path.
 //
 // For detailed information on third-party storage partitioning, please see
 // https://developers.google.com/privacy-sandbox/cookies/storage-partitioning.
@@ -29607,8 +29736,8 @@ message WebHidAllowDevicesWithHidUsagesForUrlsProto {
 // takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message WebHidAskForUrlsProto {
@@ -29637,8 +29766,8 @@ message WebHidAskForUrlsProto {
 // precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message WebHidBlockedForUrlsProto {
@@ -29659,8 +29788,8 @@ message WebHidBlockedForUrlsProto {
 // takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os
 message WebPrintingAllowedForUrlsProto {
@@ -29681,8 +29810,8 @@ message WebPrintingAllowedForUrlsProto {
 // takes precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os
 message WebPrintingBlockedForUrlsProto {
@@ -30084,8 +30213,8 @@ message WebUsbAllowDevicesForUrlsProto {
 // precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WebUsbAskForUrlsProto {
@@ -30105,8 +30234,8 @@ message WebUsbAskForUrlsProto {
 // precedence if a URL matches with both.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WebUsbBlockedForUrlsProto {
@@ -30220,9 +30349,9 @@ message WindowCaptureAllowedByOriginsProto {
 // screens.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultWindowManagementSetting applies to the site, if set, otherwise the
@@ -30246,9 +30375,9 @@ message WindowManagementAllowedForUrlsProto {
 // screens.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultWindowManagementSetting applies to the site, if set, otherwise the
@@ -30295,9 +30424,9 @@ message WindowOcclusionEnabledProto {
 // screens.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultWindowPlacementSetting applies to the site, if set, otherwise the
@@ -30319,9 +30448,9 @@ message WindowPlacementAllowedForUrlsProto {
 // screens.
 //
 // For detailed information on valid site url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // If this policy is not set for a site then the policy from
 // DefaultWindowPlacementSetting applies to the site, if set, otherwise the
@@ -30422,6 +30551,7 @@ message ChromeSettingsSubProto1 {
   optional DefaultDeviceAttributesSettingProto DefaultDeviceAttributesSetting = 337;
   optional DefaultDirectSocketsPrivateNetworkAccessSettingProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
   optional DefaultDirectSocketsSettingProto DefaultDirectSocketsSetting = 190;
+  optional DefaultIdleDetectionSettingProto DefaultIdleDetectionSetting = 367;
   optional DefaultJavaScriptOptimizerSettingProto DefaultJavaScriptOptimizerSetting = 237;
   optional DefaultSmartCardConnectSettingProto DefaultSmartCardConnectSetting = 315;
   optional DefaultThirdPartyStoragePartitioningSettingProto DefaultThirdPartyStoragePartitioningSetting = 50;
@@ -30491,6 +30621,8 @@ message ChromeSettingsSubProto1 {
   optional GenAIWallpaperSettingsProto GenAIWallpaperSettings = 223;
   optional GenAiChromeOsSmartActionsSettingsProto GenAiChromeOsSmartActionsSettings = 297;
   optional GenAiDefaultSettingsProto GenAiDefaultSettings = 256;
+  optional GeolocationAllowedForUrlsProto GeolocationAllowedForUrls = 370;
+  optional GeolocationBlockedForUrlsProto GeolocationBlockedForUrls = 371;
   optional GlanceablesEnabledProto GlanceablesEnabled = 91;
   optional GoogleLocationServicesEnabledProto GoogleLocationServicesEnabled = 174;
   optional GoogleSearchSidePanelEnabledProto GoogleSearchSidePanelEnabled = 67;
@@ -30503,6 +30635,8 @@ message ChromeSettingsSubProto1 {
   optional HttpAllowlistProto HttpAllowlist = 42;
   optional HttpsUpgradesEnabledProto HttpsUpgradesEnabled = 43;
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
+  optional IdleDetectionAllowedForUrlsProto IdleDetectionAllowedForUrls = 368;
+  optional IdleDetectionBlockedForUrlsProto IdleDetectionBlockedForUrls = 369;
   optional IncognitoModeAllowlistProto IncognitoModeAllowlist = 353;
   optional IncognitoModeBlocklistProto IncognitoModeBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
@@ -30565,6 +30699,7 @@ message ChromeSettingsSubProto1 {
   optional PasswordSharingEnabledProto PasswordSharingEnabled = 130;
   optional PdfUseSkiaRendererEnabledProto PdfUseSkiaRendererEnabled = 68;
   optional PdfViewerOutOfProcessIframeEnabledProto PdfViewerOutOfProcessIframeEnabled = 216;
+  optional PdfXfaFormsEnabledProto PdfXfaFormsEnabled = 372;
   optional PhysicalKeyboardAutocorrectProto PhysicalKeyboardAutocorrect = 78;
   optional PhysicalKeyboardPredictiveWritingProto PhysicalKeyboardPredictiveWriting = 79;
   optional PolicyTestPageEnabledProto PolicyTestPageEnabled = 72;

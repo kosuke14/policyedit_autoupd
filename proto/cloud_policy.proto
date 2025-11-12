@@ -44,6 +44,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto DefaultDeviceAttributesSetting = 337;
   optional IntegerPolicyProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
   optional IntegerPolicyProto DefaultDirectSocketsSetting = 190;
+  optional IntegerPolicyProto DefaultIdleDetectionSetting = 367;
   optional IntegerPolicyProto DefaultJavaScriptOptimizerSetting = 237;
   optional IntegerPolicyProto DefaultSmartCardConnectSetting = 315;
   optional IntegerPolicyProto DefaultThirdPartyStoragePartitioningSetting = 50;
@@ -54,6 +55,10 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto DirectSocketsBlockedForUrls = 192;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessAllowedForUrls = 264;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessBlockedForUrls = 265;
+  optional StringListPolicyProto GeolocationAllowedForUrls = 370;
+  optional StringListPolicyProto GeolocationBlockedForUrls = 371;
+  optional StringListPolicyProto IdleDetectionAllowedForUrls = 368;
+  optional StringListPolicyProto IdleDetectionBlockedForUrls = 369;
   optional StringListPolicyProto JavaScriptOptimizerAllowedForSites = 238;
   optional StringListPolicyProto JavaScriptOptimizerBlockedForSites = 239;
   optional IntegerPolicyProto LegacyCookieScopeEnabled = 342;
@@ -164,6 +169,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto PageUpAndPageDownKeysModifier = 166;
   optional BooleanPolicyProto PdfUseSkiaRendererEnabled = 68;
   optional BooleanPolicyProto PdfViewerOutOfProcessIframeEnabled = 216;
+  optional BooleanPolicyProto PdfXfaFormsEnabled = 372;
   optional BooleanPolicyProto PhysicalKeyboardAutocorrect = 78;
   optional BooleanPolicyProto PhysicalKeyboardPredictiveWriting = 79;
   optional BooleanPolicyProto PolicyTestPageEnabled = 72;

@@ -40,7 +40,7 @@ jobs:
 
           if [[ -n "$(git status --porcelain)" ]]; then
             git add -A
-            git commit -m "chore: update assets [CI skip]"
+            git commit -m "chore: update assets"
             git push origin mngjson
           else
             echo "No changes to commit."
