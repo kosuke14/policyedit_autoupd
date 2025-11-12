@@ -169,6 +169,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto PageUpAndPageDownKeysModifier = 166;
   optional BooleanPolicyProto PdfUseSkiaRendererEnabled = 68;
   optional BooleanPolicyProto PdfViewerOutOfProcessIframeEnabled = 216;
+  optional BooleanPolicyProto PdfXfaFormsEnabled = 372;
   optional BooleanPolicyProto PhysicalKeyboardAutocorrect = 78;
   optional BooleanPolicyProto PhysicalKeyboardPredictiveWriting = 79;
   optional BooleanPolicyProto PolicyTestPageEnabled = 72;
