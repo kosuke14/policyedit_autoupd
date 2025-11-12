@@ -67,7 +67,7 @@ class DevicePolicy:
         print(f"skipped policy {policy_name} since multiple mappings are not supported yet")
         continue
       
-      policy_value = policy_dict[policy_name]["value"]
+      policy_value = policy_dict[policy_name]
       try: 
         self.set_policy_item(policy_key, policy_value)
       except ParseError:
