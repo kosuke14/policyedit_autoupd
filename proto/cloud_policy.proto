@@ -55,7 +55,6 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto DirectSocketsBlockedForUrls = 192;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessAllowedForUrls = 264;
   optional StringListPolicyProto DirectSocketsPrivateNetworkAccessBlockedForUrls = 265;
-  optional StringListPolicyProto GeolocationAllowedForUrls = 370;
   optional StringListPolicyProto GeolocationBlockedForUrls = 371;
   optional StringListPolicyProto IdleDetectionAllowedForUrls = 368;
   optional StringListPolicyProto IdleDetectionBlockedForUrls = 369;
@@ -64,6 +63,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto LegacyCookieScopeEnabled = 342;
   optional StringListPolicyProto LegacyCookieScopeEnabledForDomainList = 343;
   optional BooleanPolicyProto PartitionedBlobUrlUsage = 286;
+  optional StringListPolicyProto PreciseGeolocationAllowedForUrls = 370;
   optional StringListPolicyProto SmartCardConnectAllowedForUrls = 280;
   optional StringListPolicyProto SmartCardConnectBlockedForUrls = 281;
   optional StringListPolicyProto ThirdPartyStoragePartitioningBlockedForOrigins = 51;
@@ -126,6 +126,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto ArcVmDataMigrationStrategy = 85;
   optional BooleanPolicyProto BuiltInAIAPIsEnabled = 317;
   optional BooleanPolicyProto CacheEncryptionEnabled = 356;
+  optional StringPolicyProto CameraSaveLocation = 373;
   optional IntegerPolicyProto ChromeDataRegionSetting = 213;
   optional StringListPolicyProto ContextualGoogleIntegrationsConfiguration = 215;
   optional BooleanPolicyProto ContextualGoogleIntegrationsEnabled = 214;

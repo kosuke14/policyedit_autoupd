@@ -1518,9 +1518,8 @@ message AudioCaptureAllowedProto {
 // capture devices without prompt
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Note,
-// however, that the pattern "*", which matches any URL, is not supported by
-// this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Note, however, that
+// the pattern "*", which matches any URL, is not supported by this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message AudioCaptureAllowedUrlsProto {
@@ -2131,7 +2130,7 @@ message AutoplayAllowedProto {
 // Google Chrome is running, it only applies to newly opened tabs.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message AutoplayAllowlistProto {
@@ -3475,6 +3474,32 @@ message CacheEncryptionEnabledProto {
 message CalendarIntegrationEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CalendarIntegrationEnabled = 2;
+}
+
+// Set location to save Camera app photos.
+//
+// Sets the directory where pictures and videos captured by the camera are being
+// saved.
+// The user can't change it and the photos are always saved to the defined
+// directory.
+//
+// The policy uses same format as DownloadDirectory policy.
+// The location could be set to either local filesystem or Google Drive (with
+// '${google_drive}' prefix) or Microsoft OneDrive (with '${microsoft_onedrive}'
+// prefix).
+// If the policy is set to empty string, it'll save the photos in the default
+// "My files/Camera" directory.
+// See a list of variables you can use (
+// https://www.chromium.org/administrators/policy-list-3/user-data-directory-
+// variables ).
+//
+// Leaving the policy unset means Google ChromeOS uses the default "My
+// files/Camera" directory to save photos.
+//
+// Supported on: chrome_os
+message CameraSaveLocationProto {
+  optional PolicyOptions policy_options = 1;
+  optional string CameraSaveLocation = 2;
 }
 
 // Captive portal authentication ignores proxy
@@ -9629,7 +9654,7 @@ message EventPathEnabledProto {
 // If you enable this policy:
 //
 // * The URL pattern should be formatted according to
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // * The file type extension entered must be in lower-cased ASCII. The leading
 // separator should not be included when listing the file type extension, so
@@ -10799,7 +10824,7 @@ message FileHandlingBlockedForUrlsProto {
 // called without prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -12152,25 +12177,6 @@ message GenAiChromeOsSmartActionsSettingsProto {
 message GenAiDefaultSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GenAiDefaultSettings = 2;
-}
-
-// Allow geolocation on these sites
-//
-// Setting the policy lets you set a list of URL patterns that specify sites
-// that are allowed to access the user's geolocation without first having to
-// request the user's permission to do so.
-//
-// Leaving the policy unset means DefaultGeolocationSetting applies for all
-// sites, if it's set. If not, the user's personal setting applies.
-//
-// For detailed information on valid url patterns, please see
-// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
-// allowed.
-//
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
-message GeolocationAllowedForUrlsProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList GeolocationAllowedForUrls = 2;
 }
 
 // Block geolocation on these sites
@@ -13592,7 +13598,7 @@ message InsecurePrivateNetworkRequestsAllowedProto {
 // policy, if it is set, or the user's personal configuration otherwise.
 //
 // For detailed information on valid URL patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // Supported on:
 message InsecurePrivateNetworkRequestsAllowedForUrlsProto {
@@ -14568,8 +14574,8 @@ message KioskApplicationLogCollectionEnabledProto {
 // available to the web kiosk applications install origin.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os
 message KioskBrowserPermissionsAllowedForOriginsProto {
@@ -19995,6 +20001,25 @@ message PowerSmartDimEnabledProto {
   optional bool PowerSmartDimEnabled = 2;
 }
 
+// Allow precise geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are allowed to access the user's high accuracy geolocation without first
+// having to request the user's permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message PreciseGeolocationAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList PreciseGeolocationAllowedForUrls = 2;
+}
+
 // Allow users to select a preconfigured desktop layout to load
 //
 // If set, this policy contains information to download a desk template file.
@@ -23601,8 +23626,8 @@ message ReportVersionDataProto {
 // allowlisted URLs.
 // If unset, no website events will be reported.
 // For detailed information on valid URL patterns, see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Only
-// HTTP and HTTPS URL schemes are allowed for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Only HTTP and HTTPS
+// URL schemes are allowed for this policy.
 //
 // Supported on: chrome_os
 message ReportWebsiteActivityAllowlistProto {
@@ -23637,8 +23662,8 @@ message ReportWebsiteTelemetryProto {
 // Setting the policy controls website telemetry reporting for allowlisted URLs.
 // If unset, no website telemetry will be reported.
 // For detailed information on valid URL patterns, see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Only
-// HTTP and HTTPS URL schemes are allowed for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Only HTTP and HTTPS
+// URL schemes are allowed for this policy.
 //
 // Supported on: chrome_os
 message ReportWebsiteTelemetryAllowlistProto {
@@ -24041,9 +24066,9 @@ message SSLErrorOverrideAllowedProto {
 // Leaving the policy unset means SSLErrorOverrideAllowed applies for all sites.
 //
 // For detailed information on valid input patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy. This policy only matches based on
-// origin, so any path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns/. * is not an accepted
+// value for this policy. This policy only matches based on origin, so any path
+// in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SSLErrorOverrideAllowedForOriginsProto {
@@ -24439,9 +24464,8 @@ message SafeSitesFilterBehaviorProto {
 // ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SameOriginTabCaptureAllowedByOriginsProto {
@@ -24679,9 +24703,8 @@ message ScreenCaptureAllowedProto {
 // not be considered.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedByOriginsProto {
@@ -24728,7 +24751,7 @@ message ScreenCaptureLocationProto {
 // called without prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -26691,7 +26714,7 @@ message StricterMixedContentTreatmentEnabledProto {
 // called without prior user gesture, nor asking the user for confirmation.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -27097,9 +27120,8 @@ message TLS13HardeningForLocalAnchorsEnabledProto {
 // ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message TabCaptureAllowedByOriginsProto {
@@ -28760,9 +28782,8 @@ message VideoCaptureAllowedProto {
 // capture devices without prompt
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Note,
-// however, that the pattern "*", which matches any URL, is not supported by
-// this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Note, however, that
+// the pattern "*", which matches any URL, is not supported by this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message VideoCaptureAllowedUrlsProto {
@@ -29927,9 +29948,9 @@ message WebRtcIPHandlingProto {
 // WebRtcIPHandling.
 //
 // For detailed information on valid input patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns/. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // Valid handling values:
 //
@@ -30330,9 +30351,8 @@ message WifiSyncAndroidAllowedProto {
 // not be considered: ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WindowCaptureAllowedByOriginsProto {
@@ -30523,6 +30543,7 @@ message ChromeSettingsSubProto1 {
   optional CAPlatformIntegrationEnabledProto CAPlatformIntegrationEnabled = 156;
   optional CSSCustomStateDeprecatedSyntaxEnabledProto CSSCustomStateDeprecatedSyntaxEnabled = 220;
   optional CacheEncryptionEnabledProto CacheEncryptionEnabled = 356;
+  optional CameraSaveLocationProto CameraSaveLocation = 373;
   optional ChromeAppsWebViewPermissiveBehaviorAllowedProto ChromeAppsWebViewPermissiveBehaviorAllowed = 33;
   optional ChromeDataRegionSettingProto ChromeDataRegionSetting = 213;
   optional ChromeForTestingAllowedProto ChromeForTestingAllowed = 173;
@@ -30621,7 +30642,6 @@ message ChromeSettingsSubProto1 {
   optional GenAIWallpaperSettingsProto GenAIWallpaperSettings = 223;
   optional GenAiChromeOsSmartActionsSettingsProto GenAiChromeOsSmartActionsSettings = 297;
   optional GenAiDefaultSettingsProto GenAiDefaultSettings = 256;
-  optional GeolocationAllowedForUrlsProto GeolocationAllowedForUrls = 370;
   optional GeolocationBlockedForUrlsProto GeolocationBlockedForUrls = 371;
   optional GlanceablesEnabledProto GlanceablesEnabled = 91;
   optional GoogleLocationServicesEnabledProto GoogleLocationServicesEnabled = 174;
@@ -30704,6 +30724,7 @@ message ChromeSettingsSubProto1 {
   optional PhysicalKeyboardPredictiveWritingProto PhysicalKeyboardPredictiveWriting = 79;
   optional PolicyTestPageEnabledProto PolicyTestPageEnabled = 72;
   optional PostQuantumKeyAgreementEnabledProto PostQuantumKeyAgreementEnabled = 77;
+  optional PreciseGeolocationAllowedForUrlsProto PreciseGeolocationAllowedForUrls = 370;
   optional PreferSlowCiphersProto PreferSlowCiphers = 358;
   optional PreferSlowKexAlgorithmsProto PreferSlowKexAlgorithms = 354;
   optional PrefetchWithServiceWorkerEnabledProto PrefetchWithServiceWorkerEnabled = 325;
