@@ -93,6 +93,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto AutofillPredictionSettings = 260;
   optional IntegerPolicyProto CreateThemesSettings = 148;
   optional IntegerPolicyProto DevToolsGenAiSettings = 188;
+  optional IntegerPolicyProto GeminiActOnWebSettings = 362;
   optional IntegerPolicyProto GeminiSettings = 295;
   optional IntegerPolicyProto GenAIInlineImageSettings = 306;
   optional IntegerPolicyProto GenAILocalFoundationalModelSettings = 211;

@@ -11867,7 +11867,7 @@ message GaiaOfflineSigninTimeLimitDaysProto {
 //   0: Allow the Gemini app to take action on the web pages.
 //   1: Disallow the Gemini app to take action on the web pages.
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message GeminiActOnWebSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GeminiActOnWebSettings = 2;
@@ -18691,6 +18691,9 @@ message PasswordManagerAllowShowPasswordsProto {
 //
 // If the policy is unset, the Password Manager will be available for all
 // domains.
+//
+// For detailed information on valid URL patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
 // Supported on: chrome_os, linux, mac, win
 message PasswordManagerBlocklistProto {
