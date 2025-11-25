@@ -21070,6 +21070,9 @@ message PrivacySandboxAdMeasurementEnabledProto {
 // Setting this policy requires setting the PrivacySandboxPromptEnabled policy
 // to Disabled.
 //
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of Topics API.
+//
 // Valid values:
 //   True: Allow users to to turn on or off the Privacy Sandbox Ad topics
 // setting on their device.
@@ -25126,6 +25129,42 @@ message ScreensaverLockScreenImagesProto {
 message ScrollToTextFragmentEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool ScrollToTextFragmentEnabled = 2;
+}
+
+// Enable content sharing with Google AI Mode integrations
+//
+// This policy controls sharing of page and file content with Google AI Mode
+// through Google Chrome side panel or tabs.
+//
+// Note that this policy doesn't affect Google AI Mode on the web. It only
+// controls how users can share information with it when using Google Chrome.
+//
+// 0/unset = users can share page or file content with Google AI Mode.
+//
+// 1 = users cannot share page or file content with Google AI Mode. The entry
+// points for sharing context will be disabled or hidden.
+//
+// This policy will be ignored when Google Search is not users' default search
+// engine as the feature is disabled.
+//
+// This policy is independent of the AIModeSettings policy. The AIModeSettings
+// policy only controls entry points on omnibox or NTP search box, while this
+// policy controls context sharing through side panel or tabs.
+//
+// This policy also doesn't control Google Gemini integration which can be
+// disabled by GeminiSettings.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow content sharing with Google AI Mode integrations.
+//   1: Do not allow content sharing with Google AI Mode integrations.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message SearchContentSharingSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 SearchContentSharingSettings = 2;
 }
 
 // Enable search suggestions
@@ -30805,6 +30844,7 @@ message ChromeSettingsSubProto1 {
   optional ScreensaverLockScreenIdleTimeoutSecondsProto ScreensaverLockScreenIdleTimeoutSeconds = 20;
   optional ScreensaverLockScreenImageDisplayIntervalSecondsProto ScreensaverLockScreenImageDisplayIntervalSeconds = 21;
   optional ScreensaverLockScreenImagesProto ScreensaverLockScreenImages = 22;
+  optional SearchContentSharingSettingsProto SearchContentSharingSettings = 376;
   optional SelectParserRelaxationEnabledProto SelectParserRelaxationEnabled = 266;
   optional ServiceWorkerAutoPreloadEnabledProto ServiceWorkerAutoPreloadEnabled = 340;
   optional ServiceWorkerToControlSrcdocIframeEnabledProto ServiceWorkerToControlSrcdocIframeEnabled = 293;

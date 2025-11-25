@@ -106,6 +106,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto HelpMeReadSettings = 255;
   optional IntegerPolicyProto HelpMeWriteSettings = 147;
   optional IntegerPolicyProto HistorySearchSettings = 235;
+  optional IntegerPolicyProto SearchContentSharingSettings = 376;
   optional IntegerPolicyProto TabCompareSettings = 251;
   optional BooleanPolicyProto ShowCastSessionsStartedByOtherDevices = 2;
   optional BooleanPolicyProto KerberosUseCustomPrefilledConfig = 13;
