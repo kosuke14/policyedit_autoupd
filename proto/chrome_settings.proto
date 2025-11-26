@@ -21747,15 +21747,19 @@ message ProxyModeProto {
 // settings.
 //
 // When the browser needs to decide what proxy to use, entries of the
-// ProxyOverrideRules policy are evaluated in sequence until an entry has a
-// match for at least one of the URL hosts in DestinationMatchers and if all
-// entries in Conditions are met. The value in ProxyList will be used as a proxy
-// for such a match. If no match is found, proxy settings will fall back to what
-// is set in the ProxySettings policy.
+// ProxyOverrideRules policy are evaluated in sequence until an entry satisfies
+// all the following points:
+// * At least one of the URL patterns in DestinationMatchers is matched.
+// * None of the URL patterns in ExcludeDestinationMatchers is matched.
+// * If Conditions is specified and is a non-empty list, all conditions
+// represented by its entries are satisfied.
+// The value in ProxyList will be used as a proxy for such a match. If no match
+// is found, proxy settings will fall back to what is set in the ProxySettings
+// policy.
 //
-// The URL patterns supported by DestinationMatchers are documented at https://c
-// hromium.googlesource.com/chromium/src/+/HEAD/net/docs/proxy.md#proxy-config-
-// url-patterns.
+// The URL patterns supported by DestinationMatchers and
+// ExcludeDestinationMatchers are documented at https://chromium.googlesource.co
+// m/chromium/src/+/HEAD/net/docs/proxy.md#proxy-config-url-patterns.
 //
 // The ProxyList field entries correspond to string values of PAC files such as:
 // * DIRECT
@@ -21778,7 +21782,7 @@ message ProxyModeProto {
 // matched.
 //
 // The DnsProbe condition checks if the provided DNS Host is able to resolve to
-// an IP address. If the value of Result is "resolves" then the condition is
+// an IP address. If the value of Result is "resolved" then the condition is
 // considered as met. If the value is instead set to not_found, then the
 // condition is considered met if the resolution failed.
 //
@@ -21796,7 +21800,7 @@ message ProxyModeProto {
 //                                 },
 //                                 "Result": {
 //                                     "enum": [
-//                                         "resolves",
+//                                         "resolved",
 //                                         "not_found"
 //                                     ],
 //                                     "type": "string"
@@ -21810,6 +21814,12 @@ message ProxyModeProto {
 //                 "type": "array"
 //             },
 //             "DestinationMatchers": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             },
+//             "ExcludeDestinationMatchers": {
 //                 "items": {
 //                     "type": "string"
 //                 },
