@@ -197,9 +197,11 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto SilentPrintingEnabled = 357;
   optional StringPolicyProto SiteSearchSettings = 136;
   optional BooleanPolicyProto StandardizedBrowserZoomEnabled = 246;
+  optional BooleanPolicyProto StaticStorageQuotaEnabled = 377;
   optional StringListPolicyProto SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 178;
   optional IntegerPolicyProto SystemShortcutBehavior = 244;
   optional BooleanPolicyProto TLS13EarlyDataEnabled = 323;
+  optional BooleanPolicyProto TranslatorAPIAllowed = 269;
   optional BooleanPolicyProto UrlKeyedMetricsAllowed = 73;
   optional BooleanPolicyProto UsbDetectorNotificationEnabled = 4;
   optional BooleanPolicyProto UserAvatarCustomizationSelectorsEnabled = 49;

@@ -26691,6 +26691,28 @@ message StartupBrowserWindowLaunchSuppressedProto {
   optional bool StartupBrowserWindowLaunchSuppressed = 2;
 }
 
+// Control whether storage quota APIs will return static values
+//
+// When enabled, the storage quota APIs will return a static value equal to
+// usage + min(10 GiB, disk rounded up to the nearest 1 GiB).
+// When disabled, the storage quota APIs will generally return a dynamic value
+// proportional to the total space available on the device, regardless of usage.
+// If unset, the predictable reported storage quota feature launch or flags will
+// determine behavior.
+// Sites with unlimited storage permissions are unaffected by this setting.
+// Enforced quota is also unaffected.
+//
+// Valid values:
+//   True: Storage quota APIs return static values.
+//   False: Storage quota APIs return dynamic values.
+//   None: Storage quota APIs return values based on feature launch process.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message StaticStorageQuotaEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool StaticStorageQuotaEnabled = 2;
+}
+
 // Enable sticky keys
 //
 // Setting the policy to True keeps sticky keys on. Setting the policy to False
@@ -27656,7 +27678,7 @@ message TranslateEnabledProto {
 //   True: Allows the use of Translator API
 //   False: Disallows the use of Translator API
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message TranslatorAPIAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool TranslatorAPIAllowed = 2;
@@ -30871,6 +30893,7 @@ message ChromeSettingsSubProto1 {
   optional SmartCardConnectAllowedForUrlsProto SmartCardConnectAllowedForUrls = 280;
   optional SmartCardConnectBlockedForUrlsProto SmartCardConnectBlockedForUrls = 281;
   optional StandardizedBrowserZoomEnabledProto StandardizedBrowserZoomEnabled = 246;
+  optional StaticStorageQuotaEnabledProto StaticStorageQuotaEnabled = 377;
   optional SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOriginsProto SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 178;
   optional SystemShortcutBehaviorProto SystemShortcutBehavior = 244;
   optional TLS13EarlyDataEnabledProto TLS13EarlyDataEnabled = 323;
