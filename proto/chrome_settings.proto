@@ -26984,8 +26984,8 @@ message SyncDisabledProto {
 //
 // The current data types for this policy are: "apps", "autofill", "bookmarks",
 // "extensions", "preferences", "passwords", "payments", "productComparison",
-// "readingList", "savedTabGroups", "tabs", "themes", "typedUrls",
-// "wifiConfigurations". Those names are case sensitive!
+// "readingList", "tabs", "themes", "typedUrls", "wifiConfigurations". Those
+// names are case sensitive!
 //
 // Notes: Dynamic Policy Refresh is supported only in Google Chrome version 123
 // and later. Disabling "autofill" also disables "payments". "typedUrls" refers
