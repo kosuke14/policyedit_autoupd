@@ -9869,7 +9869,7 @@ message ExtensionAllowInsecureUpdatesProto {
 //   legacy_packaged_app: Legacy packaged app
 //   platform_app: Platform app
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionAllowedTypesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ExtensionAllowedTypes = 2;
@@ -10139,7 +10139,7 @@ message ExtensionInstallForcelistProto {
 // extension on the blocklist won't be installed, even if it happens from a site
 // on this list.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallSourcesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ExtensionInstallSources = 2;
@@ -26697,8 +26697,7 @@ message StartupBrowserWindowLaunchSuppressedProto {
 // usage + min(10 GiB, disk rounded up to the nearest 1 GiB).
 // When disabled, the storage quota APIs will generally return a dynamic value
 // proportional to the total space available on the device, regardless of usage.
-// If unset, the predictable reported storage quota feature launch or flags will
-// determine behavior.
+// If unset, the storage quota APIs will use the default Chrome behavior.
 // Sites with unlimited storage permissions are unaffected by this setting.
 // Enforced quota is also unaffected.
 //
