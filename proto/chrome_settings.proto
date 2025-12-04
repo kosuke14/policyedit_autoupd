@@ -28512,7 +28512,7 @@ message UserAgentClientHintsGREASEUpdateEnabledProto {
 //   1: Full (legacy) User Agent.
 //   2: Reduced User Agent.
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: fuchsia
 message UserAgentReductionProto {
   optional PolicyOptions policy_options = 1;
   optional int64 UserAgentReduction = 2;

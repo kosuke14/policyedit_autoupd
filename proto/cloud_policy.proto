@@ -625,7 +625,6 @@ message CloudPolicySettings {
   optional BooleanPolicyProto UnifiedDesktopEnabledByDefault = 309;
   optional BooleanPolicyProto UnmanagedDeviceSignalsConsentFlowEnabled = 1003;
   optional BooleanPolicyProto UrlKeyedAnonymizedDataCollectionEnabled = 463;
-  optional IntegerPolicyProto UserAgentReduction = 934;
   optional StringPolicyProto UserAvatarImage = 251;
   optional StringPolicyProto UserDisplayName = 171;
   optional BooleanPolicyProto UserFeedbackAllowed = 572;
