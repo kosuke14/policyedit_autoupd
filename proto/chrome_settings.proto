@@ -15373,15 +15373,12 @@ message LocalNetworkAccessBlockedForUrlsProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
-// This policy is deprecated because Local Network Access
-// has launched by default. The policy will be removed in a future release.
-//
 // Valid values:
 //   True: Apply restrictions to requests to local network endpoints
 //   False: Use default behavior when determining if websites can make requests
 // to local network endpoints
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on:
 message LocalNetworkAccessRestrictionsEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool LocalNetworkAccessRestrictionsEnabled = 2;
@@ -15401,14 +15398,11 @@ message LocalNetworkAccessRestrictionsEnabledProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
-// This enterprise policy is temporary, and will be removed after M146.
+// This enterprise policy is temporary, and will be removed after M152.
 //
 // Long term, the policy LocalNetworkAccessAllowedForUrls
 // can be used to allowlist URL patterns that should be automatically granted
 // the Local Network Access permission.
-//
-// Note that if the policy LocalNetworkAccessRestrictionsEnabled
-// is enabled, it will take precedence over this policy.
 //
 // Valid values:
 //   True: Temporarily opt out of restrictions on requests to local network
