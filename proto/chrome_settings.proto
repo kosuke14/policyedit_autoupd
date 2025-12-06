@@ -2303,7 +2303,7 @@ message BeforeunloadEventCancelByPreventDefaultEnabledProto {
 //   True: Block installation of external extensions
 //   False: Allow installation of external extensions
 //
-// Supported on: linux, mac, win
+// Supported on: android, linux, mac, win
 message BlockExternalExtensionsProto {
   optional PolicyOptions policy_options = 1;
   optional bool BlockExternalExtensions = 2;
@@ -10455,7 +10455,7 @@ message ExtensionSettingsProto {
 //   0: Allow unpublished extensions
 //   1: Disable unpublished extensions
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionUnpublishedAvailabilityProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ExtensionUnpublishedAvailability = 2;
