@@ -21159,7 +21159,7 @@ message PrivacySandboxFingerprintingProtectionEnabledProto {
 //   None: Allow users to turn on or turn off the IP Protection setting on their
 // device. The feature will be enabled by default.
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on:
 message PrivacySandboxIpProtectionEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool PrivacySandboxIpProtectionEnabled = 2;

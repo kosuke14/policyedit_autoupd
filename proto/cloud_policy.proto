@@ -226,7 +226,6 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto PrivacySandboxAdMeasurementEnabled = 11;
   optional BooleanPolicyProto PrivacySandboxAdTopicsEnabled = 9;
   optional BooleanPolicyProto PrivacySandboxFingerprintingProtectionEnabled = 200;
-  optional BooleanPolicyProto PrivacySandboxIpProtectionEnabled = 195;
   optional BooleanPolicyProto PrivacySandboxPromptEnabled = 8;
   optional BooleanPolicyProto PrivacySandboxSiteEnabledAdsEnabled = 10;
   optional BooleanPolicyProto ProtectedContentIdentifiersAllowed = 341;
