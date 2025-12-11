@@ -12820,16 +12820,26 @@ message HttpAllowlistProto {
 // This policy controls whether users can enable HTTPS-Only Mode (Always Use
 // Secure Connections) in Settings. HTTPS-Only Mode upgrades all navigations to
 // HTTPS.
-// If this setting is not set or set to allowed, users will be allowed to enable
-// HTTPS-Only Mode.
-// If this setting is set to disallowed, users will not be allowed to enable
-// HTTPS-Only Mode.
-// If this setting is set to force_enabled, HTTPS-Only Mode will be enabled in
-// Strict mode and users will not be able to disable it.
-// If this setting is set to force_balanced_enabled, HTTPS-Only Mode will be
-// enabled in Balanced mode and users will not be able to disable it.
-// force_enabled is supported from M112 onwards, force_balanced_enabled is
+//
+// If this setting is not set or set to "allowed", users will be allowed to
+// enable HTTPS-Only Mode.
+//
+// If this setting is set to "disallowed", HTTPS-Only Mode will be disabled.
+//
+// If this setting is set to "force_enabled", HTTPS-Only Mode will be enabled in
+// Strict mode.
+//
+// If this setting is set to "force_balanced_enabled", HTTPS-Only Mode will be
+// enabled in Balanced mode.
+//
+// "force_enabled" is supported from M112 onwards, "force_balanced_enabled" is
 // supported from M129 onwards.
+//
+// "force_enabled" and "force_balanced_enabled" can be recommended to users too.
+// HTTPS-Only Mode will be set Strict or Balanced initially but users are
+// allowed to
+// change it.
+//
 // If you set this policy to a value that is not supported by the version of
 // Chrome that receives the policy, Chrome will default to the allowed setting.
 //
@@ -12839,9 +12849,9 @@ message HttpAllowlistProto {
 //
 // Valid values:
 //   allowed: Do not restrict users' HTTPS-Only Mode setting
-//   disallowed: Do not allow users to enable any HTTPS-Only Mode
-//   force_enabled: Force enable HTTPS-Only Mode in Strict mode
-//   force_balanced_enabled: Force enable HTTPS-Only Mode in Balanced Mode
+//   disallowed: Disable HTTPS-Only Mode
+//   force_enabled: Enable HTTPS-Only Mode in Strict mode
+//   force_balanced_enabled: Enable HTTPS-Only Mode in Balanced Mode
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message HttpsOnlyModeProto {
