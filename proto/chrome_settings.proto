@@ -2593,9 +2593,9 @@ message BrowserNetworkTimeQueriesEnabledProto {
 // BrowserGuestModeEnabled will be set to disabled. Note that existing unsigned
 // profiles will be locked and inaccessible after enabling this policy. For more
 // information, see help center article:
-// https://support.google.com/chrome/a/answer/7572556 . This option is not
-// supported on Linux nor Android, where it will fall back to "Enable browser
-// sign-in" if used.
+// https://support.google.com/chrome/?p=force_browser_signin . This option is
+// not supported on Google ChromeOS nor Android, where it will fall back to
+// "Enable browser sign-in" if used.
 //
 // If this policy is not set then the user can decide if they want to enable
 // browser sign-in in the Google Chrome settings and use it as they see fit.
@@ -24199,6 +24199,72 @@ message SSLVersionMinProto {
   optional string SSLVersionMin = 2;
 }
 
+// Specifies a list of SaaS domains that will be reported for managed browser
+//
+// This policy controls Google Chrome reporting of SaaS domain visits and
+// content transfers for a managed browser.
+//
+// When the policy is set, the URLs matching SaaS domains will be used to
+// generate report and uploaded. Unmatched URLs will be ignored.
+//
+// When the policy is not set or set to an empty list, no report will be
+// generated.
+//
+// The matching patterns use a similar format to those for the 'URLBlocklist'
+// policy, which are documented at
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format. With a few
+// exceptions below:
+//
+// * URL host must match the hostname or be a subdomain of the hostname of one
+// of the domains from the SaaS sites list.
+//
+// * URL path must start with the path from the matched SaaS sites list entry.
+//
+// * The URL scheme, port, query are disregarded during the matching process.
+//
+// This policy value is populated by the cloud policy infrastructure and admins
+// can't set it directly.
+//
+// Supported on: linux, mac, win
+message SaaSReportDomainUrlsForBrowserProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SaaSReportDomainUrlsForBrowser = 2;
+}
+
+// Specifies a list of SaaS domains that will be reported for managed profile
+//
+// This policy controls Google Chrome reporting of SaaS domain visits and
+// content transfers for a managed profile.
+//
+// When the policy is set, the URLs matching SaaS domains will be used to
+// generate report and uploaded. Unmatched URLs will be ignored.
+//
+// When the policy is not set or set to an empty list, no report will be
+// generated.
+//
+// The matching patterns use a similar format to those for the 'URLBlocklist'
+// policy, which are documented at
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format. With a few
+// exceptions below:
+//
+// * URL host must match the hostname or be a subdomain of the hostname of one
+// of the domains from the SaaS sites list.
+//
+// * URL path must start with the path from the matched SaaS sites list entry.
+//
+// * The URL scheme, port, query are disregarded during the matching process.
+//
+// This policy can only be set as a cloud user policy.
+//
+// This policy value is populated by the cloud policy infrastructure and admins
+// can't set it directly.
+//
+// Supported on: linux, mac, win
+message SaaSReportDomainUrlsForProfileProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SaaSReportDomainUrlsForProfile = 2;
+}
+
 // Configure the list of domains on which Safe Browsing will not trigger
 // warnings.
 //
@@ -25167,6 +25233,9 @@ message ScrollToTextFragmentEnabledProto {
 //
 // This policy also doesn't control Google Gemini integration which can be
 // disabled by GeminiSettings.
+//
+// If this policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
 //
 // For more information on data handling for generative AI features, please see
 // https://support.google.com/chrome/a?p=generative_ai_settings.
@@ -30870,6 +30939,8 @@ message ChromeSettingsSubProto1 {
   optional ReportWebsiteTelemetryCollectionRateMsProto ReportWebsiteTelemetryCollectionRateMs = 100;
   optional ReportingEndpointsProto ReportingEndpoints = 247;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
+  optional SaaSReportDomainUrlsForBrowserProto SaaSReportDomainUrlsForBrowser = 378;
+  optional SaaSReportDomainUrlsForProfileProto SaaSReportDomainUrlsForProfile = 379;
   optional SafeBrowsingDeepScanningEnabledProto SafeBrowsingDeepScanningEnabled = 117;
   optional SafeBrowsingProxiedRealTimeChecksAllowedProto SafeBrowsingProxiedRealTimeChecksAllowed = 76;
   optional SafeBrowsingSurveysEnabledProto SafeBrowsingSurveysEnabled = 101;
