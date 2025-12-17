@@ -9789,13 +9789,14 @@ message ExplicitlyAllowedNetworkPortsProto {
 // in Incognito or Guest modes.
 //
 // Google Chrome only supports Single Sign-on using Extensible Enterprise SSO
-// for the following identity providers: Microsoft.
+// for the following identity providers: Microsoft, Okta.
 //
 // This feature is available starting in macOS 10.15.
 //
 // Valid values:
 //   all: All identity providers
 //   microsoft: Microsoft® cloud identity provider
+//   okta: Okta® cloud identity provider
 //
 // Supported on: mac
 message ExtensibleEnterpriseSSOBlocklistProto {
@@ -10275,7 +10276,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 "allowed_permissions": {
 //                     "id": "ListOfPermissions",
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10287,7 +10288,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10343,14 +10344,14 @@ message ExtensionOAuthRedirectUrlsProto {
 //             "properties": {
 //                 "allowed_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10389,7 +10390,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
