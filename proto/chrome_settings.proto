@@ -21789,9 +21789,11 @@ message ProxyModeProto {
 // The DnsProbe condition checks if the provided DNS Host is able to resolve to
 // an IP address. It must contain a host (e.g. example.com), and optionally a
 // scheme or a port (e.g. https://example.com, example.com:123,
-// https://example.com:123). If the value of Result is "resolved" then the
-// condition is considered as met. If the value is instead set to not_found,
-// then the condition is considered met if the resolution failed.
+// https://example.com:123). If a secure scheme is used (e.g. https), DNS lookup
+// may also request the HTTPS record (see RFC 9460 for more details). If the
+// value of Result is "resolved" then the condition is considered as met. If the
+// value is instead set to not_found, then the condition is considered met if
+// the resolution failed.
 //
 // Value schema:
 // {
