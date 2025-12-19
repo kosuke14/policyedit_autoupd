@@ -13400,29 +13400,6 @@ message IncognitoEnabledProto {
   optional bool IncognitoEnabled = 2;
 }
 
-// Allow access to a list of URLs in Incognito mode.
-//
-// Setting the policy provides access to the listed URLs in Incognito mode, as
-// exceptions to IncognitoModeBlocklist. For example, setting
-// IncognitoModeBlocklist to * will block all requests in Incognito mode, and
-// you can use this policy to allow access to a limited list of URLs. Use it to
-// open exceptions to certain schemes, subdomains of other domains, ports, or
-// specific paths, using the format specified at (
-// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
-// IncognitoModeAllowlist policy takes precedence over IncognitoModeBlocklist.
-// This policy is limited to 1,000 entries.
-//
-// Leaving the policy unset allows no exceptions to IncognitoModeBlocklist.
-//
-// This policy only affects Incognito mode. To allow URLs for all user profiles,
-// please use the URLAllowlist policy.
-//
-// Supported on: android, chrome_os, ios, linux, mac, win
-message IncognitoModeAllowlistProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList IncognitoModeAllowlist = 2;
-}
-
 // Incognito mode availability
 //
 // Specifies whether the user may open pages in Incognito mode in Google Chrome.
@@ -13449,22 +13426,45 @@ message IncognitoModeAvailabilityProto {
   optional int64 IncognitoModeAvailability = 2;
 }
 
+// Allow access to a list of URLs in Incognito mode.
+//
+// Setting the policy provides access to the listed URLs in Incognito mode, as
+// exceptions to IncognitoModeUrlBlocklist. For example, setting
+// IncognitoModeUrlBlocklist to * will block all requests in Incognito mode, and
+// you can use this policy to allow access to a limited list of URLs. Use it to
+// open exceptions to certain schemes, subdomains of other domains, ports, or
+// specific paths, using the format specified at (
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
+// IncognitoModeUrlAllowlist policy takes precedence over
+// IncognitoModeUrlBlocklist. This policy is limited to 1,000 entries.
+//
+// Leaving the policy unset allows no exceptions to IncognitoModeUrlBlocklist.
+//
+// This policy only affects Incognito mode. To allow URLs for all user profiles,
+// please use the URLAllowlist policy.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message IncognitoModeUrlAllowlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IncognitoModeUrlAllowlist = 2;
+}
+
 // Block access to a list of URLs in Incognito mode.
 //
-// Setting the IncognitoModeBlocklist policy stops web pages with prohibited
+// Setting the IncognitoModeUrlBlocklist policy stops web pages with prohibited
 // URLs from loading in Incognito mode. Administrators can specify the list of
 // URL patterns to be blocked. If left unset, no URLs are blocked in the
 // Incognito mode. Up to 1,000 exceptions can be defined in
-// IncognitoModeAllowlist. See how to format a URL pattern (
+// IncognitoModeUrlAllowlist. See how to format a URL pattern (
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
 //
 // This policy only affects Incognito mode. To block URLs for all user profiles,
 // please use the URLBlocklist policy.
 //
 // Supported on: android, chrome_os, ios, linux, mac, win
-message IncognitoModeBlocklistProto {
+message IncognitoModeUrlBlocklistProto {
   optional PolicyOptions policy_options = 1;
-  optional StringList IncognitoModeBlocklist = 2;
+  optional StringList IncognitoModeUrlBlocklist = 2;
 }
 
 // Allow insecure content on these sites
@@ -30833,8 +30833,8 @@ message ChromeSettingsSubProto1 {
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
   optional IdleDetectionAllowedForUrlsProto IdleDetectionAllowedForUrls = 368;
   optional IdleDetectionBlockedForUrlsProto IdleDetectionBlockedForUrls = 369;
-  optional IncognitoModeAllowlistProto IncognitoModeAllowlist = 353;
-  optional IncognitoModeBlocklistProto IncognitoModeBlocklist = 352;
+  optional IncognitoModeUrlAllowlistProto IncognitoModeUrlAllowlist = 353;
+  optional IncognitoModeUrlBlocklistProto IncognitoModeUrlBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
