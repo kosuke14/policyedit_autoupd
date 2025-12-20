@@ -4446,7 +4446,7 @@ message CloudPolicyOverridesPlatformPolicyProto {
 //   True: Enable Google Cloud Print proxy
 //   False: Disable Google Cloud Print proxy
 //
-// Supported on: fuchsia, linux, mac, win
+// Supported on: fuchsia
 message CloudPrintProxyEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CloudPrintProxyEnabled = 2;
