@@ -11843,6 +11843,44 @@ message GaiaOfflineSigninTimeLimitDaysProto {
   optional int64 GaiaOfflineSigninTimeLimitDays = 2;
 }
 
+// Allow Gemini app integrations to directly act on specified sites
+//
+// Allows to set a list of URL patterns that specify on which sites Gemini app
+// integrations can directly act on web pages.
+//
+// URLs matching neither the allowlist or the blocklist use
+// GeminiActOnWebSettings.
+//
+// URLs matching both the allowlist and the blocklist are allowed.
+//
+// For detailed information on valid url patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiActOnWebAllowedForURLsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeminiActOnWebAllowedForURLs = 2;
+}
+
+// Block Gemini app integrations to directly act on specified sites
+//
+// Allows to set a list of URL patterns that specify on which sites Gemini app
+// integrations cannot directly act on web pages.
+//
+// URLs matching neither the allowlist or the blocklist use
+// GeminiActOnWebSettings.
+//
+// URLs matching both the allowlist and the blocklist are allowed.
+//
+// For detailed information on valid url patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiActOnWebBlockedForURLsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeminiActOnWebBlockedForURLs = 2;
+}
+
 // Allows Gemini app integrations to directly act on web pages
 //
 // Controls if the Gemini app is allowed to take action on the web pages on
@@ -30808,6 +30846,8 @@ message ChromeSettingsSubProto1 {
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
+  optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;
+  optional GeminiActOnWebBlockedForURLsProto GeminiActOnWebBlockedForURLs = 381;
   optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GenAIInlineImageSettingsProto GenAIInlineImageSettings = 306;
