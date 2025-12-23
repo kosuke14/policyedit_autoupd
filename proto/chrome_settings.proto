@@ -1518,9 +1518,8 @@ message AudioCaptureAllowedProto {
 // capture devices without prompt
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Note,
-// however, that the pattern "*", which matches any URL, is not supported by
-// this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Note, however, that
+// the pattern "*", which matches any URL, is not supported by this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message AudioCaptureAllowedUrlsProto {
@@ -2131,7 +2130,7 @@ message AutoplayAllowedProto {
 // Google Chrome is running, it only applies to newly opened tabs.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message AutoplayAllowlistProto {
@@ -2304,7 +2303,7 @@ message BeforeunloadEventCancelByPreventDefaultEnabledProto {
 //   True: Block installation of external extensions
 //   False: Allow installation of external extensions
 //
-// Supported on: linux, mac, win
+// Supported on: android, linux, mac, win
 message BlockExternalExtensionsProto {
   optional PolicyOptions policy_options = 1;
   optional bool BlockExternalExtensions = 2;
@@ -2594,9 +2593,9 @@ message BrowserNetworkTimeQueriesEnabledProto {
 // BrowserGuestModeEnabled will be set to disabled. Note that existing unsigned
 // profiles will be locked and inaccessible after enabling this policy. For more
 // information, see help center article:
-// https://support.google.com/chrome/a/answer/7572556 . This option is not
-// supported on Linux nor Android, where it will fall back to "Enable browser
-// sign-in" if used.
+// https://support.google.com/chrome/?p=force_browser_signin . This option is
+// not supported on Google ChromeOS nor Android, where it will fall back to
+// "Enable browser sign-in" if used.
 //
 // If this policy is not set then the user can decide if they want to enable
 // browser sign-in in the Google Chrome settings and use it as they see fit.
@@ -3475,6 +3474,32 @@ message CacheEncryptionEnabledProto {
 message CalendarIntegrationEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CalendarIntegrationEnabled = 2;
+}
+
+// Set location to save Camera app photos.
+//
+// Sets the directory where pictures and videos captured by the camera are being
+// saved.
+// The user can't change it and the photos are always saved to the defined
+// directory.
+//
+// The policy uses same format as DownloadDirectory policy.
+// The location could be set to either local filesystem or Google Drive (with
+// '${google_drive}' prefix) or Microsoft OneDrive (with '${microsoft_onedrive}'
+// prefix).
+// If the policy is set to empty string, it'll save the photos in the default
+// "My files/Camera" directory.
+// See a list of variables you can use (
+// https://www.chromium.org/administrators/policy-list-3/user-data-directory-
+// variables ).
+//
+// Leaving the policy unset means Google ChromeOS uses the default "My
+// files/Camera" directory to save photos.
+//
+// Supported on: chrome_os
+message CameraSaveLocationProto {
+  optional PolicyOptions policy_options = 1;
+  optional string CameraSaveLocation = 2;
 }
 
 // Captive portal authentication ignores proxy
@@ -4421,7 +4446,7 @@ message CloudPolicyOverridesPlatformPolicyProto {
 //   True: Enable Google Cloud Print proxy
 //   False: Disable Google Cloud Print proxy
 //
-// Supported on: fuchsia, linux, mac, win
+// Supported on: fuchsia
 message CloudPrintProxyEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CloudPrintProxyEnabled = 2;
@@ -9629,7 +9654,7 @@ message EventPathEnabledProto {
 // If you enable this policy:
 //
 // * The URL pattern should be formatted according to
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // * The file type extension entered must be in lower-cased ASCII. The leading
 // separator should not be included when listing the file type extension, so
@@ -9764,13 +9789,14 @@ message ExplicitlyAllowedNetworkPortsProto {
 // in Incognito or Guest modes.
 //
 // Google Chrome only supports Single Sign-on using Extensible Enterprise SSO
-// for the following identity providers: Microsoft.
+// for the following identity providers: Microsoft, Okta.
 //
 // This feature is available starting in macOS 10.15.
 //
 // Valid values:
 //   all: All identity providers
 //   microsoft: Microsoft® cloud identity provider
+//   okta: Okta® cloud identity provider
 //
 // Supported on: mac
 message ExtensibleEnterpriseSSOBlocklistProto {
@@ -9844,7 +9870,7 @@ message ExtensionAllowInsecureUpdatesProto {
 //   legacy_packaged_app: Legacy packaged app
 //   platform_app: Platform app
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionAllowedTypesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ExtensionAllowedTypes = 2;
@@ -10114,7 +10140,7 @@ message ExtensionInstallForcelistProto {
 // extension on the blocklist won't be installed, even if it happens from a site
 // on this list.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallSourcesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ExtensionInstallSources = 2;
@@ -10250,7 +10276,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 "allowed_permissions": {
 //                     "id": "ListOfPermissions",
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10262,7 +10288,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10318,14 +10344,14 @@ message ExtensionOAuthRedirectUrlsProto {
 //             "properties": {
 //                 "allowed_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10364,7 +10390,7 @@ message ExtensionOAuthRedirectUrlsProto {
 //                 },
 //                 "blocked_permissions": {
 //                     "items": {
-//                         "pattern": "^[a-z][a-zA-Z0-9.]*$",
+//                         "pattern": "^[a-z][a-zA-Z0-9._]*$",
 //                         "type": "string"
 //                     },
 //                     "type": "array"
@@ -10430,7 +10456,7 @@ message ExtensionSettingsProto {
 //   0: Allow unpublished extensions
 //   1: Disable unpublished extensions
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionUnpublishedAvailabilityProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ExtensionUnpublishedAvailability = 2;
@@ -10799,7 +10825,7 @@ message FileHandlingBlockedForUrlsProto {
 // called without prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -11817,6 +11843,44 @@ message GaiaOfflineSigninTimeLimitDaysProto {
   optional int64 GaiaOfflineSigninTimeLimitDays = 2;
 }
 
+// Allow Gemini app integrations to directly act on specified sites
+//
+// Allows to set a list of URL patterns that specify on which sites Gemini app
+// integrations can directly act on web pages.
+//
+// URLs matching neither the allowlist or the blocklist use
+// GeminiActOnWebSettings.
+//
+// URLs matching both the allowlist and the blocklist are allowed.
+//
+// For detailed information on valid url patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiActOnWebAllowedForURLsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeminiActOnWebAllowedForURLs = 2;
+}
+
+// Block Gemini app integrations to directly act on specified sites
+//
+// Allows to set a list of URL patterns that specify on which sites Gemini app
+// integrations cannot directly act on web pages.
+//
+// URLs matching neither the allowlist or the blocklist use
+// GeminiActOnWebSettings.
+//
+// URLs matching both the allowlist and the blocklist are allowed.
+//
+// For detailed information on valid url patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiActOnWebBlockedForURLsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList GeminiActOnWebBlockedForURLs = 2;
+}
+
 // Allows Gemini app integrations to directly act on web pages
 //
 // Controls if the Gemini app is allowed to take action on the web pages on
@@ -11842,7 +11906,7 @@ message GaiaOfflineSigninTimeLimitDaysProto {
 //   0: Allow the Gemini app to take action on the web pages.
 //   1: Disallow the Gemini app to take action on the web pages.
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message GeminiActOnWebSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GeminiActOnWebSettings = 2;
@@ -12152,25 +12216,6 @@ message GenAiChromeOsSmartActionsSettingsProto {
 message GenAiDefaultSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GenAiDefaultSettings = 2;
-}
-
-// Allow geolocation on these sites
-//
-// Setting the policy lets you set a list of URL patterns that specify sites
-// that are allowed to access the user's geolocation without first having to
-// request the user's permission to do so.
-//
-// Leaving the policy unset means DefaultGeolocationSetting applies for all
-// sites, if it's set. If not, the user's personal setting applies.
-//
-// For detailed information on valid url patterns, please see
-// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
-// allowed.
-//
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
-message GeolocationAllowedForUrlsProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList GeolocationAllowedForUrls = 2;
 }
 
 // Block geolocation on these sites
@@ -12814,16 +12859,26 @@ message HttpAllowlistProto {
 // This policy controls whether users can enable HTTPS-Only Mode (Always Use
 // Secure Connections) in Settings. HTTPS-Only Mode upgrades all navigations to
 // HTTPS.
-// If this setting is not set or set to allowed, users will be allowed to enable
-// HTTPS-Only Mode.
-// If this setting is set to disallowed, users will not be allowed to enable
-// HTTPS-Only Mode.
-// If this setting is set to force_enabled, HTTPS-Only Mode will be enabled in
-// Strict mode and users will not be able to disable it.
-// If this setting is set to force_balanced_enabled, HTTPS-Only Mode will be
-// enabled in Balanced mode and users will not be able to disable it.
-// force_enabled is supported from M112 onwards, force_balanced_enabled is
+//
+// If this setting is not set or set to "allowed", users will be allowed to
+// enable HTTPS-Only Mode.
+//
+// If this setting is set to "disallowed", HTTPS-Only Mode will be disabled.
+//
+// If this setting is set to "force_enabled", HTTPS-Only Mode will be enabled in
+// Strict mode.
+//
+// If this setting is set to "force_balanced_enabled", HTTPS-Only Mode will be
+// enabled in Balanced mode.
+//
+// "force_enabled" is supported from M112 onwards, "force_balanced_enabled" is
 // supported from M129 onwards.
+//
+// "force_enabled" and "force_balanced_enabled" can be recommended to users too.
+// HTTPS-Only Mode will be set Strict or Balanced initially but users are
+// allowed to
+// change it.
+//
 // If you set this policy to a value that is not supported by the version of
 // Chrome that receives the policy, Chrome will default to the allowed setting.
 //
@@ -12833,9 +12888,9 @@ message HttpAllowlistProto {
 //
 // Valid values:
 //   allowed: Do not restrict users' HTTPS-Only Mode setting
-//   disallowed: Do not allow users to enable any HTTPS-Only Mode
-//   force_enabled: Force enable HTTPS-Only Mode in Strict mode
-//   force_balanced_enabled: Force enable HTTPS-Only Mode in Balanced Mode
+//   disallowed: Disable HTTPS-Only Mode
+//   force_enabled: Enable HTTPS-Only Mode in Strict mode
+//   force_balanced_enabled: Enable HTTPS-Only Mode in Balanced Mode
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message HttpsOnlyModeProto {
@@ -13383,29 +13438,6 @@ message IncognitoEnabledProto {
   optional bool IncognitoEnabled = 2;
 }
 
-// Allow access to a list of URLs in Incognito mode.
-//
-// Setting the policy provides access to the listed URLs in Incognito mode, as
-// exceptions to IncognitoModeBlocklist. For example, setting
-// IncognitoModeBlocklist to * will block all requests in Incognito mode, and
-// you can use this policy to allow access to a limited list of URLs. Use it to
-// open exceptions to certain schemes, subdomains of other domains, ports, or
-// specific paths, using the format specified at (
-// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
-// IncognitoModeAllowlist policy takes precedence over IncognitoModeBlocklist.
-// This policy is limited to 1,000 entries.
-//
-// Leaving the policy unset allows no exceptions to IncognitoModeBlocklist.
-//
-// This policy only affects Incognito mode. To allow URLs for all user profiles,
-// please use the URLAllowlist policy.
-//
-// Supported on: android, chrome_os, ios, linux, mac, win
-message IncognitoModeAllowlistProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList IncognitoModeAllowlist = 2;
-}
-
 // Incognito mode availability
 //
 // Specifies whether the user may open pages in Incognito mode in Google Chrome.
@@ -13432,22 +13464,45 @@ message IncognitoModeAvailabilityProto {
   optional int64 IncognitoModeAvailability = 2;
 }
 
+// Allow access to a list of URLs in Incognito mode.
+//
+// Setting the policy provides access to the listed URLs in Incognito mode, as
+// exceptions to IncognitoModeUrlBlocklist. For example, setting
+// IncognitoModeUrlBlocklist to * will block all requests in Incognito mode, and
+// you can use this policy to allow access to a limited list of URLs. Use it to
+// open exceptions to certain schemes, subdomains of other domains, ports, or
+// specific paths, using the format specified at (
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
+// IncognitoModeUrlAllowlist policy takes precedence over
+// IncognitoModeUrlBlocklist. This policy is limited to 1,000 entries.
+//
+// Leaving the policy unset allows no exceptions to IncognitoModeUrlBlocklist.
+//
+// This policy only affects Incognito mode. To allow URLs for all user profiles,
+// please use the URLAllowlist policy.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message IncognitoModeUrlAllowlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList IncognitoModeUrlAllowlist = 2;
+}
+
 // Block access to a list of URLs in Incognito mode.
 //
-// Setting the IncognitoModeBlocklist policy stops web pages with prohibited
+// Setting the IncognitoModeUrlBlocklist policy stops web pages with prohibited
 // URLs from loading in Incognito mode. Administrators can specify the list of
 // URL patterns to be blocked. If left unset, no URLs are blocked in the
 // Incognito mode. Up to 1,000 exceptions can be defined in
-// IncognitoModeAllowlist. See how to format a URL pattern (
+// IncognitoModeUrlAllowlist. See how to format a URL pattern (
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
 //
 // This policy only affects Incognito mode. To block URLs for all user profiles,
 // please use the URLBlocklist policy.
 //
 // Supported on: android, chrome_os, ios, linux, mac, win
-message IncognitoModeBlocklistProto {
+message IncognitoModeUrlBlocklistProto {
   optional PolicyOptions policy_options = 1;
-  optional StringList IncognitoModeBlocklist = 2;
+  optional StringList IncognitoModeUrlBlocklist = 2;
 }
 
 // Allow insecure content on these sites
@@ -13592,7 +13647,7 @@ message InsecurePrivateNetworkRequestsAllowedProto {
 // policy, if it is set, or the user's personal configuration otherwise.
 //
 // For detailed information on valid URL patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
+// https://chromeenterprise.google/policies/url-patterns/.
 //
 // Supported on:
 message InsecurePrivateNetworkRequestsAllowedForUrlsProto {
@@ -14568,8 +14623,8 @@ message KioskApplicationLogCollectionEnabledProto {
 // available to the web kiosk applications install origin.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. * is not an accepted
+// value for this policy.
 //
 // Supported on: chrome_os
 message KioskBrowserPermissionsAllowedForOriginsProto {
@@ -15367,15 +15422,12 @@ message LocalNetworkAccessBlockedForUrlsProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
-// This policy is deprecated because Local Network Access
-// has launched by default. The policy will be removed in a future release.
-//
 // Valid values:
 //   True: Apply restrictions to requests to local network endpoints
 //   False: Use default behavior when determining if websites can make requests
 // to local network endpoints
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on:
 message LocalNetworkAccessRestrictionsEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool LocalNetworkAccessRestrictionsEnabled = 2;
@@ -15395,14 +15447,11 @@ message LocalNetworkAccessRestrictionsEnabledProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
-// This enterprise policy is temporary, and will be removed after M146.
+// This enterprise policy is temporary, and will be removed after M152.
 //
 // Long term, the policy LocalNetworkAccessAllowedForUrls
 // can be used to allowlist URL patterns that should be automatically granted
 // the Local Network Access permission.
-//
-// Note that if the policy LocalNetworkAccessRestrictionsEnabled
-// is enabled, it will take precedence over this policy.
 //
 // Valid values:
 //   True: Temporarily opt out of restrictions on requests to local network
@@ -18686,6 +18735,9 @@ message PasswordManagerAllowShowPasswordsProto {
 // If the policy is unset, the Password Manager will be available for all
 // domains.
 //
+// For detailed information on valid URL patterns, please see
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format.
+//
 // Supported on: chrome_os, linux, mac, win
 message PasswordManagerBlocklistProto {
   optional PolicyOptions policy_options = 1;
@@ -19995,6 +20047,25 @@ message PowerSmartDimEnabledProto {
   optional bool PowerSmartDimEnabled = 2;
 }
 
+// Allow precise geolocation on these sites
+//
+// Setting the policy lets you set a list of URL patterns that specify sites
+// that are allowed to access the user's high accuracy geolocation without first
+// having to request the user's permission to do so.
+//
+// Leaving the policy unset means DefaultGeolocationSetting applies for all
+// sites, if it's set. If not, the user's personal setting applies.
+//
+// For detailed information on valid url patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. Wildcards, *, are
+// allowed.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message PreciseGeolocationAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList PreciseGeolocationAllowedForUrls = 2;
+}
+
 // Allow users to select a preconfigured desktop layout to load
 //
 // If set, this policy contains information to download a desk template file.
@@ -21015,6 +21086,9 @@ message PrintingSendUsernameAndFilenameEnabledProto {
 // Setting this policy requires setting the PrivacySandboxPromptEnabled policy
 // to Disabled.
 //
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of the Attribution Reporting API.
+//
 // Valid values:
 //   True: Allow users to turn on or off the Privacy Sandbox Ad measurement
 // setting on their device.
@@ -21038,6 +21112,9 @@ message PrivacySandboxAdMeasurementEnabledProto {
 //
 // Setting this policy requires setting the PrivacySandboxPromptEnabled policy
 // to Disabled.
+//
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of Topics API.
 //
 // Valid values:
 //   True: Allow users to to turn on or off the Privacy Sandbox Ad topics
@@ -21131,7 +21208,7 @@ message PrivacySandboxFingerprintingProtectionEnabledProto {
 //   None: Allow users to turn on or turn off the IP Protection setting on their
 // device. The feature will be enabled by default.
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on:
 message PrivacySandboxIpProtectionEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool PrivacySandboxIpProtectionEnabled = 2;
@@ -21180,6 +21257,9 @@ message PrivacySandboxPromptEnabledProto {
 //
 // Setting this policy requires setting the PrivacySandboxPromptEnabled policy
 // to Disabled.
+//
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of the Protected Audience API.
 //
 // Valid values:
 //   True: Allow users to turn on or off the Privacy Sandbox Site-suggested ads
@@ -21710,17 +21790,34 @@ message ProxyModeProto {
 // settings.
 //
 // When the browser needs to decide what proxy to use, entries of the
-// ProxyOverrideRules policy are evaluated in sequence until an entry has a
-// match for at least one of the URL hosts in DestinationMatchers and if all
-// entries in Conditions are met. The value in ProxyList will be used as a proxy
-// for such a match. If no match is found, proxy settings will fall back to what
-// is set in the ProxySettings policy.
+// ProxyOverrideRules policy are evaluated in sequence until an entry satisfies
+// all the following points:
+// * At least one of the URL patterns in DestinationMatchers is matched.
+// * None of the URL patterns in ExcludeDestinationMatchers is matched.
+// * If Conditions is specified and is a non-empty list, all conditions
+// represented by its entries are satisfied.
+// The value in ProxyList will be used as a proxy for such a match. If no match
+// is found, proxy settings will fall back to what is set in the ProxySettings
+// policy.
+//
+// The URL patterns supported by DestinationMatchers and
+// ExcludeDestinationMatchers are documented at https://chromium.googlesource.co
+// m/chromium/src/+/HEAD/net/docs/proxy.md#proxy-config-url-patterns.
 //
 // The ProxyList field entries correspond to string values of PAC files such as:
 // * DIRECT
 // * PROXY host:port
 // * HTTPS host:port
-// The first reachable entry will be used as a proxy.
+// * SOCKS4 host:port
+// * SOCKS5 host:port
+// Alternatively, URL-like proxy specifiers can be used directly to specify the
+// proxy, for example:
+// * http://host:port
+// * https://host:port
+// * socks4://host:port
+// * socks5://host:port
+// The first reachable entry in the list will be used as a proxy. Invalid
+// entries in the list are ignored.
 //
 // The Conditions field contains a list of conditions that must all be met for
 // its override rule to be used to decide the proxy to use. If it is left unset,
@@ -21728,9 +21825,13 @@ message ProxyModeProto {
 // matched.
 //
 // The DnsProbe condition checks if the provided DNS Host is able to resolve to
-// an IP address. If the value of Result is "resolves" then the condition is
-// considered as met. If the value is instead set to not_found, then the
-// condition is considered met if the resolution failed.
+// an IP address. It must contain a host (e.g. example.com), and optionally a
+// scheme or a port (e.g. https://example.com, example.com:123,
+// https://example.com:123). If a secure scheme is used (e.g. https), DNS lookup
+// may also request the HTTPS record (see RFC 9460 for more details). If the
+// value of Result is "resolved" then the condition is considered as met. If the
+// value is instead set to not_found, then the condition is considered met if
+// the resolution failed.
 //
 // Value schema:
 // {
@@ -21746,7 +21847,7 @@ message ProxyModeProto {
 //                                 },
 //                                 "Result": {
 //                                     "enum": [
-//                                         "resolves",
+//                                         "resolved",
 //                                         "not_found"
 //                                     ],
 //                                     "type": "string"
@@ -21760,6 +21861,12 @@ message ProxyModeProto {
 //                 "type": "array"
 //             },
 //             "DestinationMatchers": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             },
+//             "ExcludeDestinationMatchers": {
 //                 "items": {
 //                     "type": "string"
 //                 },
@@ -22352,6 +22459,9 @@ message RegisteredProtocolHandlersProto {
 // When this policy is set to False, the Related Website Sets feature is
 // disabled.
 //
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of Related Website Sets.
+//
 // Valid values:
 //   True: Enable Related Website Sets
 //   False: Disable Related Website Sets
@@ -22421,6 +22531,9 @@ message RelatedWebsiteSetsEnabledProto {
 //
 // On macOS, this policy is only available on instances that are managed via
 // MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
+//
+// This policy is deprecated as of Google Chrome version 144 with the
+// deprecation of Related Website Sets.
 //
 // Value schema:
 // {
@@ -23601,8 +23714,8 @@ message ReportVersionDataProto {
 // allowlisted URLs.
 // If unset, no website events will be reported.
 // For detailed information on valid URL patterns, see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Only
-// HTTP and HTTPS URL schemes are allowed for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Only HTTP and HTTPS
+// URL schemes are allowed for this policy.
 //
 // Supported on: chrome_os
 message ReportWebsiteActivityAllowlistProto {
@@ -23637,8 +23750,8 @@ message ReportWebsiteTelemetryProto {
 // Setting the policy controls website telemetry reporting for allowlisted URLs.
 // If unset, no website telemetry will be reported.
 // For detailed information on valid URL patterns, see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Only
-// HTTP and HTTPS URL schemes are allowed for this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Only HTTP and HTTPS
+// URL schemes are allowed for this policy.
 //
 // Supported on: chrome_os
 message ReportWebsiteTelemetryAllowlistProto {
@@ -24041,9 +24154,9 @@ message SSLErrorOverrideAllowedProto {
 // Leaving the policy unset means SSLErrorOverrideAllowed applies for all sites.
 //
 // For detailed information on valid input patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
-// not an accepted value for this policy. This policy only matches based on
-// origin, so any path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns/. * is not an accepted
+// value for this policy. This policy only matches based on origin, so any path
+// in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SSLErrorOverrideAllowedForOriginsProto {
@@ -24127,6 +24240,72 @@ message SSLVersionMaxProto {
 message SSLVersionMinProto {
   optional PolicyOptions policy_options = 1;
   optional string SSLVersionMin = 2;
+}
+
+// Specifies a list of SaaS domains that will be reported for managed browser
+//
+// This policy controls Google Chrome reporting of SaaS domain visits and
+// content transfers for a managed browser.
+//
+// When the policy is set, the URLs matching SaaS domains will be used to
+// generate report and uploaded. Unmatched URLs will be ignored.
+//
+// When the policy is not set or set to an empty list, no report will be
+// generated.
+//
+// The matching patterns use a similar format to those for the 'URLBlocklist'
+// policy, which are documented at
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format. With a few
+// exceptions below:
+//
+// * URL host must match the hostname or be a subdomain of the hostname of one
+// of the domains from the SaaS sites list.
+//
+// * URL path must start with the path from the matched SaaS sites list entry.
+//
+// * The URL scheme, port, query are disregarded during the matching process.
+//
+// This policy value is populated by the cloud policy infrastructure and admins
+// can't set it directly.
+//
+// Supported on: linux, mac, win
+message SaaSReportDomainUrlsForBrowserProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SaaSReportDomainUrlsForBrowser = 2;
+}
+
+// Specifies a list of SaaS domains that will be reported for managed profile
+//
+// This policy controls Google Chrome reporting of SaaS domain visits and
+// content transfers for a managed profile.
+//
+// When the policy is set, the URLs matching SaaS domains will be used to
+// generate report and uploaded. Unmatched URLs will be ignored.
+//
+// When the policy is not set or set to an empty list, no report will be
+// generated.
+//
+// The matching patterns use a similar format to those for the 'URLBlocklist'
+// policy, which are documented at
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format. With a few
+// exceptions below:
+//
+// * URL host must match the hostname or be a subdomain of the hostname of one
+// of the domains from the SaaS sites list.
+//
+// * URL path must start with the path from the matched SaaS sites list entry.
+//
+// * The URL scheme, port, query are disregarded during the matching process.
+//
+// This policy can only be set as a cloud user policy.
+//
+// This policy value is populated by the cloud policy infrastructure and admins
+// can't set it directly.
+//
+// Supported on: linux, mac, win
+message SaaSReportDomainUrlsForProfileProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SaaSReportDomainUrlsForProfile = 2;
 }
 
 // Configure the list of domains on which Safe Browsing will not trigger
@@ -24439,9 +24618,8 @@ message SafeSitesFilterBehaviorProto {
 // ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message SameOriginTabCaptureAllowedByOriginsProto {
@@ -24679,9 +24857,8 @@ message ScreenCaptureAllowedProto {
 // not be considered.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ScreenCaptureAllowedByOriginsProto {
@@ -24728,7 +24905,7 @@ message ScreenCaptureLocationProto {
 // called without prior user gesture.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -25075,6 +25252,45 @@ message ScreensaverLockScreenImagesProto {
 message ScrollToTextFragmentEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool ScrollToTextFragmentEnabled = 2;
+}
+
+// Enable content sharing with Google AI Mode integrations
+//
+// This policy controls sharing of page and file content with Google AI Mode
+// through Google Chrome side panel or tabs.
+//
+// Note that this policy doesn't affect Google AI Mode on the web. It only
+// controls how users can share information with it when using Google Chrome.
+//
+// 0/unset = users can share page or file content with Google AI Mode.
+//
+// 1 = users cannot share page or file content with Google AI Mode. The entry
+// points for sharing context will be disabled or hidden.
+//
+// This policy will be ignored when Google Search is not users' default search
+// engine as the feature is disabled.
+//
+// This policy is independent of the AIModeSettings policy. The AIModeSettings
+// policy only controls entry points on omnibox or NTP search box, while this
+// policy controls context sharing through side panel or tabs.
+//
+// This policy also doesn't control Google Gemini integration which can be
+// disabled by GeminiSettings.
+//
+// If this policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow content sharing with Google AI Mode integrations.
+//   1: Do not allow content sharing with Google AI Mode integrations.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message SearchContentSharingSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 SearchContentSharingSettings = 2;
 }
 
 // Enable search suggestions
@@ -26591,6 +26807,27 @@ message StartupBrowserWindowLaunchSuppressedProto {
   optional bool StartupBrowserWindowLaunchSuppressed = 2;
 }
 
+// Control whether storage quota APIs will return static values
+//
+// When enabled, the storage quota APIs will return a static value equal to
+// usage + min(10 GiB, disk rounded up to the nearest 1 GiB).
+// When disabled, the storage quota APIs will generally return a dynamic value
+// proportional to the total space available on the device, regardless of usage.
+// If unset, the storage quota APIs will use the default Chrome behavior.
+// Sites with unlimited storage permissions are unaffected by this setting.
+// Enforced quota is also unaffected.
+//
+// Valid values:
+//   True: Storage quota APIs return static values.
+//   False: Storage quota APIs return dynamic values.
+//   None: Storage quota APIs return values based on feature launch process.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message StaticStorageQuotaEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool StaticStorageQuotaEnabled = 2;
+}
+
 // Enable sticky keys
 //
 // Setting the policy to True keeps sticky keys on. Setting the policy to False
@@ -26691,7 +26928,7 @@ message StricterMixedContentTreatmentEnabledProto {
 // called without prior user gesture, nor asking the user for confirmation.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. * is
+// https://chromeenterprise.google/policies/url-patterns/. * is
 // not an accepted value for this policy.
 //
 // If this policy is unset, all origins will require a prior user gesture to
@@ -26862,8 +27099,8 @@ message SyncDisabledProto {
 //
 // The current data types for this policy are: "apps", "autofill", "bookmarks",
 // "extensions", "preferences", "passwords", "payments", "productComparison",
-// "readingList", "savedTabGroups", "tabs", "themes", "typedUrls",
-// "wifiConfigurations". Those names are case sensitive!
+// "readingList", "tabs", "themes", "typedUrls", "wifiConfigurations". Those
+// names are case sensitive!
 //
 // Notes: Dynamic Policy Refresh is supported only in Google Chrome version 123
 // and later. Disabling "autofill" also disables "payments". "typedUrls" refers
@@ -27097,9 +27334,8 @@ message TLS13HardeningForLocalAnchorsEnabledProto {
 // ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message TabCaptureAllowedByOriginsProto {
@@ -27557,7 +27793,7 @@ message TranslateEnabledProto {
 //   True: Allows the use of Translator API
 //   False: Disallows the use of Translator API
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message TranslatorAPIAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool TranslatorAPIAllowed = 2;
@@ -28392,7 +28628,7 @@ message UserAgentClientHintsGREASEUpdateEnabledProto {
 //   1: Full (legacy) User Agent.
 //   2: Reduced User Agent.
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: fuchsia
 message UserAgentReductionProto {
   optional PolicyOptions policy_options = 1;
   optional int64 UserAgentReduction = 2;
@@ -28760,9 +28996,8 @@ message VideoCaptureAllowedProto {
 // capture devices without prompt
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns. Note,
-// however, that the pattern "*", which matches any URL, is not supported by
-// this policy.
+// https://chromeenterprise.google/policies/url-patterns/. Note, however, that
+// the pattern "*", which matches any URL, is not supported by this policy.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message VideoCaptureAllowedUrlsProto {
@@ -29927,9 +30162,9 @@ message WebRtcIPHandlingProto {
 // WebRtcIPHandling.
 //
 // For detailed information on valid input patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.
-// Wildcards, *, are allowed. This policy only matches based on origin, so any
-// path in the URL pattern is ignored.
+// https://chromeenterprise.google/policies/url-patterns/. Wildcards, *, are
+// allowed. This policy only matches based on origin, so any path in the URL
+// pattern is ignored.
 //
 // Valid handling values:
 //
@@ -30330,9 +30565,8 @@ message WifiSyncAndroidAllowedProto {
 // not be considered: ScreenCaptureAllowedByOrigins, ScreenCaptureAllowed.
 //
 // For detailed information on valid url patterns, please see
-// https://cloud.google.com/docs/chrome-enterprise/policies/url-patterns.  This
-// policy only matches based on origin, so any path in the URL pattern is
-// ignored.
+// https://chromeenterprise.google/policies/url-patterns/.  This policy only
+// matches based on origin, so any path in the URL pattern is ignored.
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message WindowCaptureAllowedByOriginsProto {
@@ -30523,6 +30757,7 @@ message ChromeSettingsSubProto1 {
   optional CAPlatformIntegrationEnabledProto CAPlatformIntegrationEnabled = 156;
   optional CSSCustomStateDeprecatedSyntaxEnabledProto CSSCustomStateDeprecatedSyntaxEnabled = 220;
   optional CacheEncryptionEnabledProto CacheEncryptionEnabled = 356;
+  optional CameraSaveLocationProto CameraSaveLocation = 373;
   optional ChromeAppsWebViewPermissiveBehaviorAllowedProto ChromeAppsWebViewPermissiveBehaviorAllowed = 33;
   optional ChromeDataRegionSettingProto ChromeDataRegionSetting = 213;
   optional ChromeForTestingAllowedProto ChromeForTestingAllowed = 173;
@@ -30611,6 +30846,8 @@ message ChromeSettingsSubProto1 {
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
+  optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;
+  optional GeminiActOnWebBlockedForURLsProto GeminiActOnWebBlockedForURLs = 381;
   optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GenAIInlineImageSettingsProto GenAIInlineImageSettings = 306;
@@ -30621,7 +30858,6 @@ message ChromeSettingsSubProto1 {
   optional GenAIWallpaperSettingsProto GenAIWallpaperSettings = 223;
   optional GenAiChromeOsSmartActionsSettingsProto GenAiChromeOsSmartActionsSettings = 297;
   optional GenAiDefaultSettingsProto GenAiDefaultSettings = 256;
-  optional GeolocationAllowedForUrlsProto GeolocationAllowedForUrls = 370;
   optional GeolocationBlockedForUrlsProto GeolocationBlockedForUrls = 371;
   optional GlanceablesEnabledProto GlanceablesEnabled = 91;
   optional GoogleLocationServicesEnabledProto GoogleLocationServicesEnabled = 174;
@@ -30637,8 +30873,8 @@ message ChromeSettingsSubProto1 {
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
   optional IdleDetectionAllowedForUrlsProto IdleDetectionAllowedForUrls = 368;
   optional IdleDetectionBlockedForUrlsProto IdleDetectionBlockedForUrls = 369;
-  optional IncognitoModeAllowlistProto IncognitoModeAllowlist = 353;
-  optional IncognitoModeBlocklistProto IncognitoModeBlocklist = 352;
+  optional IncognitoModeUrlAllowlistProto IncognitoModeUrlAllowlist = 353;
+  optional IncognitoModeUrlBlocklistProto IncognitoModeUrlBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
@@ -30704,6 +30940,7 @@ message ChromeSettingsSubProto1 {
   optional PhysicalKeyboardPredictiveWritingProto PhysicalKeyboardPredictiveWriting = 79;
   optional PolicyTestPageEnabledProto PolicyTestPageEnabled = 72;
   optional PostQuantumKeyAgreementEnabledProto PostQuantumKeyAgreementEnabled = 77;
+  optional PreciseGeolocationAllowedForUrlsProto PreciseGeolocationAllowedForUrls = 370;
   optional PreferSlowCiphersProto PreferSlowCiphers = 358;
   optional PreferSlowKexAlgorithmsProto PreferSlowKexAlgorithms = 354;
   optional PrefetchWithServiceWorkerEnabledProto PrefetchWithServiceWorkerEnabled = 325;
@@ -30747,6 +30984,8 @@ message ChromeSettingsSubProto1 {
   optional ReportWebsiteTelemetryCollectionRateMsProto ReportWebsiteTelemetryCollectionRateMs = 100;
   optional ReportingEndpointsProto ReportingEndpoints = 247;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
+  optional SaaSReportDomainUrlsForBrowserProto SaaSReportDomainUrlsForBrowser = 378;
+  optional SaaSReportDomainUrlsForProfileProto SaaSReportDomainUrlsForProfile = 379;
   optional SafeBrowsingDeepScanningEnabledProto SafeBrowsingDeepScanningEnabled = 117;
   optional SafeBrowsingProxiedRealTimeChecksAllowedProto SafeBrowsingProxiedRealTimeChecksAllowed = 76;
   optional SafeBrowsingSurveysEnabledProto SafeBrowsingSurveysEnabled = 101;
@@ -30756,6 +30995,7 @@ message ChromeSettingsSubProto1 {
   optional ScreensaverLockScreenIdleTimeoutSecondsProto ScreensaverLockScreenIdleTimeoutSeconds = 20;
   optional ScreensaverLockScreenImageDisplayIntervalSecondsProto ScreensaverLockScreenImageDisplayIntervalSeconds = 21;
   optional ScreensaverLockScreenImagesProto ScreensaverLockScreenImages = 22;
+  optional SearchContentSharingSettingsProto SearchContentSharingSettings = 376;
   optional SelectParserRelaxationEnabledProto SelectParserRelaxationEnabled = 266;
   optional ServiceWorkerAutoPreloadEnabledProto ServiceWorkerAutoPreloadEnabled = 340;
   optional ServiceWorkerToControlSrcdocIframeEnabledProto ServiceWorkerToControlSrcdocIframeEnabled = 293;
@@ -30772,6 +31012,7 @@ message ChromeSettingsSubProto1 {
   optional SmartCardConnectAllowedForUrlsProto SmartCardConnectAllowedForUrls = 280;
   optional SmartCardConnectBlockedForUrlsProto SmartCardConnectBlockedForUrls = 281;
   optional StandardizedBrowserZoomEnabledProto StandardizedBrowserZoomEnabled = 246;
+  optional StaticStorageQuotaEnabledProto StaticStorageQuotaEnabled = 377;
   optional SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOriginsProto SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 178;
   optional SystemShortcutBehaviorProto SystemShortcutBehavior = 244;
   optional TLS13EarlyDataEnabledProto TLS13EarlyDataEnabled = 323;
