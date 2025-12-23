@@ -2,7 +2,7 @@ name: Build executables (x86_64, arm64) and upload artifacts
 
 on:
   push:
-    paths: ['.github/workflows/build.yml', 'inferfaces/**', 'proto/**', 'schema/**']
+    paths: ['.github/workflows/build.yml', 'interfaces/**', 'proto/**', 'schema/**']
   workflow_dispatch:
 
 jobs:
