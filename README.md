@@ -29,8 +29,8 @@ options:
   -h, --help    show this help message and exit
 ```
 To import `policies.json` (not `policy.json` like pollen), add `--policy-json` argument and specify the path to `policies.json`.<br/>
-Please note that `policies.json` is different with `policy.json` like pollen.<br/>
-**For more detailed informations and format of them**, see [ChromiumOS Docs - ChromeOS Local Policy Testing Tools](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/policy/tools/fake_dmserver/chromeos_instructions.md).<br/><br/>
+Please note that `policies.json` is different with `policy.json` like pollen, the `policies.json` is an json file which is exported from `chrome://policy`.<br/>
+**For more detailed informations about policies**, see [ChromiumOS Docs - ChromeOS Local Policy Testing Tools](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/policy/tools/fake_dmserver/chromeos_instructions.md).<br/><br/>
 
 **On an enrolled device, you may need to turn off Wi-Fi to be persist because ChromeOS tries to fetch and sync policies every time when Chrome starts up.** <br/>
 > ⚠️ It won't be shown as online on GAC while policies are edited.
