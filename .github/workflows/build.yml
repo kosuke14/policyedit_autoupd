@@ -3,7 +3,7 @@ name: Build executables (x86_64, arm64) and upload artifacts
 on:
   push:
     branches:
-      - main
+      - mngjson
     paths: ['.github/workflows/build.yml', 'interfaces/**', 'proto/**', 'schema/**']
   workflow_dispatch:
 
