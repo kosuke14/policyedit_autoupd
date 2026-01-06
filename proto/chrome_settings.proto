@@ -1877,7 +1877,7 @@ message AutoOpenFileTypesProto {
 //
 // Leaving the policy unset means there's no autoselection for any site.
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message AutoSelectCertificateForUrlsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList AutoSelectCertificateForUrls = 2;
@@ -7493,9 +7493,17 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 // As of Google Chrome version 128, this setting will not control developer mode
 // on extensions page if ExtensionDeveloperModeSettings policy is set.
 //
-// If you want to restrict Developer Tools access based on the page URL, use the
-// DeveloperToolsAvailabilityBlocklist and DeveloperToolsAvailabilityAllowlist
-// policies.
+// The availability of Developer Tools is determined in the following order of
+// precedence:
+// 1. If a URL matches a pattern in the DeveloperToolsAvailabilityAllowlist
+// policy, Developer Tools are allowed.
+// 2. If the DeveloperToolsAvailabilityAllowlist is set and the
+// DeveloperToolsAvailabilityBlocklist is not, any URL not on the allowlist is
+// blocked.
+// 3. If a URL matches a pattern in the DeveloperToolsAvailabilityBlocklist
+// policy, Developer Tools are blocked.
+// 4. If a URL is not covered by the allowlist or blocklist, this policy
+// (DeveloperToolsAvailability) is the fallback.
 //
 // Valid values:
 //   0: Disallow usage of the Developer Tools on apps and extensions installed
@@ -7522,11 +7530,19 @@ message DeveloperToolsAvailabilityProto {
 // information on the URL format, see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// Leaving the policy unset means this allowlist has no effect. Since Chrome
-// DevTools are available by default, they will only be blocked if specified in
-// the DeveloperToolsAvailabilityBlocklist policy.
+// Leaving the policy unset means this allowlist has no effect.
 //
-// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+// If this policy is set and DeveloperToolsAvailabilityBlocklist is not, any URL
+// not on this list will be blocked.
+//
+// If both this and the DeveloperToolsAvailabilityBlocklist policies are set,
+// this allowlist takes precedence. If a URL matches a pattern on the allowlist,
+// it will be allowed. If it matches a pattern on the blocklist (but not the
+// allowlist), it will be blocked. If a URL matches neither, the
+// DeveloperToolsAvailability policy will be used as a fallback.
+//
+// If neither policy is set, the availability is determined by the
+// DeveloperToolsAvailability policy.
 //
 // This policy also applies to Chrome DevTools opened for extensions and web
 // applications.
@@ -7546,10 +7562,17 @@ message DeveloperToolsAvailabilityAllowlistProto {
 // format, see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// The DeveloperToolsAvailabilityAllowlist policy takes precedence over
-// DeveloperToolsAvailabilityBlocklist.
+// If the DeveloperToolsAvailabilityAllowlist policy is set and this policy is
+// not, any URL not on the allowlist will be blocked.
 //
-// Unmatched URLs will follow the DeveloperToolsAvailability policy.
+// If both this and the DeveloperToolsAvailabilityAllowlist are set, the
+// allowlist takes precedence. If a URL matches a pattern on the allowlist, it
+// will be allowed. If it matches a pattern on this blocklist (but not the
+// allowlist), it will be blocked. If a URL matches neither, the
+// DeveloperToolsAvailability policy will be used as a fallback.
+//
+// If neither policy is set, the availability is determined by the
+// DeveloperToolsAvailability policy.
 //
 // This policy also applies to Chrome DevTools opened for extensions and web
 // applications.
@@ -21670,7 +21693,7 @@ message ProtectedContentIdentifiersAllowedProto {
 //   0: Disable client certificate provisioning for browsers
 //   1: Enable client certificate provisioning for browsers
 //
-// Supported on: android, linux, mac, win
+// Supported on: android, ios, linux, mac, win
 message ProvisionManagedClientCertificateForBrowserProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ProvisionManagedClientCertificateForBrowser = 2;
@@ -21692,7 +21715,7 @@ message ProvisionManagedClientCertificateForBrowserProto {
 //   0: Disable client certificate provisioning
 //   1: Enable client certificate provisioning
 //
-// Supported on: android, linux, mac, win
+// Supported on: android, ios, linux, mac, win
 message ProvisionManagedClientCertificateForUserProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ProvisionManagedClientCertificateForUser = 2;
