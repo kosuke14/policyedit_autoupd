@@ -27914,6 +27914,13 @@ message U2fSecurityKeyApiEnabledProto {
 // From Google Chrome version 92, this policy is also supported in the headless
 // mode.
 //
+// On Microsoft® Windows®, this policy is only available on instances that are
+// joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
+// Active Directory® or enrolled in Chrome Enterprise Core.
+//
+// On macOS, this policy is only available on instances that are managed via
+// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
+//
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message URLAllowlistProto {
   optional PolicyOptions policy_options = 1;
@@ -27962,6 +27969,13 @@ message URLBlacklistProto {
 //
 // - Instead of blocking chrome-untrusted://crosh, use
 // SystemFeaturesDisableList.
+//
+// On Microsoft® Windows®, this policy is only available on instances that are
+// joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
+// Active Directory® or enrolled in Chrome Enterprise Core.
+//
+// On macOS, this policy is only available on instances that are managed via
+// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message URLBlocklistProto {
