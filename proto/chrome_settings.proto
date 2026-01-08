@@ -10996,7 +10996,8 @@ message FileSystemWriteBlockedForUrlsProto {
 
 // Enable First-Party Sets.
 //
-// This policy is provided as a way to opt-out of the First-Party Sets feature.
+// This policy is provided as a way to opt-out of the First-Party Sets feature
+// (which was later renamed Related Website Sets feature).
 //
 // When this policy is unset or set to Enabled, the First-Party Sets feature is
 // enabled.
@@ -11007,9 +11008,9 @@ message FileSystemWriteBlockedForUrlsProto {
 // It controls whether Chrome supports First-Party Sets related integrations.
 //
 // This is the equivalent of the RelatedWebsiteSetsEnabled policy.
-// Either policy may be used, but this one will be deprecated soon so the
-// RelatedWebsiteSetsEnabled policy is preferred.
-// They both have the same effect on the browser's behavior.
+// Either policy may be used with the same effect on the browser's behavior.
+// Both these policies are deprecated following Related Website Sets feature
+// deprecation in Google Chrome version 144.
 //
 // Valid values:
 //   True: Enable First-Party Sets for all affected users
@@ -11024,7 +11025,8 @@ message FirstPartySetsEnabledProto {
 // Override First-Party Sets.
 //
 // This policy provides a way to override the list of sets the browser uses for
-// First-Party Sets features.
+// First-Party Sets features (which was later renamed Related Website Sets
+// feature).
 //
 // Each set in the browser's list of First-Party Sets must meet the requirements
 // of a First-Party Set.
@@ -11078,9 +11080,9 @@ message FirstPartySetsEnabledProto {
 // MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
 // This is the equivalent of the RelatedWebsiteSetsOverrides policy.
-// Either policy may be used, but this one will be deprecated soon so the
-// RelatedWebsiteSetsOverrides policy is preferred.
-// They both have the same effect on the browser's behavior.
+// Either policy may be used with the same effect on the browser's behavior.
+// Both these policies are deprecated following Related Website Sets feature
+// deprecation in Google Chrome version 144.
 //
 // Value schema:
 // {
@@ -15062,6 +15064,8 @@ message LensCameraAssistedSearchEnabledProto {
 // use the Google Lens button in the search box on the New Tab page. Setting the
 // policy to Disabled means users will not see the Google Lens button in the
 // search box on the New Tab page.
+// Starting in Google Chrome 147, this policy will be deprecated. IT Admins can
+// use SearchContentSharingSettings to control this feature going forward.
 //
 // Valid values:
 //   True: Show the Google Lens button in the search box on the New Tab page.
@@ -15110,6 +15114,9 @@ message LensOnGalleryEnabledProto {
 // Starting in Google Chrome 140, if the policy is unset, its behavior is
 // determined by the GenAiDefaultSettings policy.
 //
+// Starting in Google Chrome 147, this policy will be deprecated. IT Admins can
+// use SearchContentSharingSettings to control this feature going forward.
+//
 // Valid values:
 //   0: Allow
 //   1: Do not allow
@@ -15127,6 +15134,8 @@ message LensOverlaySettingsProto {
 // use the Google Lens region search menu item in the context menu. Setting the
 // policy to Disabled means users will not see the Google Lens region search
 // menu item in the context menu when Google Lens region search is supported.
+// Starting in Google Chrome 147, this policy will be deprecated. IT Admins can
+// use SearchContentSharingSettings to control this feature going forward.
 //
 // Valid values:
 //   True: Enable Google Lens region search.
@@ -15672,6 +15681,7 @@ message MachineLevelUserCloudPolicyEnrollmentTokenProto {
 
 // Add restrictions on managed accounts
 //
+// This policy is deprecated. Please use ProfileSeparationSettings instead.
 //
 // Default behavior (Policy unset)
 // When an account is added in the content area a small dialog may appear asking
@@ -25277,10 +25287,10 @@ message ScrollToTextFragmentEnabledProto {
   optional bool ScrollToTextFragmentEnabled = 2;
 }
 
-// Enable content sharing with Google AI Mode integrations
+// Enable content sharing with Google AI Mode and Lens integrations
 //
-// This policy controls sharing of page and file content with Google AI Mode
-// through Google Chrome side panel or tabs.
+// This policy controls sharing of page and file content with Google AI Mode and
+// Lens through Google Chrome side panel or tabs.
 //
 // Note that this policy doesn't affect Google AI Mode on the web. It only
 // controls how users can share information with it when using Google Chrome.
