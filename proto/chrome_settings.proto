@@ -29534,6 +29534,28 @@ message WebAnnotationsProto {
   optional string WebAnnotations = 2;
 }
 
+// Enable User Web App Install From Browser
+//
+// This policy controls whether users can install web apps through the browser.
+// If you enable or don’t configure this policy, users can install web apps
+// through the browser.
+// If you disable this policy, users can’t install web apps through the browser
+// and the "apps" data type will be excluded from synchronization for Chrome
+// Sync.
+// This policy doesn't support dynamic refresh. Any changes, whether enabling,
+// disabling or unsetting, become effective only after the browser is restarted.
+// This policy doesn't affect the 'WebAppInstallForceList' policy.
+//
+// Valid values:
+//   True: Users can install web apps through the browser.
+//   False: Users can’t install web apps through the browser.
+//
+// Supported on: chrome_os, linux, mac, win
+message WebAppInstallByUserEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool WebAppInstallByUserEnabled = 2;
+}
+
 // Configure list of force-installed Web Apps
 //
 // Setting the policy specifies a list of web apps that install silently,
@@ -31084,6 +31106,7 @@ message ChromeSettingsSubProto1 {
   optional WallpaperGooglePhotosIntegrationEnabledProto WallpaperGooglePhotosIntegrationEnabled = 37;
   optional WatermarkStyleProto WatermarkStyle = 328;
   optional WebAnnotationsProto WebAnnotations = 163;
+  optional WebAppInstallByUserEnabledProto WebAppInstallByUserEnabled = 382;
   optional WebAudioOutputBufferingEnabledProto WebAudioOutputBufferingEnabled = 270;
   optional WebAuthenticationRemoteDesktopAllowedOriginsProto WebAuthenticationRemoteDesktopAllowedOrigins = 292;
   optional WebPrintingAllowedForUrlsProto WebPrintingAllowedForUrls = 180;

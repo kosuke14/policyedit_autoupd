@@ -211,6 +211,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto VirtualKeyboardSmartVisibilityEnabled = 162;
   optional BooleanPolicyProto WallpaperGooglePhotosIntegrationEnabled = 37;
   optional StringPolicyProto WatermarkStyle = 328;
+  optional BooleanPolicyProto WebAppInstallByUserEnabled = 382;
   optional BooleanPolicyProto WebAudioOutputBufferingEnabled = 270;
   optional StringListPolicyProto WebAuthenticationRemoteDesktopAllowedOrigins = 292;
   optional BooleanPolicyProto WebRtcTextLogCollectionAllowed = 38;
