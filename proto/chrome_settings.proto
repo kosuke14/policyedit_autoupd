@@ -9977,13 +9977,15 @@ message ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrlsProto {
 // Setting the policy to Disabled or not setting the policy will cause force-
 // installed extensions with non-malware violations to be disabled.
 //
-// This policy will be available for 3 milestones.
+// This policy was removed in M145. Starting that version, force-installed
+// extensions with non-malware violations will be disabled in low-trust
+// environments.
 //
 // Valid values:
 //   True: Enable force-installed extensions with non-malware violations.
 //   False: Disable force-installed extensions with non-malware violations.
 //
-// Supported on: mac, win
+// Supported on:
 message ExtensionForceInstallWithNonMalwareViolationsEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool ExtensionForceInstallWithNonMalwareViolationsEnabled = 2;
@@ -11881,7 +11883,7 @@ message GaiaOfflineSigninTimeLimitDaysProto {
 // For detailed information on valid url patterns, please see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message GeminiActOnWebAllowedForURLsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList GeminiActOnWebAllowedForURLs = 2;
@@ -11900,7 +11902,7 @@ message GeminiActOnWebAllowedForURLsProto {
 // For detailed information on valid url patterns, please see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message GeminiActOnWebBlockedForURLsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList GeminiActOnWebBlockedForURLs = 2;
@@ -11931,7 +11933,7 @@ message GeminiActOnWebBlockedForURLsProto {
 //   0: Allow the Gemini app to take action on the web pages.
 //   1: Disallow the Gemini app to take action on the web pages.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message GeminiActOnWebSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 GeminiActOnWebSettings = 2;
@@ -27924,13 +27926,6 @@ message U2fSecurityKeyApiEnabledProto {
 // From Google Chrome version 92, this policy is also supported in the headless
 // mode.
 //
-// On Microsoft® Windows®, this policy is only available on instances that are
-// joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
-// Active Directory® or enrolled in Chrome Enterprise Core.
-//
-// On macOS, this policy is only available on instances that are managed via
-// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
-//
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message URLAllowlistProto {
   optional PolicyOptions policy_options = 1;
@@ -27979,13 +27974,6 @@ message URLBlacklistProto {
 //
 // - Instead of blocking chrome-untrusted://crosh, use
 // SystemFeaturesDisableList.
-//
-// On Microsoft® Windows®, this policy is only available on instances that are
-// joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
-// Active Directory® or enrolled in Chrome Enterprise Core.
-//
-// On macOS, this policy is only available on instances that are managed via
-// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message URLBlocklistProto {
