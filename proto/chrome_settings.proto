@@ -8991,8 +8991,6 @@ message EnableOnlineRevocationChecksProto {
 // will only be applied at the user scope for affiliated users.
 // When this policy is set to 1, the ProxyOverrideRules policy will be applied
 // at the user scope, even that user is unaffiliated.
-// When this policy is set to 2, the ProxyOverrideRules policy will never be
-// applied when its source is a user.
 //
 // Supported on: linux, mac, win
 message EnableProxyOverrideRulesForAllUsersProto {
