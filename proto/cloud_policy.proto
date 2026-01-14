@@ -25,7 +25,6 @@ message CloudPolicySubProto1 {
   optional StringPolicyProto ClassManagementEnabled = 267;
   optional BooleanPolicyProto ClassManagementNetworkRestrictionEnabled = 301;
   optional BooleanPolicyProto ClassManagementViewScreenEnabled = 303;
-  optional StringPolicyProto ReportingEndpoints = 247;
   optional StringPolicyProto BruschettaInstallerConfiguration = 96;
   optional StringListPolicyProto CACertificates = 151;
   optional StringPolicyProto CACertificatesWithConstraints = 189;
@@ -47,7 +46,6 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto DefaultIdleDetectionSetting = 367;
   optional IntegerPolicyProto DefaultJavaScriptOptimizerSetting = 237;
   optional IntegerPolicyProto DefaultSmartCardConnectSetting = 315;
-  optional IntegerPolicyProto DefaultThirdPartyStoragePartitioningSetting = 50;
   optional IntegerPolicyProto DefaultWebPrintingSetting = 179;
   optional IntegerPolicyProto DefaultWindowManagementSetting = 27;
   optional StringListPolicyProto DeviceAttributesBlockedForOrigins = 338;
@@ -66,7 +64,6 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto PreciseGeolocationAllowedForUrls = 370;
   optional StringListPolicyProto SmartCardConnectAllowedForUrls = 280;
   optional StringListPolicyProto SmartCardConnectBlockedForUrls = 281;
-  optional StringListPolicyProto ThirdPartyStoragePartitioningBlockedForOrigins = 51;
   optional StringListPolicyProto WebPrintingAllowedForUrls = 180;
   optional StringListPolicyProto WebPrintingBlockedForUrls = 181;
   optional StringListPolicyProto WindowManagementAllowedForUrls = 28;
@@ -228,7 +225,6 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto OopPrintDriversAllowed = 144;
   optional BooleanPolicyProto PrivacySandboxAdMeasurementEnabled = 11;
   optional BooleanPolicyProto PrivacySandboxAdTopicsEnabled = 9;
-  optional BooleanPolicyProto PrivacySandboxFingerprintingProtectionEnabled = 200;
   optional BooleanPolicyProto PrivacySandboxPromptEnabled = 8;
   optional BooleanPolicyProto PrivacySandboxSiteEnabledAdsEnabled = 10;
   optional BooleanPolicyProto ProtectedContentIdentifiersAllowed = 341;

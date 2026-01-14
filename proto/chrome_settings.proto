@@ -7075,7 +7075,7 @@ message DefaultSmartCardConnectSettingProto {
 // on third-party storage partitioning, please see
 // https://developers.google.com/privacy-sandbox/cookies/storage-partitioning.
 //
-// This will be removed in Chrome 145, and the requestStorageAccess method is
+// This was removed in Chrome 145, and the requestStorageAccess method is
 // recommended for use instead: https://developer.mozilla.org/en-
 // US/docs/Web/API/Document/requestStorageAccess. Feedback can be left at
 // https://crbug.com/425248669.
@@ -7084,7 +7084,7 @@ message DefaultSmartCardConnectSettingProto {
 //   1: Allow third-party storage partitioning by default.
 //   2: Disable third-party storage partitioning.
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: fuchsia
 message DefaultThirdPartyStoragePartitioningSettingProto {
   optional PolicyOptions policy_options = 1;
   optional int64 DefaultThirdPartyStoragePartitioningSetting = 2;
@@ -18657,11 +18657,6 @@ message ParentAccessCodeConfigProto {
 // If this policy is set to Enabled or not set, Blob URLs will be partitioned.
 // If this policy is set to Disabled, Blob URLs won't be partitioned.
 //
-// If storage partitioning is disabled for a given top-level origin by either
-// ThirdPartyStoragePartitioningBlockedForOrigins
-// or DefaultThirdPartyStoragePartitioningSetting,
-// then Blob URLs will also not be partitioned.
-//
 // If you must use the policy, please file a bug at
 // https://crbug.com/new?component=1779870&amp;cc=awillia@chromium.org&amp;prior
 // ity=p1&amp;type=bug&amp;noWizard=true
@@ -21183,7 +21178,7 @@ message PrivacySandboxAdTopicsEnabledProto {
 //   None: Allow users to turn on or turn off the Privacy Sandbox Fingerprinting
 // Protection setting in Incognito mode on their device.
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on:
 message PrivacySandboxFingerprintingProtectionEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool PrivacySandboxFingerprintingProtectionEnabled = 2;
@@ -23803,27 +23798,6 @@ message ReportWebsiteTelemetryAllowlistProto {
 message ReportWebsiteTelemetryCollectionRateMsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ReportWebsiteTelemetryCollectionRateMs = 2;
-}
-
-// Reporting Endpoints
-//
-// Allows you to configure the list of Reporting API Endpoints[1] where
-// enterprise reports can be sent.
-//
-// [1] https://www.w3.org/TR/reporting-1/#endpoint
-//
-// Value schema:
-// {
-//     "additionalProperties": {
-//         "type": "string"
-//     },
-//     "type": "object"
-// }
-//
-// Supported on: android, chrome_os, linux, mac, win
-message ReportingEndpointsProto {
-  optional PolicyOptions policy_options = 1;
-  optional string ReportingEndpoints = 2;
 }
 
 // Require online OCSP/CRL checks for local trust anchors
@@ -27653,12 +27627,12 @@ message ThirdPartyPasswordManagersAllowedProto {
 // For detailed information on third-party storage partitioning, please see
 // https://developers.google.com/privacy-sandbox/cookies/storage-partitioning.
 //
-// This will be removed in Chrome 145, and the requestStorageAccess method is
+// This was removed in Chrome 145, and the requestStorageAccess method is
 // recommended for use instead: https://developer.mozilla.org/en-
 // US/docs/Web/API/Document/requestStorageAccess. Feedback can be left at
 // https://crbug.com/425248669.
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: fuchsia
 message ThirdPartyStoragePartitioningBlockedForOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList ThirdPartyStoragePartitioningBlockedForOrigins = 2;
@@ -31037,7 +31011,6 @@ message ChromeSettingsSubProto1 {
   optional ReportWebsiteTelemetryProto ReportWebsiteTelemetry = 103;
   optional ReportWebsiteTelemetryAllowlistProto ReportWebsiteTelemetryAllowlist = 99;
   optional ReportWebsiteTelemetryCollectionRateMsProto ReportWebsiteTelemetryCollectionRateMs = 100;
-  optional ReportingEndpointsProto ReportingEndpoints = 247;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
   optional SaaSReportDomainUrlsForBrowserProto SaaSReportDomainUrlsForBrowser = 378;
   optional SaaSReportDomainUrlsForProfileProto SaaSReportDomainUrlsForProfile = 379;
