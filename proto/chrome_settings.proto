@@ -13475,6 +13475,12 @@ message IncognitoEnabledProto {
 // If 'Forced' is selected, pages may be opened ONLY in Incognito mode. Note
 // that 'Forced' does not work for Android-on-Chrome
 //
+// The IncognitoModeUrlAllowlist policy takes precedence over this policy and
+// can re-enable Incognito mode for specific URLs. When Incognito mode is
+// disabled by this policy when an allowlist is provided, Incognito mode is
+// available only for URLs matching the allowlist, while all other pages are
+// blocked.
+//
 // Note: On iOS, if the policy is changed during a session, it will only take
 // effect on relaunch.
 //
@@ -13491,20 +13497,31 @@ message IncognitoModeAvailabilityProto {
 
 // Allow access to a list of URLs in Incognito mode.
 //
-// Setting the policy provides access to the listed URLs in Incognito mode, as
-// exceptions to IncognitoModeUrlBlocklist. For example, setting
-// IncognitoModeUrlBlocklist to * will block all requests in Incognito mode, and
-// you can use this policy to allow access to a limited list of URLs. Use it to
-// open exceptions to certain schemes, subdomains of other domains, ports, or
-// specific paths, using the format specified at (
-// https://support.google.com/chrome/a?p=url_blocklist_filter_format ). The
-// IncognitoModeUrlAllowlist policy takes precedence over
-// IncognitoModeUrlBlocklist. This policy is limited to 1,000 entries.
+// Setting the policy provides access to the listed URLs in Incognito mode. Use
+// it to open exceptions to certain URL patterns defined in
+// IncognitoModeUrlBlocklist, using the format specified at (
+// https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
 //
-// Leaving the policy unset allows no exceptions to IncognitoModeUrlBlocklist.
+// If both this policy and IncognitoModeUrlBlocklist are set, the allowlist
+// takes precedence. If a URL matches a pattern on the allowlist, it will be
+// allowed. If it matches a pattern on the blocklist (but not the allowlist), it
+// will be blocked. If a URL matches neither, the general
+// URLBlocklist/URLAllowlist policies will be used as a fallback.
+//
+// If this policy is set and  IncognitoModeUrlBlocklist is not, any URL not on
+// the allowlist will be blocked in Incognito mode.
+//
+// If IncognitoModeAvailability is set to disallow (value 1), but this policy is
+// configured, Incognito mode will be available only for the URLs matching the
+// allowlist.
+//
+// Leaving the policy unset allows no exceptions to IncognitoModeUrlBlocklist
+// and IncognitoModeAvailability.
 //
 // This policy only affects Incognito mode. To allow URLs for all user profiles,
 // please use the URLAllowlist policy.
+//
+// This policy is limited to 1000 entries.
 //
 // Supported on: android, chrome_os, ios, linux, mac, win
 message IncognitoModeUrlAllowlistProto {
@@ -13516,13 +13533,26 @@ message IncognitoModeUrlAllowlistProto {
 //
 // Setting the IncognitoModeUrlBlocklist policy stops web pages with prohibited
 // URLs from loading in Incognito mode. Administrators can specify the list of
-// URL patterns to be blocked. If left unset, no URLs are blocked in the
-// Incognito mode. Up to 1,000 exceptions can be defined in
-// IncognitoModeUrlAllowlist. See how to format a URL pattern (
+// URL patterns to be blocked. See how to format a URL pattern (
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
+//
+// If both this and the IncognitoModeUrlAllowlist are set, the allowlist takes
+// precedence. If a URL matches a pattern on the allowlist, it will be allowed.
+// If it matches a pattern on the blocklist but not the allowlist, it will be
+// blocked. If a URL matches neither, the general URLBlocklist/URLAllowlist
+// policies will be used as a fallback.
+//
+// If the IncognitoModeUrlAllowlist policy is set and this policy is not, any
+// URL not on the allowlist will be blocked in Incognito mode.
+//
+// If IncognitoModeAvailability is set to disallow (value 1), but the
+// IncognitoModeUrlAllowlist policy is configured, Incognito mode will be
+// available only for the URLs matching the allowlist.
 //
 // This policy only affects Incognito mode. To block URLs for all user profiles,
 // please use the URLBlocklist policy.
+//
+// This policy is limited to 1000 entries.
 //
 // Supported on: android, chrome_os, ios, linux, mac, win
 message IncognitoModeUrlBlocklistProto {
@@ -24255,7 +24285,7 @@ message SSLVersionMinProto {
 // content transfers for a managed browser.
 //
 // When the policy is set, the URLs matching SaaS domains will be used to
-// generate report and uploaded. Unmatched URLs will be ignored.
+// generate report. Unmatched URLs will be ignored.
 //
 // When the policy is not set or set to an empty list, no report will be
 // generated.
@@ -24276,9 +24306,9 @@ message SSLVersionMinProto {
 // can't set it directly.
 //
 // Supported on: linux, mac, win
-message SaaSReportDomainUrlsForBrowserProto {
+message SaasUsageReportingDomainUrlsForBrowsersProto {
   optional PolicyOptions policy_options = 1;
-  optional StringList SaaSReportDomainUrlsForBrowser = 2;
+  optional StringList SaasUsageReportingDomainUrlsForBrowsers = 2;
 }
 
 // Specifies a list of SaaS domains that will be reported for managed profile
@@ -24287,7 +24317,7 @@ message SaaSReportDomainUrlsForBrowserProto {
 // content transfers for a managed profile.
 //
 // When the policy is set, the URLs matching SaaS domains will be used to
-// generate report and uploaded. Unmatched URLs will be ignored.
+// generate report. Unmatched URLs will be ignored.
 //
 // When the policy is not set or set to an empty list, no report will be
 // generated.
@@ -24310,9 +24340,9 @@ message SaaSReportDomainUrlsForBrowserProto {
 // can't set it directly.
 //
 // Supported on: linux, mac, win
-message SaaSReportDomainUrlsForProfileProto {
+message SaasUsageReportingDomainUrlsForProfilesProto {
   optional PolicyOptions policy_options = 1;
-  optional StringList SaaSReportDomainUrlsForProfile = 2;
+  optional StringList SaasUsageReportingDomainUrlsForProfiles = 2;
 }
 
 // Configure the list of domains on which Safe Browsing will not trigger
@@ -31012,8 +31042,8 @@ message ChromeSettingsSubProto1 {
   optional ReportWebsiteTelemetryAllowlistProto ReportWebsiteTelemetryAllowlist = 99;
   optional ReportWebsiteTelemetryCollectionRateMsProto ReportWebsiteTelemetryCollectionRateMs = 100;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
-  optional SaaSReportDomainUrlsForBrowserProto SaaSReportDomainUrlsForBrowser = 378;
-  optional SaaSReportDomainUrlsForProfileProto SaaSReportDomainUrlsForProfile = 379;
+  optional SaasUsageReportingDomainUrlsForBrowsersProto SaasUsageReportingDomainUrlsForBrowsers = 378;
+  optional SaasUsageReportingDomainUrlsForProfilesProto SaasUsageReportingDomainUrlsForProfiles = 379;
   optional SafeBrowsingDeepScanningEnabledProto SafeBrowsingDeepScanningEnabled = 117;
   optional SafeBrowsingProxiedRealTimeChecksAllowedProto SafeBrowsingProxiedRealTimeChecksAllowed = 76;
   optional SafeBrowsingSurveysEnabledProto SafeBrowsingSurveysEnabled = 101;
