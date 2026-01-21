@@ -9916,7 +9916,7 @@ message ExtensionAllowedTypesProto {
 //   0: Allow the usage of developer mode on extensions page
 //   1: Do not allow the usage of developer mode on extensions page
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message ExtensionDeveloperModeSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ExtensionDeveloperModeSettings = 2;
@@ -11072,17 +11072,17 @@ message FirstPartySetsEnabledProto {
 // aren't then an
 // appropriate error will be outputted.
 //
+// This is the equivalent of the RelatedWebsiteSetsOverrides policy.
+// Either policy may be used with the same effect on the browser's behavior.
+// Both these policies are deprecated following Related Website Sets feature
+// deprecation in Google Chrome version 144.
+//
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
 //
 // On macOS, this policy is only available on instances that are managed via
 // MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
-//
-// This is the equivalent of the RelatedWebsiteSetsOverrides policy.
-// Either policy may be used with the same effect on the browser's behavior.
-// Both these policies are deprecated following Related Website Sets feature
-// deprecation in Google Chrome version 144.
 //
 // Value schema:
 // {
@@ -16041,14 +16041,14 @@ message MemorySaverModeSavingsProto {
 // When this policy is not set, users can choose the anonymous reporting
 // behavior at installation or first run, and can change this setting later.
 //
+// (For Google ChromeOS, see DeviceMetricsReportingEnabled.)
+//
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
 //
 // On macOS, this policy is only available on instances that are managed via
 // MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
-//
-// (For Google ChromeOS, see DeviceMetricsReportingEnabled.)
 //
 // Valid values:
 //   True: Enable reporting of usage and crash-related data
