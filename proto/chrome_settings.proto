@@ -15470,6 +15470,41 @@ message LocalNetworkAccessBlockedForUrlsProto {
   optional StringList LocalNetworkAccessBlockedForUrls = 2;
 }
 
+// Override IP address space mappings
+//
+// This can be used to treat certain internal address ranges as "public" and
+// thus not subject to Local Network Access checks. Conversely, this can be used
+// to treat certain public address ranges that might be used internally as
+// "local" so that they are protected by Local Network Access checks.
+//
+// IP address space overrides have two forms:
+//
+// [cidr]=[public|local|loopback]
+//
+// where [cidr] is a IP address range in CIDR notation (see section 3.1 of
+// https://tools.ietf.org/html/rfc4632 for IPv4 and section 2.3 of
+// https://tools.ietf.org/html/rfc4291 for IPv6). IPv6 addresses must be
+// specified in URL-safe (bracketed) format. CIDR overrides apply to all ports.
+//
+// or
+//
+// [ip-address]:[port]=[public|local|loopback]
+//
+// For more information on Local Network Access, see
+// https://wicg.github.io/local-network-access/ and
+// https://developer.chrome.com/blog/local-network-access.
+//
+// This policy does not support dynamic refresh.
+//
+// Overrides from the command-line switch --ip-address-space-overrides take
+// precedence over overrides set by this policy.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkAccessIpAddressSpaceOverridesProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LocalNetworkAccessIpAddressSpaceOverrides = 2;
+}
+
 // Specifies whether to apply restrictions to requests to local network
 // endpoints
 //
@@ -30959,6 +30994,7 @@ message ChromeSettingsSubProto1 {
   optional LocalAuthFactorsComplexityProto LocalAuthFactorsComplexity = 363;
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
+  optional LocalNetworkAccessIpAddressSpaceOverridesProto LocalNetworkAccessIpAddressSpaceOverrides = 383;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;
   optional LocalNetworkAccessRestrictionsTemporaryOptOutProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional LocalUserFilesAllowedProto LocalUserFilesAllowed = 176;
