@@ -827,6 +827,34 @@ message AllowedLanguagesProto {
   optional StringList AllowedLanguages = 2;
 }
 
+// Configure allowed local authentication factors
+//
+// Setting the policy controls which local authentication factors can be used
+// for both login and reauthentication on Google ChromeOS.
+//
+// To allow:
+//
+// * Every local authentication factor, use ["ALL"] (includes factors added in
+// the future).
+//
+// * Only PIN, use ["PIN"].
+//
+// * Only Local Passwords, use ["LOCAL_PASSWORD"].
+//
+// If the policy is unset or set to an empty list, no local auth factors are
+// available for managed users.
+//
+// Valid values:
+//   ALL: All
+//   PIN: PIN
+//   LOCAL_PASSWORD: Local Password
+//
+// Supported on: chrome_os
+message AllowedLocalAuthFactorsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList AllowedLocalAuthFactors = 2;
+}
+
 // Enable alternate error pages
 //
 // Setting the policy to True means Google Chrome uses alternate error pages
@@ -1836,6 +1864,9 @@ message AutoOpenAllowedForURLsProto {
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
+//
+// On macOS, this policy is only available on instances that are managed via
+// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message AutoOpenFileTypesProto {
@@ -15289,34 +15320,6 @@ message LoadCryptoTokenExtensionProto {
   optional bool LoadCryptoTokenExtension = 2;
 }
 
-// Configure allowed local auth factors
-//
-// Setting the policy controls which local authentication factors can be used
-// for both login and reauthentication on Google ChromeOS.
-//
-// To allow:
-//
-// * Every local authentication factor, use ["ALL"] (includes factors added in
-// the future).
-//
-// * Only PIN, use ["PIN"].
-//
-// * Only Local Passwords, use ["LOCAL_PASSWORD"].
-//
-// If the policy is unset or set to an empty list, no local auth factors are
-// available for managed users.
-//
-// Valid values:
-//   ALL: All
-//   PIN: PIN
-//   LOCAL_PASSWORD: Local Password
-//
-// Supported on: chrome_os
-message LocalAuthFactorsProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList LocalAuthFactors = 2;
-}
-
 // Set minimum complexity for local PINs and passwords
 //
 // This policy configures the minimum complexity requirements for local
@@ -16368,7 +16371,7 @@ message NTPContentSuggestionsEnabledProto {
 //   True: Users can customize the New Tab page background
 //   False: Users can not customize the New Tab page background
 //
-// Supported on: chrome_os, fuchsia, ios, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message NTPCustomBackgroundEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool NTPCustomBackgroundEnabled = 2;
@@ -17721,7 +17724,7 @@ message OnFileAttachedEnterpriseConnectorProto {
 //     "type": "array"
 // }
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, linux, mac, win
 message OnFileDownloadedEnterpriseConnectorProto {
   optional PolicyOptions policy_options = 1;
   optional string OnFileDownloadedEnterpriseConnector = 2;
@@ -24004,6 +24007,9 @@ message RestoreOnStartupProto {
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
+//
+// On macOS, this policy is only available on instances that are managed via
+// MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
 // Supported on: chrome_os, fuchsia, linux, mac, win
 message RestoreOnStartupURLsProto {
@@ -30827,6 +30833,7 @@ message ChromeSettingsSubProto1 {
   optional AllowExcludeDisplayInMirrorModeProto AllowExcludeDisplayInMirrorMode = 259;
   optional AllowedDomainsForAppsListProto AllowedDomainsForAppsList = 172;
   optional AllowedInputMethodsForceEnabledProto AllowedInputMethodsForceEnabled = 283;
+  optional AllowedLocalAuthFactorsProto AllowedLocalAuthFactors = 365;
   optional AlwaysOnVpnPreConnectUrlAllowlistProto AlwaysOnVpnPreConnectUrlAllowlist = 150;
   optional AppLaunchAutomationProto AppLaunchAutomation = 54;
   optional AppStoreRatingEnabledProto AppStoreRatingEnabled = 12;
@@ -30990,7 +30997,6 @@ message ChromeSettingsSubProto1 {
   optional ListenToThisPageEnabledProto ListenToThisPageEnabled = 149;
   optional LiveCaptionEnabledProto LiveCaptionEnabled = 334;
   optional LiveTranslateEnabledProto LiveTranslateEnabled = 278;
-  optional LocalAuthFactorsProto LocalAuthFactors = 365;
   optional LocalAuthFactorsComplexityProto LocalAuthFactorsComplexity = 363;
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
