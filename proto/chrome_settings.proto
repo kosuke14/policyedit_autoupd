@@ -2330,6 +2330,8 @@ message BeforeunloadEventCancelByPreventDefaultEnabledProto {
 // https://developer.chrome.com/docs/extensions/how-to/distribute/install-
 // extensions.
 //
+// Note: This policy only applies to platforms that support extensions.
+//
 // Valid values:
 //   True: Block installation of external extensions
 //   False: Allow installation of external extensions
@@ -9914,6 +9916,8 @@ message ExtensionAllowInsecureUpdatesProto {
 // Note: This policy also affects extensions and apps to be force-installed
 // using ExtensionInstallForcelist.
 //
+// Note: This policy only applies to platforms that support extensions.
+//
 // Valid values:
 //   extension: Extension
 //   theme: Theme
@@ -9942,6 +9946,8 @@ message ExtensionAllowedTypesProto {
 //
 // If this policy is set, DeveloperToolsAvailability can no longer control
 // extensions developer mode.
+//
+// Note: This policy only applies to platforms that support extensions.
 //
 // Valid values:
 //   0: Allow the usage of developer mode on extensions page
@@ -10031,6 +10037,8 @@ message ExtensionForceInstallWithNonMalwareViolationsEnabledProto {
 // By default, all extensions are allowed. But, if you prohibited extensions by
 // policy, use the list of allowed extensions to change that policy.
 //
+// Note: This policy only applies to platforms that support extensions.
+//
 // Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallAllowlistProto {
   optional PolicyOptions policy_options = 1;
@@ -10061,6 +10069,8 @@ message ExtensionInstallBlacklistProto {
 //
 // If this policy is left not set the user can install any extension in Google
 // Chrome.
+//
+// Note: This policy only applies to platforms that support extensions.
 //
 // Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallBlocklistProto {
@@ -10169,6 +10179,8 @@ message ExtensionInstallEventLoggingEnabledProto {
 // Note: This policy doesn't apply to Incognito mode. Read about hosting
 // extensions ( https://developer.chrome.com/extensions/hosting ).
 //
+// Note: This policy only applies to platforms that support extensions.
+//
 // Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallForcelistProto {
   optional PolicyOptions policy_options = 1;
@@ -10193,6 +10205,8 @@ message ExtensionInstallForcelistProto {
 // ExtensionInstallBlocklist takes precedence over this policy. That is, an
 // extension on the blocklist won't be installed, even if it happens from a site
 // on this list.
+//
+// Note: This policy only applies to platforms that support extensions.
 //
 // Supported on: android, chrome_os, linux, mac, win
 message ExtensionInstallSourcesProto {
@@ -10321,6 +10335,8 @@ message ExtensionOAuthRedirectUrlsProto {
 // On macOS instances, apps and extensions from outside the Chrome Web Store can
 // only be force installed if the instance is managed via MDM, joined to a
 // domain via MCX or enrolled in Chrome Enterprise Core.
+//
+// Note: This policy only applies to platforms that support extensions.
 //
 // Value schema:
 // {
@@ -11064,8 +11080,8 @@ message FirstPartySetsEnabledProto {
 // A First-Party Set must contain a primary site and one or more member sites.
 // A set can also contain a list of service sites that it owns, as well as a map
 // from a site to all of its ccTLD variants.
-// See https://github.com/WICG/first-party-sets for more information on First-
-// Party Sets are used by Google Chrome.
+// See https://github.com/WICG/first-party-sets for more information on how
+// First-Party Sets are used by Google Chrome.
 //
 // All sites in a First-Party Set must be a registrable domain served over
 // HTTPS. Each site in a First-Party Set must also be unique,
@@ -15107,6 +15123,8 @@ message LegacyTechReportAllowlistProto {
 // their cameras using Google Lens. Setting the policy to Disabled means users
 // can't see the Google Lens button in the search box when Google Lens camera
 // assisted search is supported.
+// Starting in Google Chrome 147, this policy will be deprecated. IT Admins can
+// use SearchContentSharingSettings to control this feature going forward.
 //
 // Valid values:
 //   True: Enable Google Lens camera assisted search for Enterprise user
@@ -24072,6 +24090,24 @@ message RestrictCoreSharingOnRendererProto {
   optional bool RestrictCoreSharingOnRenderer = 2;
 }
 
+// Restrict eligible Google accounts for saving PDF files to Google Drive from
+// the Google Chrome PDF Viewer
+//
+// Contains a regular expression to determine eligible Google accounts for
+// saving PDF files to Google Drive from the Google Chrome PDF Viewer.
+//
+// An error is displayed if a user tries to upload a PDF file to Google Drive
+// using an account that does not match this pattern.
+//
+// If this policy is left not set or blank, then the user can use any Google
+// account to save PDF files to Google Drive.
+//
+// Supported on: linux, mac, win
+message RestrictPdfSaveToGoogleDriveAccountsToPatternProto {
+  optional PolicyOptions policy_options = 1;
+  optional string RestrictPdfSaveToGoogleDriveAccountsToPattern = 2;
+}
+
 // Restrict which Google accounts are allowed to be set as browser primary
 // accounts in Google Chrome
 //
@@ -31084,6 +31120,7 @@ message ChromeSettingsSubProto1 {
   optional ReportWebsiteTelemetryAllowlistProto ReportWebsiteTelemetryAllowlist = 99;
   optional ReportWebsiteTelemetryCollectionRateMsProto ReportWebsiteTelemetryCollectionRateMs = 100;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
+  optional RestrictPdfSaveToGoogleDriveAccountsToPatternProto RestrictPdfSaveToGoogleDriveAccountsToPattern = 384;
   optional SaasUsageReportingDomainUrlsForBrowsersProto SaasUsageReportingDomainUrlsForBrowsers = 378;
   optional SaasUsageReportingDomainUrlsForProfilesProto SaasUsageReportingDomainUrlsForProfiles = 379;
   optional SafeBrowsingDeepScanningEnabledProto SafeBrowsingDeepScanningEnabled = 117;
