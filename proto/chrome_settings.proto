@@ -26248,7 +26248,7 @@ message ShowDisplaySizeScreenEnabledProto {
 //   False: Display the default URL
 //   None: Display the default URL, allow users to switch to the full URL
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message ShowFullUrlsInAddressBarProto {
   optional PolicyOptions policy_options = 1;
   optional bool ShowFullUrlsInAddressBar = 2;
