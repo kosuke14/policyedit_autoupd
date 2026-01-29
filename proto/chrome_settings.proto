@@ -15440,14 +15440,11 @@ message LocalFontsBlockedForUrlsProto {
   optional StringList LocalFontsBlockedForUrls = 2;
 }
 
-// Allow sites to make requests to local network endpoints.
+// Allow sites to make network requests to local devices and local network
+// endpoints.
 //
-// List of URL patterns. Requests initiated from websites served by matching
-// origins are not subject to Local Network Access checks.
-//
-// If an origin is covered by both this policy and by
-// LocalNetworkAccessBlockedForUrls, LocalNetworkAccessBlockedForUrls takes
-// precedence.
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins are not subject to Local Network Access checks.
 //
 // For origins not covered by the patterns specified here, the user's personal
 // configuration will apply.
@@ -15457,6 +15454,18 @@ message LocalFontsBlockedForUrlsProto {
 //
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
+//
+// There are multiple policies listing origins that impact requests to local
+// device and local network endpoints. If an origin is matched by more than one
+// of the following policies, the policies take precedence in the following
+// order:
+//
+// - LocalNetworkBlockedForUrls
+// - LocalNetworkAllowedForUrls
+// - LoopbackNetworkAccessBlockedForUrls
+// - LoopbackNetworkAccessAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
 //
 // Supported on: android, chrome_os, linux, mac, win
 message LocalNetworkAccessAllowedForUrlsProto {
@@ -15464,17 +15473,11 @@ message LocalNetworkAccessAllowedForUrlsProto {
   optional StringList LocalNetworkAccessAllowedForUrls = 2;
 }
 
-// Block sites from making requests to local network endpoints.
+// Block sites from making network requests to local devices and local network
+// endpoints.
 //
-// List of URL patterns. Requests initiated from websites served by matching
-// origins are blocked from issuing Local Network Access requests.
-//
-// If an origin is covered by both this policy and by
-// LocalNetworkAccessAllowedForUrls, this policy takes precedence.
-//
-// Depending on the stage of the rollout of Local Network Access,
-// LocalNetworkAccessRestrictionsEnabled may also need to be enabled for this
-// policy to block Local Network Access requests.
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins are blocked from issuing Local Network Access requests.
 //
 // For origins not covered by the patterns specified here, the user's personal
 // configuration will apply.
@@ -15484,6 +15487,18 @@ message LocalNetworkAccessAllowedForUrlsProto {
 //
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
+//
+// There are multiple policies listing origins that impact requests to local
+// device and local network endpoints. If an origin is matched by more than one
+// of the following policies, the policies take precedence in the following
+// order:
+//
+// - LocalNetworkBlockedForUrls
+// - LocalNetworkAllowedForUrls
+// - LoopbackNetworkAccessBlockedForUrls
+// - LoopbackNetworkAccessAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
 //
 // Supported on: android, chrome_os, linux, mac, win
 message LocalNetworkAccessBlockedForUrlsProto {
@@ -15581,6 +15596,66 @@ message LocalNetworkAccessRestrictionsEnabledProto {
 message LocalNetworkAccessRestrictionsTemporaryOptOutProto {
   optional PolicyOptions policy_options = 1;
   optional bool LocalNetworkAccessRestrictionsTemporaryOptOut = 2;
+}
+
+// Allow sites to make network requests to local network endpoints.
+//
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins to local network endpoints are not subject to Local Network
+// Access checks.
+//
+// For origins not covered by the patterns specified here, the user's personal
+// configuration will apply.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns/.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// There are multiple policies listing origins that impact requests to local
+// network endpoints. If an origin is matched by more than one of the following
+// policies, the policies take precedence in the following order:
+//
+// - LocalNetworkBlockedForUrls
+// - LocalNetworkAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LocalNetworkAllowedForUrls = 2;
+}
+
+// Block sites from making network requests to local network endpoints.
+//
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins to local network endpoints are blocked from issuing Local
+// Network Access requests.
+//
+// For origins not covered by the patterns specified here, the user's personal
+// configuration will apply.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns/.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// There are multiple policies listing origins that impact requests to local
+// network endpoints. If an origin is matched by more than one of the following
+// policies, the policies take precedence in the following order:
+//
+// - LocalNetworkBlockedForUrls
+// - LocalNetworkAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LocalNetworkBlockedForUrls = 2;
 }
 
 // Enable local user files
@@ -15751,6 +15826,66 @@ message LoginDisplayPasswordButtonEnabledProto {
 message LookalikeWarningAllowlistDomainsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList LookalikeWarningAllowlistDomains = 2;
+}
+
+// Allow sites to make network requests to the local device.
+//
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins to the local device are not subject to Local Network Access
+// checks.
+//
+// For origins not covered by the patterns specified here, the user's personal
+// configuration will apply.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns/.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// There are multiple policies listing origins that impact requests to the local
+// device. If an origin is matched by more than one of the following policies,
+// the policies take precedence in the following order:
+//
+// - LoopbackNetworkBlockedForUrls
+// - LoopbackNetworkAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LoopbackNetworkAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LoopbackNetworkAllowedForUrls = 2;
+}
+
+// Block sites from making network requests to the local device.
+//
+// List of URL patterns. Network requests initiated from websites served by
+// matching origins to the local device are blocked from issuing Local Network
+// Access requests.
+//
+// For origins not covered by the patterns specified here, the user's personal
+// configuration will apply.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns/.
+//
+// See https://wicg.github.io/local-network-access/ for Local Network Access
+// restrictions.
+//
+// There are multiple policies listing origins that impact requests to the local
+// device. If an origin is matched by more than one of the following policies,
+// the policies take precedence in the following order:
+//
+// - LoopbackNetworkBlockedForUrls
+// - LoopbackNetworkAllowedForUrls
+// - LocalNetworkAccessBlockedForUrls
+// - LocalNetworkAccessAllowedForUrls
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LoopbackNetworkBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList LoopbackNetworkBlockedForUrls = 2;
 }
 
 // The enrollment token of cloud policy on desktop
@@ -17041,7 +17176,7 @@ message NewBaseUrlInheritanceBehaviorAllowedProto {
 // On macOS, this policy is only available on instances that are managed via
 // MDM, joined to a domain via MCX or enrolled in Chrome Enterprise Core.
 //
-// Supported on: chrome_os, fuchsia, ios, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message NewTabPageLocationProto {
   optional PolicyOptions policy_options = 1;
   optional string NewTabPageLocation = 2;
@@ -31039,9 +31174,13 @@ message ChromeSettingsSubProto1 {
   optional LocalNetworkAccessIpAddressSpaceOverridesProto LocalNetworkAccessIpAddressSpaceOverrides = 383;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;
   optional LocalNetworkAccessRestrictionsTemporaryOptOutProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
+  optional LocalNetworkAllowedForUrlsProto LocalNetworkAllowedForUrls = 385;
+  optional LocalNetworkBlockedForUrlsProto LocalNetworkBlockedForUrls = 386;
   optional LocalUserFilesAllowedProto LocalUserFilesAllowed = 176;
   optional LocalUserFilesMigrationDestinationProto LocalUserFilesMigrationDestination = 232;
   optional LockScreenAutoStartOnlineReauthProto LockScreenAutoStartOnlineReauth = 217;
+  optional LoopbackNetworkAllowedForUrlsProto LoopbackNetworkAllowedForUrls = 387;
+  optional LoopbackNetworkBlockedForUrlsProto LoopbackNetworkBlockedForUrls = 388;
   optional MandatoryExtensionsForIncognitoNavigationProto MandatoryExtensionsForIncognitoNavigation = 45;
   optional MemorySaverModeSavingsProto MemorySaverModeSavings = 221;
   optional MicrosoftOfficeCloudUploadProto MicrosoftOfficeCloudUpload = 105;
