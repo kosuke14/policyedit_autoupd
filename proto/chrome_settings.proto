@@ -2096,7 +2096,7 @@ message AutomatedPasswordChangeSettingsProto {
 // Origins not specified by policy nor user settings will require a prior user
 // gesture to call this API.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message AutomaticFullscreenAllowedForUrlsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList AutomaticFullscreenAllowedForUrls = 2;
@@ -2122,7 +2122,7 @@ message AutomaticFullscreenAllowedForUrlsProto {
 // Origins not specified by policy nor user settings will require a prior user
 // gesture to call this API.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message AutomaticFullscreenBlockedForUrlsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList AutomaticFullscreenBlockedForUrls = 2;
@@ -25514,7 +25514,7 @@ message ScrollToTextFragmentEnabledProto {
 // 0/unset = users can share page or file content with Google AI Mode.
 //
 // 1 = users cannot share page or file content with Google AI Mode. The entry
-// points for sharing context will be disabled or hidden.
+// points for sharing context and the side panel will be disabled or hidden.
 //
 // This policy will be ignored when Google Search is not users' default search
 // engine as the feature is disabled.
@@ -30968,6 +30968,30 @@ message WindowPlacementBlockedForUrlsProto {
   optional StringList WindowPlacementBlockedForUrls = 2;
 }
 
+// Control the availability of the XSLT feature
+//
+// This policy controls the availability of the XSLT feature (the XSLTProcessor
+// Javascript API and the XSL processing instruction).
+// If this policy is set to Enabled, XSLT will be available, regardless of the
+// default state of the feature in the browser.
+// If this policy is set to Disabled, XSLT will be unavailable, regardless of
+// the default state of the feature in the browser.
+// If this policy is left unset, XSLT availability will be determined by the
+// browser's default settings and field trials.
+// This policy is a temporary measure, and will be removed in M164.
+//
+// Valid values:
+//   True: Enabled: XSLT is explicitly enabled.
+//   False: Disabled: XSLT is explicitly disabled.
+//   None: Default: XSLT availability will be determined by browser defaults and
+// field trials.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message XSLTEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool XSLTEnabled = 2;
+}
+
 // Enable zstd content-encoding support
 //
 // This policy is temporary and will no longer work starting in M137.
@@ -31323,6 +31347,7 @@ message ChromeSettingsSubProto1 {
   optional WebRtcTextLogCollectionAllowedProto WebRtcTextLogCollectionAllowed = 38;
   optional WindowManagementAllowedForUrlsProto WindowManagementAllowedForUrls = 28;
   optional WindowManagementBlockedForUrlsProto WindowManagementBlockedForUrls = 29;
+  optional XSLTEnabledProto XSLTEnabled = 389;
   optional ZstdContentEncodingEnabledProto ZstdContentEncodingEnabled = 131;
 }
 

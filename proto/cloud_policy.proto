@@ -217,6 +217,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto WebAudioOutputBufferingEnabled = 270;
   optional StringListPolicyProto WebAuthenticationRemoteDesktopAllowedOrigins = 292;
   optional BooleanPolicyProto WebRtcTextLogCollectionAllowed = 38;
+  optional BooleanPolicyProto XSLTEnabled = 389;
   optional BooleanPolicyProto CompressionDictionaryTransportEnabled = 104;
   optional BooleanPolicyProto DataURLWhitespacePreservationEnabled = 258;
   optional StringListPolicyProto DnsOverHttpsExcludedDomains = 242;
