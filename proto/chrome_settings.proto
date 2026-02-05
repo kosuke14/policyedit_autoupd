@@ -11486,6 +11486,35 @@ message ForceEphemeralProfilesProto {
   optional bool ForceEphemeralProfiles = 2;
 }
 
+// Force foreground priority for all tabs in the profile
+//
+// This policy controls whether background web content is forced to run at
+// foreground priority.
+//
+// By default, the browser optimizes resources by deprioritizing content in
+// background tabs. Enabling this policy overrides that behavior, causing
+// background tabs to be scheduled the same way as the active tab.
+//
+// Note that forcing background content to run at foreground priority may
+// slightly impact the responsiveness of the active tab.
+//
+// If this policy is set to Enabled, all web content runs at foreground priority
+// regardless of its visibility state.
+//
+// If this policy is set to Disabled or not set, the browser determines priority
+// based on standard heuristics (e.g., deprioritizing content that is not
+// visible, not playing audio, not participating in video calls...).
+//
+// Valid values:
+//   True: Force foreground priority for all tabs
+//   False: Use standard tab prioritization
+//
+// Supported on: chrome_os, linux, mac, win
+message ForceForegroundPriorityForAllTabsProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool ForceForegroundPriorityForAllTabs = 2;
+}
+
 // Force Google SafeSearch
 //
 // Setting the policy to Enabled means SafeSearch in Google Search is always
@@ -12256,6 +12285,16 @@ message GenAiChromeOsSmartActionsSettingsProto {
 // https://support.google.com/chrome/a?p=generative_ai_settings for the list of
 // covered features.
 //
+// Some policies, e.g. GeminiSettings, only support the states Allowed and Do
+// not allow. In this case, if GenAiDefaultSettings is set to 0 or 1, this
+// feature will be enabled. If GenAiDefaultSettings is set to 2, this feature
+// will be disabled. The documentation for each feature contains more details
+// about how it interacts with values in this policy (e.g. Gemini in Chrome -
+// https://support.google.com/chrome/a/?p=gemini_in_chrome). This applies to the
+// following features: Gemini in Chrome, Google Lens, and AI Mode as they are
+// subject to their own guarantees and/or terms of service
+// (https://support.google.com/chrome/a/?p=genai_features_chrome).
+//
 // 0 = Allow the feature to be used, while allowing Google to use relevant data
 // to improve its AI models. Relevant data may include prompts, inputs, outputs,
 // source materials, and written feedback, depending on the feature. It may also
@@ -12268,13 +12307,6 @@ message GenAiChromeOsSmartActionsSettingsProto {
 // Google Admin console and for Education accounts managed by Google Workspace.
 //
 // 2 = Do not allow the feature.
-//
-// If a covered Chrome feature does not have an equivalent policy value, the
-// closest higher value will be used. Some policies, e.g. GeminiSettings, only
-// support the states Allowed and Not Allowed. If GenAiDefaultSettings policy is
-// set to 0 or 1, this feature will be allowed. If policy is set to 2, this
-// feature will not be allowed. Please review documentation for each feature for
-// more details about how it interacts with values in this policy.
 //
 // For more information on data handling for generative AI features, please see
 // https://support.google.com/chrome/a?p=generative_ai_settings.
@@ -15539,6 +15571,43 @@ message LocalNetworkAccessBlockedForUrlsProto {
 message LocalNetworkAccessIpAddressSpaceOverridesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList LocalNetworkAccessIpAddressSpaceOverrides = 2;
+}
+
+// Allow Local Network Access (LNA) requests in subframes without explicit
+// delegation
+//
+// By default, the permissions for Local Network Access (LNA) are only allowed
+// to be requested in cross-origin subframes if they are explicitly delegated.
+// This policy can be used to override this default behavior so that LNA
+// permissions are default inherited into subframes, unless explicitly denied in
+// permissions policy.
+//
+// If this policy is set to enabled, then subframes are by default delegated all
+// LNA permissions policy features and can make local network requests
+// (triggering the permission prompt).
+//
+// If this policy is set to disabled or not set, then subframes must be
+// explicitly delegated the permissions policy feature in order make local
+// network requests and trigger the permission prompt.
+//
+// This policy applies to the permissions policy features "local-network-
+// access", "loopback-network", and "local-network".
+//
+// For more information on Local Network Access, see
+// https://wicg.github.io/local-network-access/ and
+// https://developer.chrome.com/blog/local-network-access.
+//
+// For more information on permissions policy, see
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Permissions_Policy.
+//
+// Valid values:
+//   True: Allow LNA requests in subframes without explicit delegation
+//   False: Do not allow LNA requests in subframes without explicit delegation
+//
+// Supported on: android, chrome_os, linux, mac, win
+message LocalNetworkAccessPermissionsPolicyDefaultEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool LocalNetworkAccessPermissionsPolicyDefaultEnabled = 2;
 }
 
 // Specifies whether to apply restrictions to requests to local network
@@ -31140,6 +31209,7 @@ message ChromeSettingsSubProto1 {
   optional FloatingSsoSessionCookiesIncludedProto FloatingSsoSessionCookiesIncluded = 339;
   optional FocusModeSoundsEnabledProto FocusModeSoundsEnabled = 230;
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
+  optional ForceForegroundPriorityForAllTabsProto ForceForegroundPriorityForAllTabs = 391;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
   optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;
@@ -31196,6 +31266,7 @@ message ChromeSettingsSubProto1 {
   optional LocalNetworkAccessAllowedForUrlsProto LocalNetworkAccessAllowedForUrls = 331;
   optional LocalNetworkAccessBlockedForUrlsProto LocalNetworkAccessBlockedForUrls = 332;
   optional LocalNetworkAccessIpAddressSpaceOverridesProto LocalNetworkAccessIpAddressSpaceOverrides = 383;
+  optional LocalNetworkAccessPermissionsPolicyDefaultEnabledProto LocalNetworkAccessPermissionsPolicyDefaultEnabled = 390;
   optional LocalNetworkAccessRestrictionsEnabledProto LocalNetworkAccessRestrictionsEnabled = 324;
   optional LocalNetworkAccessRestrictionsTemporaryOptOutProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional LocalNetworkAllowedForUrlsProto LocalNetworkAllowedForUrls = 385;

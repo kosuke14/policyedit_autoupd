@@ -117,6 +117,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto LocalNetworkAccessAllowedForUrls = 331;
   optional StringListPolicyProto LocalNetworkAccessBlockedForUrls = 332;
   optional StringListPolicyProto LocalNetworkAccessIpAddressSpaceOverrides = 383;
+  optional BooleanPolicyProto LocalNetworkAccessPermissionsPolicyDefaultEnabled = 390;
   optional BooleanPolicyProto LocalNetworkAccessRestrictionsTemporaryOptOut = 361;
   optional StringListPolicyProto LocalNetworkAllowedForUrls = 385;
   optional StringListPolicyProto LocalNetworkBlockedForUrls = 386;
@@ -151,6 +152,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto FeedbackSurveysEnabled = 142;
   optional StringListPolicyProto FileOrDirectoryPickerWithoutGestureAllowedForOrigins = 53;
   optional StringPolicyProto FocusModeSoundsEnabled = 230;
+  optional BooleanPolicyProto ForceForegroundPriorityForAllTabs = 391;
   optional BooleanPolicyProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional IntegerPolicyProto FullRestoreMode = 115;
   optional IntegerPolicyProto GoogleLocationServicesEnabled = 174;
