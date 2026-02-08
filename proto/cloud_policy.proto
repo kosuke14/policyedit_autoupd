@@ -188,6 +188,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto QuickOfficeForceFileDownloadEnabled = 111;
   optional BooleanPolicyProto ReduceAcceptLanguageEnabled = 305;
   optional IntegerPolicyProto RelaunchFastIfOutdated = 298;
+  optional StringPolicyProto RestrictPdfSaveToGoogleDriveAccountsToPattern = 384;
   optional StringPolicyProto ScreenCaptureLocation = 171;
   optional StringListPolicyProto ScreenCaptureWithoutGestureAllowedForOrigins = 52;
   optional BooleanPolicyProto ServiceWorkerAutoPreloadEnabled = 340;

@@ -24307,7 +24307,7 @@ message RestrictCoreSharingOnRendererProto {
 // If this policy is left not set or blank, then the user can use any Google
 // account to save PDF files to Google Drive.
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message RestrictPdfSaveToGoogleDriveAccountsToPatternProto {
   optional PolicyOptions policy_options = 1;
   optional string RestrictPdfSaveToGoogleDriveAccountsToPattern = 2;
