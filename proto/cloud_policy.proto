@@ -18,6 +18,8 @@ import "policy_common_definitions.proto";
 message CloudPolicySubProto1 {
   optional BooleanPolicyProto ColorCorrectionEnabled = 80;
   optional BooleanPolicyProto FaceGazeEnabled = 310;
+  optional BooleanPolicyProto LiveCaptionEnabled = 334;
+  optional BooleanPolicyProto LiveTranslateEnabled = 278;
   optional BooleanPolicyProto ArcOpenLinksInBrowserByDefault = 261;
   optional BooleanPolicyProto UnaffiliatedDeviceArcAllowed = 127;
   optional BooleanPolicyProto ClassManagementCaptionsEnabled = 299;
@@ -262,6 +264,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto ReportWebsiteTelemetry = 103;
   optional StringListPolicyProto ReportWebsiteTelemetryAllowlist = 99;
   optional IntegerPolicyProto ReportWebsiteTelemetryCollectionRateMs = 100;
+  optional StringListPolicyProto WebRtcDiagnosticLogCollectionAllowedForOrigins = 392;
   optional StringPolicyProto WebRtcIPHandlingUrl = 284;
   optional BooleanPolicyProto WebRtcPostQuantumKeyAgreement = 344;
 }

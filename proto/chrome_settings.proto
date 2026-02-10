@@ -15318,7 +15318,7 @@ message ListenToThisPageEnabledProto {
 //   False: Disable Live Caption
 //   None: Allow the user to decide
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message LiveCaptionEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool LiveCaptionEnabled = 2;
@@ -15346,7 +15346,7 @@ message LiveCaptionEnabledProto {
 //   False: Disable Live Translate
 //   None: Allow the user to decide
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message LiveTranslateEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool LiveTranslateEnabled = 2;
@@ -30415,6 +30415,28 @@ message WebRtcAllowLegacyTLSProtocolsProto {
   optional bool WebRtcAllowLegacyTLSProtocols = 2;
 }
 
+// Enable WebRTC diagnostic log collection for specific origins
+//
+// This policy allows enabling diagnostic log collection for WebRTC for specific
+// origins.
+//
+// For detailed information on valid input patterns, please see
+// https://chromeenterprise.google/policies/url-patterns. * is not an accepted
+// value for this policy. This policy only matches based on origin, so any path
+// in the URL pattern is ignored. Scheme and subdomains are supported.
+//
+// If the policy is set, diagnostic log collection will be enabled for the
+// origins matched by the patterns in the list.
+//
+// If the policy is not set, diagnostic log collection will be disabled by
+// default.
+//
+// Supported on: chrome_os, linux, mac, win
+message WebRtcDiagnosticLogCollectionAllowedForOriginsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList WebRtcDiagnosticLogCollectionAllowedForOrigins = 2;
+}
+
 // Allow collection of WebRTC event logs from Google services
 //
 // Setting the policy to Enabled means Google Chrome can collect WebRTC event
@@ -31414,6 +31436,7 @@ message ChromeSettingsSubProto1 {
   optional WebAuthenticationRemoteDesktopAllowedOriginsProto WebAuthenticationRemoteDesktopAllowedOrigins = 292;
   optional WebPrintingAllowedForUrlsProto WebPrintingAllowedForUrls = 180;
   optional WebPrintingBlockedForUrlsProto WebPrintingBlockedForUrls = 181;
+  optional WebRtcDiagnosticLogCollectionAllowedForOriginsProto WebRtcDiagnosticLogCollectionAllowedForOrigins = 392;
   optional WebRtcIPHandlingUrlProto WebRtcIPHandlingUrl = 284;
   optional WebRtcPostQuantumKeyAgreementProto WebRtcPostQuantumKeyAgreement = 344;
   optional WebRtcTextLogCollectionAllowedProto WebRtcTextLogCollectionAllowed = 38;
