@@ -165,6 +165,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto IncognitoModeUrlAllowlist = 353;
   optional StringListPolicyProto IncognitoModeUrlBlocklist = 352;
   optional IntegerPolicyProto InsertKeyModifier = 167;
+  optional BooleanPolicyProto IsolatedWebAppUserInstallationEnabled = 393;
   optional StringListPolicyProto KioskBrowserPermissionsAllowedForOrigins = 233;
   optional BooleanPolicyProto LensOnGalleryEnabled = 234;
   optional IntegerPolicyProto LensOverlaySettings = 226;

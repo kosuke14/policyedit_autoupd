@@ -14117,6 +14117,25 @@ message IsolatedWebAppInstallForceListProto {
   optional string IsolatedWebAppInstallForceList = 2;
 }
 
+// Controls the ability for a user to manually install Isolated Web Apps
+//
+// Controls the user's ability to manually install Isolated Web Apps (IWAs).
+//
+// If this policy is set to false, IWA user installation is blocked.
+//
+// If this policy is set to true, or if the policy is not set, IWA user
+// installations are permitted.
+//
+// Valid values:
+//   True: Enable IWA user installation
+//   False: Disable IWA user installation
+//
+// Supported on: chrome_os
+message IsolatedWebAppUserInstallationEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool IsolatedWebAppUserInstallationEnabled = 2;
+}
+
 // Allow JavaScript on these sites
 //
 // Setting the policy lets you set a list of URL patterns that specify the sites
@@ -31266,6 +31285,7 @@ message ChromeSettingsSubProto1 {
   optional IncognitoModeUrlBlocklistProto IncognitoModeUrlBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
+  optional IsolatedWebAppUserInstallationEnabledProto IsolatedWebAppUserInstallationEnabled = 393;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
   optional JavaScriptOptimizerBlockedForSitesProto JavaScriptOptimizerBlockedForSites = 239;
   optional KerberosUseCustomPrefilledConfigProto KerberosUseCustomPrefilledConfig = 13;
