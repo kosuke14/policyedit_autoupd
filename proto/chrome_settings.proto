@@ -11486,7 +11486,7 @@ message ForceEphemeralProfilesProto {
   optional bool ForceEphemeralProfiles = 2;
 }
 
-// Force foreground priority for all tabs in the profile
+// Force foreground priority for all tabs
 //
 // This policy controls whether background web content is forced to run at
 // foreground priority.
