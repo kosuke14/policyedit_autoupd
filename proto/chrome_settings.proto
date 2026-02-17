@@ -14798,6 +14798,9 @@ message KioskBrowserPermissionsAllowedForOriginsProto {
 // explaining why the app was not launched and suggesting to contact their IT
 // department.
 //
+// The value of this policy will be honored until the deprecation of Chrome Apps
+// in Kiosk sessions, which is expected to happen in M151.
+//
 // Valid values:
 //   True: Allow Chrome Apps to run in Kiosk sessions.
 //   False: Use Default behavior.
