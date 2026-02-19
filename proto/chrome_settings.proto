@@ -28281,6 +28281,10 @@ message URLBlacklistProto {
 // - Instead of blocking chrome-untrusted://crosh, use
 // SystemFeaturesDisableList.
 //
+// - Instead of blocking devtools://*, use one of the
+// DeveloperToolsAvailability, DeveloperToolsAvailabilityAllowlist or
+// DeveloperToolsAvailabilityBlocklist policies.
+//
 // Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message URLBlocklistProto {
   optional PolicyOptions policy_options = 1;
