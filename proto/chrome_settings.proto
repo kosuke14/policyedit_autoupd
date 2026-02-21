@@ -28348,7 +28348,7 @@ message URLWhitelistProto {
 //   None: The UI Automation provider will be enabled or disabled via the
 // variations framework.
 //
-// Supported on: win
+// Supported on:
 message UiAutomationProviderEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool UiAutomationProviderEnabled = 2;
