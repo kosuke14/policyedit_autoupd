@@ -184,7 +184,6 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto PhysicalKeyboardAutocorrect = 78;
   optional BooleanPolicyProto PhysicalKeyboardPredictiveWriting = 79;
   optional BooleanPolicyProto PolicyTestPageEnabled = 72;
-  optional BooleanPolicyProto PostQuantumKeyAgreementEnabled = 77;
   optional BooleanPolicyProto PrefetchWithServiceWorkerEnabled = 325;
   optional BooleanPolicyProto PromotionsEnabled = 240;
   optional BooleanPolicyProto QRCodeGeneratorEnabled = 241;

@@ -7556,26 +7556,26 @@ message DeveloperToolsAvailabilityProto {
 //
 // This policy can be used to allow Chrome DevTools on specific URLs.
 //
-// URL patterns are matched against the URL of the page being inspected. If a
-// match is found, the Chrome DevTools are allowed. This applies even if the URL
-// also matches the DeveloperToolsAvailabilityBlocklist policy, even if the
-// DeveloperToolsAvailability policy is set to disallow (value 2). For
-// information on the URL format, see
+// URL patterns are matched against the URL of every frame on the page being
+// inspected. The resulting behavior depends on whether the
+// DeveloperToolsAvailabilityBlocklist policy is also set.
+//
+// If this policy is set and DeveloperToolsAvailabilityBlocklist is not, every
+// frame's URL must match a pattern on this allowlist for Chrome DevTools to be
+// allowed. If any frame's URL does not match, DevTools will be blocked for the
+// entire page. For information on the URL format, see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// Leaving the policy unset means this allowlist has no effect.
-//
-// If this policy is set and DeveloperToolsAvailabilityBlocklist is not, any URL
-// not on this list will be blocked.
-//
 // If both this and the DeveloperToolsAvailabilityBlocklist policies are set,
-// this allowlist takes precedence. If a URL matches a pattern on the allowlist,
-// it will be allowed. If it matches a pattern on the blocklist (but not the
+// this allowlist takes precedence. If a frame's URL matches a pattern on this
+// allowlist, it will be allowed, even if it also matches a pattern in the
+// blocklist. If a URL matches a pattern on the blocklist (but not the
 // allowlist), it will be blocked. If a URL matches neither, the
 // DeveloperToolsAvailability policy will be used as a fallback.
 //
-// If neither policy is set, the availability is determined by the
-// DeveloperToolsAvailability policy.
+// If this policy is not set, the availability of Chrome DevTools is determined
+// by the DeveloperToolsAvailabilityBlocklist and DeveloperToolsAvailability
+// policies.
 //
 // This policy also applies to Chrome DevTools opened for extensions and web
 // applications.
@@ -7590,25 +7590,29 @@ message DeveloperToolsAvailabilityAllowlistProto {
 
 // List of URL patterns for which Chrome DevTools are blocked
 //
-// URL patterns are matched against the URL of the page being inspected. If a
-// match is found, the Chrome DevTools are blocked. For information on the URL
-// format, see
+// This policy can be used to block Chrome DevTools on specific URLs. For
+// information on the URL format, see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// If the DeveloperToolsAvailabilityAllowlist policy is set and this policy is
-// not, any URL not on the allowlist will be blocked.
+// URL patterns are matched against the URL of every frame on the page being
+// inspected. The resulting behavior depends on whether the
+// DeveloperToolsAvailabilityAllowlist policy is also set.
 //
-// If both this and the DeveloperToolsAvailabilityAllowlist are set, the
-// allowlist takes precedence. If a URL matches a pattern on the allowlist, it
-// will be allowed. If it matches a pattern on this blocklist (but not the
+// If this policy is set and DeveloperToolsAvailabilityAllowlist is not, any
+// frame's URL matching a pattern on this blocklist will block Chrome DevTools
+// for the entire page. If a frame's URL doesn't match any pattern, the
+// availability is determined by the DeveloperToolsAvailability policy.
+//
+// If both this and the DeveloperToolsAvailabilityAllowlist policies are set,
+// the allowlist takes precedence. If a frame's URL matches a pattern on the
+// allowlist, it will be allowed, even if it also matches a pattern in this
+// blocklist. If a URL matches a pattern on this blocklist (but not the
 // allowlist), it will be blocked. If a URL matches neither, the
 // DeveloperToolsAvailability policy will be used as a fallback.
 //
-// If neither policy is set, the availability is determined by the
-// DeveloperToolsAvailability policy.
-//
-// This policy also applies to Chrome DevTools opened for extensions and web
-// applications.
+// If this policy is not set, the availability of Chrome DevTools is determined
+// by the DeveloperToolsAvailabilityAllowlist and DeveloperToolsAvailability
+// policies.
 //
 // This policy is limited to 1,000 entries.
 //
@@ -20168,7 +20172,7 @@ message PopupsBlockedForUrlsProto {
 //   True: Enable post-quantum key agreement for TLS
 //   False: Disable post-quantum key agreement for TLS
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: fuchsia
 message PostQuantumKeyAgreementEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool PostQuantumKeyAgreementEnabled = 2;
@@ -20482,10 +20486,6 @@ message PreferSlowCiphersProto {
 //
 // Not setting the policy, or setting it to 'default', configures Google Chrome
 // to use its default key exchange methods.
-//
-// If this policy is set to a value that would configure Google Chrome to prefer
-// a post-quantum key agreement algorithm but PostQuantumKeyAgreementEnabled is
-// Disabled, the setting of PostQuantumKeyAgreementEnabled takes precedence.
 //
 // Setting this policy is not required for security. The default cryptography
 // used by Google Chrome is strong enough to withstand a brute force attack
