@@ -17973,7 +17973,7 @@ message OnFileAttachedEnterpriseConnectorProto {
 //     "type": "array"
 // }
 //
-// Supported on: android, chrome_os, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message OnFileDownloadedEnterpriseConnectorProto {
   optional PolicyOptions policy_options = 1;
   optional string OnFileDownloadedEnterpriseConnector = 2;
