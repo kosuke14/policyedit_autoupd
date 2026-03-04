@@ -10316,14 +10316,20 @@ message ExtensionOAuthRedirectUrlsProto {
 // Extension management settings
 //
 // Setting the policy controls extension management settings for Google Chrome,
-// including any controlled by existing extension-related policies. The policy
-// supersedes any legacy policies that might be set.
+// including any controlled by existing extension-related policies.
 //
 // This policy maps an extension ID or an update URL to its specific setting
 // only. A default configuration can be set for the special ID "*", which
-// applies to all extensions without a custom configuration in this policy. With
-// an update URL, configuration applies to extensions with the exact update URL
-// stated in the extension manifest (
+// applies to all extensions without a custom configuration in this policy.
+//
+// This policy can override per-extension config from legacy policies.
+//
+// Note that any per-ID extension setting from either ExtensionInstallForcelist,
+// ExtensionInstallAllowlist, ExtensionInstallBlocklist, or ExtensionSettings
+// will only inherit 'installation_mode' and 'update_url' from the "*" defaults.
+// It will not inherit any other properties. With an update URL, configuration
+// applies to extensions with the exact update URL stated in the extension
+// manifest (
 // http://support.google.com/chrome/a?p=Configure_ExtensionSettings_policy ). If
 // the 'override_update_url' flag is set to true, the extension is installed and
 // updated using the "update" URL specified in the ExtensionInstallForcelist
