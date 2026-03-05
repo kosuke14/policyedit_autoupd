@@ -77,6 +77,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto MicrosoftOneDriveAccountRestrictions = 134;
   optional StringPolicyProto MicrosoftOneDriveMount = 108;
   optional StringPolicyProto ContentTransferEnablementStatus = 254;
+  optional BooleanPolicyProto ExtensionDOMActivityLoggingEnabled = 394;
   optional IntegerPolicyProto ExtensionDeveloperModeSettings = 231;
   optional StringListPolicyProto ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls = 34;
   optional BooleanPolicyProto ExtensionInstallCloudPolicyChecksEnabled = 350;

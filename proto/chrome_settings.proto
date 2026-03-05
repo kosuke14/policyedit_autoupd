@@ -9936,6 +9936,34 @@ message ExtensionAllowedTypesProto {
   optional StringList ExtensionAllowedTypes = 2;
 }
 
+// Control extension DOM activity logging
+//
+// Control whether extension DOM activity logging is enabled for enterprise
+// users.
+//
+// Setting the policy to Enabled turns on telemetry for extension DOM activity.
+// This includes monitoring code injection and sensitive data access by
+// extensions.
+//
+// If this policy is set to Enabled, Google Chrome will collect and transmit
+// signals about extension interactions with web pages to the Extension
+// Telemetry Service for security auditing.
+// If this policy is set to Disabled or not set, these signals are not collected
+// or transmitted for enterprise users.
+//
+// Actual values of sensitive data (like cookies or input values) are NOT
+// collected, only the fact that they were accessed.
+//
+// Valid values:
+//   True: Enable extension DOM activity logging
+//   False: Disable extension DOM activity logging
+//
+// Supported on: android, chrome_os, linux, mac, win
+message ExtensionDOMActivityLoggingEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool ExtensionDOMActivityLoggingEnabled = 2;
+}
+
 // Control the availability of developer mode on extensions page
 //
 // Control if users can turn on Developer Mode on chrome://extensions.
@@ -22128,57 +22156,65 @@ message ProxyModeProto {
 
 // Proxy override rules
 //
-// Setting this policy configures rules that select what proxy the browser uses
-// depending on the destination's URL and other conditions. This policy will
-// take precedence over proxy settings set from the ProxySettings policy, the
-// chrome.proxy extension API or manual user settings if any is set.
+// Configures rules that select which proxy the browser uses based on the
+// destination URL and specific network conditions.
 //
-// Leaving the policy unset has no effect on other proxy policies or user
-// settings.
+// This policy takes precedence over the ProxySettings policy, the chrome.proxy
+// extension API, and manual user settings. If no rules in this policy match,
+// the browser falls back to the settings defined in ProxySettings.
 //
-// When the browser needs to decide what proxy to use, entries of the
-// ProxyOverrideRules policy are evaluated in sequence until an entry satisfies
-// all the following points:
-// * At least one of the URL patterns in DestinationMatchers is matched.
-// * None of the URL patterns in ExcludeDestinationMatchers is matched.
-// * If Conditions is specified and is a non-empty list, all conditions
-// represented by its entries are satisfied.
-// The value in ProxyList will be used as a proxy for such a match. If no match
-// is found, proxy settings will fall back to what is set in the ProxySettings
-// policy.
+// The browser evaluates entries in the ProxyOverrideRules list in sequence. A
+// rule is applied only if all of the following criteria are met:
 //
-// The URL patterns supported by DestinationMatchers and
-// ExcludeDestinationMatchers are documented at https://chromium.googlesource.co
-// m/chromium/src/+/HEAD/net/docs/proxy.md#proxy-config-url-patterns.
+// * Match: At least one URL pattern in DestinationMatchers is matched.
 //
-// The ProxyList field entries correspond to string values of PAC files such as:
+// * Exclude: No URL patterns in ExcludeDestinationMatchers are matched.
+//
+// * Conditions: If Conditions is specified, all listed conditions must be
+// satisfied. If unset, this requirement is ignored.
+//
+// URL patterns for matchers are documented at https://chromium.googlesource.com
+// /chromium/src/+/HEAD/net/docs/proxy.md#proxy-config-url-patterns.
+//
+// The ProxyList field defines a failover list. The first reachable entry is
+// used; invalid entries are ignored. You can use PAC-style strings or URL-like
+// specifiers:
+//
+// PAC-style strings:
+//
 // * DIRECT
+//
 // * PROXY host:port
+//
 // * HTTPS host:port
+//
 // * SOCKS4 host:port
+//
 // * SOCKS5 host:port
-// Alternatively, URL-like proxy specifiers can be used directly to specify the
-// proxy, for example:
+//
+// URL-like specifiers:
+//
 // * http://host:port
+//
 // * https://host:port
+//
 // * socks4://host:port
+//
 // * socks5://host:port
-// The first reachable entry in the list will be used as a proxy. Invalid
-// entries in the list are ignored.
 //
-// The Conditions field contains a list of conditions that must all be met for
-// its override rule to be used to decide the proxy to use. If it is left unset,
-// the entry will be used as long as at least one host in DestinationMatchers is
-// matched.
+// The DnsProbe condition checks if a Host resolves to an IP address.
 //
-// The DnsProbe condition checks if the provided DNS Host is able to resolve to
-// an IP address. It must contain a host (e.g. example.com), and optionally a
-// scheme or a port (e.g. https://example.com, example.com:123,
-// https://example.com:123). If a secure scheme is used (e.g. https), DNS lookup
-// may also request the HTTPS record (see RFC 9460 for more details). If the
-// value of Result is "resolved" then the condition is considered as met. If the
-// value is instead set to not_found, then the condition is considered met if
-// the resolution failed.
+// * Supports hostnames (e.g., example.com) or URI-style strings (e.g.,
+// https://example.com:123). Using a secure scheme (https) may trigger an HTTPS
+// record request (see RFC 9460).
+//
+// * Set to "resolved" to meet the condition upon successful resolution, or
+// "not_found" to meet the condition if resolution fails.
+//
+// The application of this policy on managed devices is influenced by the
+// EnableProxyOverrideRulesForAllUsers machine-level policy on the platforms
+// where it is supported. By default, it prevents the usage of override rules
+// configured by unaffiliated users.
 //
 // Value schema:
 // {
@@ -31244,6 +31280,7 @@ message ChromeSettingsSubProto1 {
   optional EnterpriseSearchAggregatorSettingsProto EnterpriseSearchAggregatorSettings = 268;
   optional EssentialSearchEnabledProto EssentialSearchEnabled = 60;
   optional ExtensibleEnterpriseSSOBlocklistProto ExtensibleEnterpriseSSOBlocklist = 219;
+  optional ExtensionDOMActivityLoggingEnabledProto ExtensionDOMActivityLoggingEnabled = 394;
   optional ExtensionDeveloperModeSettingsProto ExtensionDeveloperModeSettings = 231;
   optional ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrlsProto ExtensionExtendedBackgroundLifetimeForPortConnectionsToUrls = 34;
   optional ExtensionForceInstallWithNonMalwareViolationsEnabledProto ExtensionForceInstallWithNonMalwareViolationsEnabled = 355;
