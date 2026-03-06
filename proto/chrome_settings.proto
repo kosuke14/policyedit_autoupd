@@ -28312,6 +28312,10 @@ message URLBlacklistProto {
 // From Google Chrome version 92, this policy is also supported in the headless
 // mode.
 //
+// From Google Chrome version 147, the wildcard * on its own does not apply to
+// internal chrome:// URLs. To block these, you must explicitly use the
+// chrome://* pattern.
+//
 // Note: Blocking internal chrome://* and chrome-untrusted://* URLs can lead to
 // unexpected errors or can be circumvented in some cases. Instead of blocking
 // certain internal URLs, see if there are more specific policies available. For
