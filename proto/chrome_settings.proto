@@ -2146,7 +2146,7 @@ message AutomaticFullscreenBlockedForUrlsProto {
 //   None: Do not allow Chrome to autoplay media unless the URL is specified in
 // the AutoplayAllowlist policy
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message AutoplayAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool AutoplayAllowed = 2;
@@ -2163,7 +2163,7 @@ message AutoplayAllowedProto {
 // For detailed information on valid url patterns, please see
 // https://chromeenterprise.google/policies/url-patterns/.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message AutoplayAllowlistProto {
   optional PolicyOptions policy_options = 1;
   optional StringList AutoplayAllowlist = 2;
