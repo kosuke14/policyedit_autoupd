@@ -288,19 +288,6 @@ message AdditionalDnsQueryTypesEnabledProto {
   optional bool AdditionalDnsQueryTypesEnabled = 2;
 }
 
-// Additional command line parameters for Google Chrome
-//
-// Allows you to specify additional parameters that are used when Google Chrome
-// Frame launches Google Chrome.
-//
-// If this policy is not set the default command line will be used.
-//
-// Supported on:
-message AdditionalLaunchParametersProto {
-  optional PolicyOptions policy_options = 1;
-  optional string AdditionalLaunchParameters = 2;
-}
-
 // Ads setting for sites with intrusive ads
 //
 // Unless SafeBrowsingEnabled is set to False, then setting
@@ -3866,39 +3853,6 @@ message ChromeDataRegionSettingProto {
 message ChromeForTestingAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool ChromeForTestingAllowed = 2;
-}
-
-// Allow Google Chrome Frame to handle the listed content types
-//
-// If this policy is set, the specified content types are handled by Google
-// Chrome Frame.
-//
-// If this policy is not set, the default renderer is used for all sites. (The
-// ChromeFrameRendererSettings policy may be used to configure the default
-// renderer.)
-//
-// Supported on:
-message ChromeFrameContentTypesProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList ChromeFrameContentTypes = 2;
-}
-
-// Default HTML renderer for Google Chrome Frame
-//
-// Allows you to configure the default HTML renderer when Google Chrome Frame is
-// installed.
-// The default setting used when this policy is left not set is to allow the
-// host browser do the rendering, but you can optionally override this and have
-// Google Chrome Frame render HTML pages by default.
-//
-// Valid values:
-//   0: Use the host browser by default
-//   1: Use Google Chrome Frame by default
-//
-// Supported on:
-message ChromeFrameRendererSettingsProto {
-  optional PolicyOptions policy_options = 1;
-  optional int64 ChromeFrameRendererSettings = 2;
 }
 
 // Enable lock when the device suspends or the lid is closed
@@ -11894,24 +11848,6 @@ message FullscreenAllowedProto {
   optional bool FullscreenAllowed = 2;
 }
 
-// Set Google Chrome Frame user data directory
-//
-// Configures the directory that Google Chrome Frame will use for storing user
-// data.
-//
-// If you set this policy, Google Chrome Frame will use the provided directory.
-//
-// See https://support.google.com/chrome/a?p=Supported_directory_variables for a
-// list of variables that can be used.
-//
-// If this setting is left not set the default profile directory will be used.
-//
-// Supported on:
-message GCFUserDataDirProto {
-  optional PolicyOptions policy_options = 1;
-  optional string GCFUserDataDir = 2;
-}
-
 // GSSAPI library name
 //
 // Setting the policy specifies which GSSAPI library to use for HTTP
@@ -18007,7 +17943,7 @@ message OnFileAttachedEnterpriseConnectorProto {
 //     "type": "array"
 // }
 //
-// Supported on: android, chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message OnFileDownloadedEnterpriseConnectorProto {
   optional PolicyOptions policy_options = 1;
   optional string OnFileDownloadedEnterpriseConnector = 2;
@@ -23753,40 +23689,6 @@ message RemoteDebuggingAllowedProto {
   optional bool RemoteDebuggingAllowed = 2;
 }
 
-// Always render the following URL patterns in Google Chrome Frame
-//
-// Customize the list of URL patterns that should always be rendered by Google
-// Chrome Frame.
-//
-// If this policy is not set the default renderer will be used for all sites as
-// specified by the 'ChromeFrameRendererSettings' policy.
-//
-// For example patterns see https://www.chromium.org/developers/how-tos/chrome-
-// frame-getting-started.
-//
-// Supported on:
-message RenderInChromeFrameListProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList RenderInChromeFrameList = 2;
-}
-
-// Always render the following URL patterns in the host browser
-//
-// Customize the list of URL patterns that should always be rendered by the host
-// browser.
-//
-// If this policy is not set the default renderer will be used for all sites as
-// specified by the 'ChromeFrameRendererSettings' policy.
-//
-// For example patterns see https://www.chromium.org/developers/how-tos/chrome-
-// frame-getting-started.
-//
-// Supported on:
-message RenderInHostListProto {
-  optional PolicyOptions policy_options = 1;
-  optional StringList RenderInHostList = 2;
-}
-
 // Enable Renderer App Container
 //
 // Setting the policy to Enabled or leaving it unset means Renderer App
@@ -26879,23 +26781,6 @@ message SiteSearchSettingsProto {
   optional string SiteSearchSettings = 2;
 }
 
-// Skip the meta tag check in Google Chrome Frame
-//
-// Normally pages with X-UA-Compatible set to chrome=1 will be rendered in
-// Google Chrome Frame regardless of the 'ChromeFrameRendererSettings' policy.
-//
-// If you enable this setting, pages will not be scanned for meta tags.
-//
-// If you disable this setting, pages will be scanned for meta tags.
-//
-// If this policy is not set, pages will be scanned for meta tags.
-//
-// Supported on:
-message SkipMetadataCheckProto {
-  optional PolicyOptions policy_options = 1;
-  optional bool SkipMetadataCheck = 2;
-}
-
 // Allow Smart Card connection by Isolated Apps
 //
 // Setting the policy specifies which Isolated Web Apps (IWAs) can connect to
@@ -27392,17 +27277,6 @@ message SupervisedUserContentProviderEnabledProto {
 message SupervisedUserCreationEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool SupervisedUserCreationEnabled = 2;
-}
-
-// Suppress the Google Chrome Frame turndown prompt
-//
-// Suppresses the turndown prompt that appears when a site is rendered by Google
-// Chrome Frame.
-//
-// Supported on:
-message SuppressChromeFrameTurndownPromptProto {
-  optional PolicyOptions policy_options = 1;
-  optional bool SuppressChromeFrameTurndownPrompt = 2;
 }
 
 // Suppress JavaScript Dialogs triggered from different origin subframes
@@ -31531,7 +31405,6 @@ message ChromeSettingsProto {
   optional AccessibilityImageLabelsEnabledProto AccessibilityImageLabelsEnabled = 705;
   optional AccessibilityShortcutsEnabledProto AccessibilityShortcutsEnabled = 661;
   optional AdditionalDnsQueryTypesEnabledProto AdditionalDnsQueryTypesEnabled = 859;
-  optional AdditionalLaunchParametersProto AdditionalLaunchParameters = 143;
   optional AdsSettingForIntrusiveAdsSitesProto AdsSettingForIntrusiveAdsSites = 411;
   optional AdvancedProtectionAllowedProto AdvancedProtectionAllowed = 687;
   optional AdvancedProtectionDeepScanningEnabledProto AdvancedProtectionDeepScanningEnabled = 669;
@@ -31644,8 +31517,6 @@ message ChromeSettingsProto {
   optional ChromeAppsEnabledProto ChromeAppsEnabled = 894;
   optional ChromeCleanupEnabledProto ChromeCleanupEnabled = 443;
   optional ChromeCleanupReportingEnabledProto ChromeCleanupReportingEnabled = 444;
-  optional ChromeFrameContentTypesProto ChromeFrameContentTypes = 62;
-  optional ChromeFrameRendererSettingsProto ChromeFrameRendererSettings = 59;
   optional ChromeOsLockOnIdleSuspendProto ChromeOsLockOnIdleSuspend = 63;
   optional ChromeOsMultiProfileUserBehaviorProto ChromeOsMultiProfileUserBehavior = 246;
   optional ChromeRootStoreEnabledProto ChromeRootStoreEnabled = 994;
@@ -31847,7 +31718,6 @@ message ChromeSettingsProto {
   optional FullRestoreEnabledProto FullRestoreEnabled = 899;
   optional FullscreenAlertEnabledProto FullscreenAlertEnabled = 806;
   optional FullscreenAllowedProto FullscreenAllowed = 242;
-  optional GCFUserDataDirProto GCFUserDataDir = 89;
   optional GSSAPILibraryNameProto GSSAPILibraryName = 33;
   optional GaiaLockScreenOfflineSigninTimeLimitDaysProto GaiaLockScreenOfflineSigninTimeLimitDays = 835;
   optional GaiaOfflineSigninTimeLimitDaysProto GaiaOfflineSigninTimeLimitDays = 823;
@@ -32119,8 +31989,6 @@ message ChromeSettingsProto {
   optional RemoteAccessHostTokenValidationUrlProto RemoteAccessHostTokenValidationUrl = 289;
   optional RemoteAccessHostUdpPortRangeProto RemoteAccessHostUdpPortRange = 266;
   optional RemoteDebuggingAllowedProto RemoteDebuggingAllowed = 866;
-  optional RenderInChromeFrameListProto RenderInChromeFrameList = 60;
-  optional RenderInHostListProto RenderInHostList = 61;
   optional RendererAppContainerEnabledProto RendererAppContainerEnabled = 989;
   optional RendererCodeIntegrityEnabledProto RendererCodeIntegrityEnabled = 600;
   optional ReportArcStatusEnabledProto ReportArcStatusEnabled = 351;
@@ -32208,7 +32076,6 @@ message ChromeSettingsProto {
   optional SigninInterceptionEnabledProto SigninInterceptionEnabled = 813;
   optional SitePerProcessProto SitePerProcess = 401;
   optional SitePerProcessAndroidProto SitePerProcessAndroid = 448;
-  optional SkipMetadataCheckProto SkipMetadataCheck = 240;
   optional SmartLockSigninAllowedProto SmartLockSigninAllowed = 490;
   optional SmsMessagesAllowedProto SmsMessagesAllowed = 471;
   optional SpellCheckServiceEnabledProto SpellCheckServiceEnabled = 153;
@@ -32225,7 +32092,6 @@ message ChromeSettingsProto {
   optional SuggestedContentEnabledProto SuggestedContentEnabled = 728;
   optional SupervisedUserContentProviderEnabledProto SupervisedUserContentProviderEnabled = 314;
   optional SupervisedUserCreationEnabledProto SupervisedUserCreationEnabled = 225;
-  optional SuppressChromeFrameTurndownPromptProto SuppressChromeFrameTurndownPrompt = 223;
   optional SuppressDifferentOriginSubframeDialogsProto SuppressDifferentOriginSubframeDialogs = 831;
   optional SuppressUnsupportedOSWarningProto SuppressUnsupportedOSWarning = 326;
   optional SyncDisabledProto SyncDisabled = 22;
