@@ -16158,16 +16158,27 @@ message MandatoryExtensionsForIncognitoNavigationProto {
 // Maximal number of concurrent connections to the proxy server
 //
 // Setting the policy specifies the maximal number of simultaneous connections
-// to the proxy server. Some proxy servers can't handle a high number of
-// concurrent connections per client, which is solved by setting this policy to
-// a lower value. The value should be lower than 100 and higher than 6. Some web
-// apps are known to consume many connections with hanging GETs, so setting a
-// value below 32 may lead to browser networking hangs if there are too many web
-// apps with hanging connections open. Lower below the default at your own risk.
+// to the proxy server.
 //
 // Leaving the policy unset means a default of 32 is used.
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Some web apps are known to consume many connections with hanging GETs, so
+// setting a value below 32 may lead to browser networking hangs if there are
+// too many web apps with hanging connections open.
+// Some proxy servers can't handle a high number of concurrent connections per
+// client, which is solved by setting this policy to a lower value.
+//
+// The value should be equal to or higher than 6.
+// Setting a value below that limit will cause 6 to be used.
+// Lower below the default (32) at your own risk.
+//
+// The value should be equal to or lower than 256 (99 in Google Chrome 147 and
+// earlier).
+// Setting a value above that limit will cause 256 (99 in Google Chrome 147 and
+// earlier) to be used.
+// Raise above the default (32) at your own risk.
+//
+// Supported on: android, chrome_os, linux, mac, win
 message MaxConnectionsPerProxyProto {
   optional PolicyOptions policy_options = 1;
   optional int64 MaxConnectionsPerProxy = 2;
@@ -26187,6 +26198,29 @@ message SharedWorkerBlobURLFixEnabledProto {
   optional bool SharedWorkerBlobURLFixEnabled = 2;
 }
 
+// Enable extended lifetime for SharedWorkers
+//
+// SharedWorkers can have an extended lifetime if the "extendedLifetime" option
+// is set to true in the SharedWorker constructor.
+//
+// If this policy is set to Enabled or left unset, SharedWorkers can have an
+// extended lifetime.
+//
+// If this policy is set to Disabled, SharedWorkers cannot have an extended
+// lifetime, even if the option is set to true.
+//
+// This policy is intended to be temporary and will be removed in the future.
+//
+// Valid values:
+//   True: SharedWorkers can have an extended lifetime.
+//   False: SharedWorkers cannot have an extended lifetime.
+//
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
+message SharedWorkerExtendedLifetimeEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool SharedWorkerExtendedLifetimeEnabled = 2;
+}
+
 // Control the shelf position
 //
 // Control the position of the Google ChromeOS shelf.
@@ -31342,6 +31376,7 @@ message ChromeSettingsSubProto1 {
   optional ServiceWorkerAutoPreloadEnabledProto ServiceWorkerAutoPreloadEnabled = 340;
   optional ServiceWorkerToControlSrcdocIframeEnabledProto ServiceWorkerToControlSrcdocIframeEnabled = 293;
   optional SharedWorkerBlobURLFixEnabledProto SharedWorkerBlobURLFixEnabled = 273;
+  optional SharedWorkerExtendedLifetimeEnabledProto SharedWorkerExtendedLifetimeEnabled = 395;
   optional ShortcutCustomizationAllowedProto ShortcutCustomizationAllowed = 107;
   optional ShowAiIntroScreenEnabledProto ShowAiIntroScreenEnabled = 208;
   optional ShowCastSessionsStartedByOtherDevicesProto ShowCastSessionsStartedByOtherDevices = 2;

@@ -197,6 +197,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto ServiceWorkerAutoPreloadEnabled = 340;
   optional BooleanPolicyProto ServiceWorkerToControlSrcdocIframeEnabled = 293;
   optional BooleanPolicyProto SharedWorkerBlobURLFixEnabled = 273;
+  optional BooleanPolicyProto SharedWorkerExtendedLifetimeEnabled = 395;
   optional BooleanPolicyProto ShortcutCustomizationAllowed = 107;
   optional BooleanPolicyProto ShowAiIntroScreenEnabled = 208;
   optional BooleanPolicyProto ShowDisplaySizeScreenEnabled = 59;
