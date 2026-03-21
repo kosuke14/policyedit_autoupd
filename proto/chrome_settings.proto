@@ -2017,7 +2017,7 @@ message AutofillCreditCardEnabledProto {
 //   1: Allow enhanced autofill without improving AI models.
 //   2: Do not allow enhanced autofill.
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: android, chrome_os, ios, linux, mac, win
 message AutofillPredictionSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 AutofillPredictionSettings = 2;
