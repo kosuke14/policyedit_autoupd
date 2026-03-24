@@ -171,6 +171,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto LensOnGalleryEnabled = 234;
   optional IntegerPolicyProto LensOverlaySettings = 226;
   optional BooleanPolicyProto LockScreenAutoStartOnlineReauth = 217;
+  optional IntegerPolicyProto MaxConnectionsPerProxyForWebSocket = 396;
   optional IntegerPolicyProto MemorySaverModeSavings = 221;
   optional BooleanPolicyProto NTPFooterExtensionAttributionEnabled = 320;
   optional BooleanPolicyProto NTPOutlookCardVisible = 271;

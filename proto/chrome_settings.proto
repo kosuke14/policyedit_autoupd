@@ -16155,10 +16155,13 @@ message MandatoryExtensionsForIncognitoNavigationProto {
   optional StringList MandatoryExtensionsForIncognitoNavigation = 2;
 }
 
-// Maximal number of concurrent connections to the proxy server
+// Maximal number of concurrent connections to the proxy server for non-
+// WebSocket requests
 //
 // Setting the policy specifies the maximal number of simultaneous connections
-// to the proxy server.
+// to the proxy server for non-WebSocket requests.
+//
+// To modify WebSocket request limits, see MaxConnectionsPerProxyForWebSocket.
 //
 // Leaving the policy unset means a default of 32 is used.
 //
@@ -16182,6 +16185,36 @@ message MandatoryExtensionsForIncognitoNavigationProto {
 message MaxConnectionsPerProxyProto {
   optional PolicyOptions policy_options = 1;
   optional int64 MaxConnectionsPerProxy = 2;
+}
+
+// Maximal number of concurrent connections to the proxy server for WebSocket
+// requests
+//
+// Setting the policy specifies the maximal number of simultaneous connections
+// to the proxy server for WebSocket requests.
+//
+// To modify non-WebSocket request limits, see MaxConnectionsPerProxy.
+//
+// Leaving the policy unset means a default of 32 is used.
+//
+// Some web apps are known to consume many connections with hanging GETs, so
+// setting a value below 32 may lead to browser networking hangs if there are
+// too many web apps with hanging connections open.
+// Some proxy servers can't handle a high number of concurrent connections per
+// client, which is solved by setting this policy to a lower value.
+//
+// The value should be equal to or higher than 6.
+// Setting a value below that limit will cause 6 to be used.
+// Lower below the default (32) at your own risk.
+//
+// The value should be equal to or lower than 256.
+// Setting a value above that limit will cause 256 to be used.
+// Raise above the default (32) at your own risk.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message MaxConnectionsPerProxyForWebSocketProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 MaxConnectionsPerProxyForWebSocket = 2;
 }
 
 // Maximum fetch delay after a policy invalidation
@@ -31282,6 +31315,7 @@ message ChromeSettingsSubProto1 {
   optional LoopbackNetworkAllowedForUrlsProto LoopbackNetworkAllowedForUrls = 387;
   optional LoopbackNetworkBlockedForUrlsProto LoopbackNetworkBlockedForUrls = 388;
   optional MandatoryExtensionsForIncognitoNavigationProto MandatoryExtensionsForIncognitoNavigation = 45;
+  optional MaxConnectionsPerProxyForWebSocketProto MaxConnectionsPerProxyForWebSocket = 396;
   optional MemorySaverModeSavingsProto MemorySaverModeSavings = 221;
   optional MicrosoftOfficeCloudUploadProto MicrosoftOfficeCloudUpload = 105;
   optional MicrosoftOneDriveAccountRestrictionsProto MicrosoftOneDriveAccountRestrictions = 134;
