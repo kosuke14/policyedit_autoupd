@@ -168,6 +168,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto InsertKeyModifier = 167;
   optional BooleanPolicyProto IsolatedWebAppUserInstallationEnabled = 393;
   optional StringListPolicyProto KioskBrowserPermissionsAllowedForOrigins = 233;
+  optional BooleanPolicyProto KrispNoiseCancellationEnabled = 397;
   optional BooleanPolicyProto LensOnGalleryEnabled = 234;
   optional IntegerPolicyProto LensOverlaySettings = 226;
   optional BooleanPolicyProto LockScreenAutoStartOnlineReauth = 217;

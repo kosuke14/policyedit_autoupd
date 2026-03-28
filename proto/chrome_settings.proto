@@ -14838,6 +14838,29 @@ message KioskWebAppOfflineEnabledProto {
   optional bool KioskWebAppOfflineEnabled = 2;
 }
 
+// Enable Krisp noise cancellation
+//
+// This policy controls the Krisp AI noise cancellation technology on the
+// device.
+// It is integrated as a separate local third-party library into Google ChromeOS
+// and is available only for managed users.
+//
+// Setting the policy to Enabled turns on Krisp AI noise cancellation audio
+// processing and prevents users from disabling it.
+//
+// Setting the policy to Disabled or not setting the policy turns off Krisp AI
+// noise cancellation audio processing.
+//
+// Valid values:
+//   True: Enable Krisp noise cancellation
+//   False: Disable Krisp noise cancellation
+//
+// Supported on: chrome_os
+message KrispNoiseCancellationEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool KrispNoiseCancellationEnabled = 2;
+}
+
 // Allow usage of Lacros
 //
 // This setting is deprecated. Use LacrosAvailability instead.
@@ -31291,6 +31314,7 @@ message ChromeSettingsSubProto1 {
   optional KioskChromeAppsForceAllowedProto KioskChromeAppsForceAllowed = 304;
   optional KioskTroubleshootingToolsEnabledProto KioskTroubleshootingToolsEnabled = 16;
   optional KioskWebAppOfflineEnabledProto KioskWebAppOfflineEnabled = 253;
+  optional KrispNoiseCancellationEnabledProto KrispNoiseCancellationEnabled = 397;
   optional LacrosSelectionProto LacrosSelection = 5;
   optional LegacyCookieScopeEnabledProto LegacyCookieScopeEnabled = 342;
   optional LegacyCookieScopeEnabledForDomainListProto LegacyCookieScopeEnabledForDomainList = 343;
