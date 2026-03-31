@@ -16178,11 +16178,11 @@ message MandatoryExtensionsForIncognitoNavigationProto {
   optional StringList MandatoryExtensionsForIncognitoNavigation = 2;
 }
 
-// Maximal number of concurrent connections to the proxy server for non-
-// WebSocket requests
+// Maximal number of concurrent connections per proxy server for non-WebSocket
+// requests
 //
 // Setting the policy specifies the maximal number of simultaneous connections
-// to the proxy server for non-WebSocket requests.
+// per proxy server for non-WebSocket requests.
 //
 // To modify WebSocket request limits, see MaxConnectionsPerProxyForWebSocket.
 //
@@ -16210,11 +16210,11 @@ message MaxConnectionsPerProxyProto {
   optional int64 MaxConnectionsPerProxy = 2;
 }
 
-// Maximal number of concurrent connections to the proxy server for WebSocket
+// Maximal number of concurrent connections per proxy server for WebSocket
 // requests
 //
 // Setting the policy specifies the maximal number of simultaneous connections
-// to the proxy server for WebSocket requests.
+// per proxy server for WebSocket requests.
 //
 // To modify non-WebSocket request limits, see MaxConnectionsPerProxy.
 //
@@ -16367,6 +16367,10 @@ message MemorySaverModeSavingsProto {
 //
 // (For Google ChromeOS, see DeviceMetricsReportingEnabled.)
 //
+// If the RestructureMetricsConsentSettings experiment is active on the device
+// and both this policy and the MetricsReportingLevel policy are set, the
+// MetricsReportingLevel policy takes precedence.
+//
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
@@ -16383,6 +16387,39 @@ message MemorySaverModeSavingsProto {
 message MetricsReportingEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool MetricsReportingEnabled = 2;
+}
+
+// Metrics reporting level
+//
+// Specifies the level of metrics reporting for Google Chrome.
+//
+// When this policy is set, it determines how much usage and crash-related data
+// is reported to Google:
+// * 0 = Disable reporting: No usage or crash-related data is sent to Google.
+// * 1 = Basic reporting: A limited set of usage and crash-related data is sent
+// to Google.
+// * 2 = Advanced reporting: A comprehensive set of usage and crash-related data
+// is sent to Google.
+//
+// If this policy is left not set, the user can choose the metrics reporting
+// behavior at installation or first run, and can change this setting later.
+//
+// This policy is only evaluated if the RestructureMetricsConsentSettings
+// experiment is active on the device.
+//
+// If the RestructureMetricsConsentSettings experiment is active on the device
+// and both this policy and the MetricsReportingEnabled policy are set, this
+// policy takes precedence.
+//
+// Valid values:
+//   0: Disable reporting
+//   1: Basic reporting
+//   2: Advanced reporting
+//
+// Supported on: android, ios, linux, mac, win
+message MetricsReportingLevelProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 MetricsReportingLevel = 2;
 }
 
 // Configures the Cloud Upload flow for Microsoft OneDrive and Microsoft 365
@@ -31341,6 +31378,7 @@ message ChromeSettingsSubProto1 {
   optional MandatoryExtensionsForIncognitoNavigationProto MandatoryExtensionsForIncognitoNavigation = 45;
   optional MaxConnectionsPerProxyForWebSocketProto MaxConnectionsPerProxyForWebSocket = 396;
   optional MemorySaverModeSavingsProto MemorySaverModeSavings = 221;
+  optional MetricsReportingLevelProto MetricsReportingLevel = 398;
   optional MicrosoftOfficeCloudUploadProto MicrosoftOfficeCloudUpload = 105;
   optional MicrosoftOneDriveAccountRestrictionsProto MicrosoftOneDriveAccountRestrictions = 134;
   optional MicrosoftOneDriveMountProto MicrosoftOneDriveMount = 108;
