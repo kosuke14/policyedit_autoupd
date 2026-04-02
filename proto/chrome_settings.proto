@@ -1019,6 +1019,35 @@ message AmbientAuthenticationInPrivateModesEnabledProto {
   optional int64 AmbientAuthenticationInPrivateModesEnabled = 2;
 }
 
+// Allow automatic sign-in to Microsoft® cloud identity providers on Android
+//
+// Configures automatic user sign-in for accounts backed by a Microsoft® cloud
+// identity provider on Android.
+//
+// By setting this policy to 1 (Enabled), users who have signed into a
+// Microsoft® productivity application on their device can be automatically
+// signed into Microsoft® web properties within Google Chrome. This
+// functionality requires the presence of a Microsoft® authentication broker
+// app, such as Microsoft® Authenticator®, Microsoft® Intune Company Portal®, or
+// Microsoft® Link to Windows®. To facilitate the single sign-on, necessary
+// authentication data is shared with the Microsoft® cloud identity provider.
+//
+// By setting this policy to 0 (Disabled) or leaving it unset, automatic sign-in
+// as described above is disabled, and users must manually provide credentials
+// for Microsoft® web properties.
+//
+// Note: This policy does not apply to Incognito or Guest modes.
+//
+// Valid values:
+//   0: Disable Microsoft® cloud authentication
+//   1: Enable Microsoft® cloud authentication
+//
+// Supported on: android
+message AndroidEntraSsoEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 AndroidEntraSsoEnabled = 2;
+}
+
 // Allows the AppCache feature to be re-enabled even if it is off by default.
 //
 // If set to true, this will force AppCache to be enabled, even when AppCache in
@@ -31158,6 +31187,7 @@ message ChromeSettingsSubProto1 {
   optional AllowedInputMethodsForceEnabledProto AllowedInputMethodsForceEnabled = 283;
   optional AllowedLocalAuthFactorsProto AllowedLocalAuthFactors = 365;
   optional AlwaysOnVpnPreConnectUrlAllowlistProto AlwaysOnVpnPreConnectUrlAllowlist = 150;
+  optional AndroidEntraSsoEnabledProto AndroidEntraSsoEnabled = 398;
   optional AppLaunchAutomationProto AppLaunchAutomation = 54;
   optional AppStoreRatingEnabledProto AppStoreRatingEnabled = 12;
   optional ApplicationBoundEncryptionEnabledProto ApplicationBoundEncryptionEnabled = 206;
