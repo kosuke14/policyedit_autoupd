@@ -11062,6 +11062,41 @@ message FileSystemWriteBlockedForUrlsProto {
   optional StringList FileSystemWriteBlockedForUrls = 2;
 }
 
+// Settings for Chrome Finds
+//
+// Chrome Finds is an AI-based feature that helps users search for and
+// understand content on the current web page.
+//
+// 0 = Allow the feature to be used, while allowing Google to use relevant data
+// to improve its AI models. Relevant data may include prompts, inputs, outputs,
+// source materials, and written feedback, depending on the feature. It may also
+// be reviewed by humans to improve AI models. 0 is the default value, except
+// when noted below.
+//
+// 1 = Allow the feature to be used, but does not allow Google to improve models
+// using users' content (including prompts, inputs, outputs, source materials,
+// and written feedback). 1 is the default value for Enterprise users managed by
+// Google Admin console and for Education accounts managed by Google Workspace.
+//
+// 2 = Do not allow the feature.
+//
+// If the policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow Chrome Finds and improve AI models.
+//   1: Allow Chrome Finds without improving AI models.
+//   2: Do not allow Chrome Finds.
+//
+// Supported on: android
+message FindsSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 FindsSettings = 2;
+}
+
 // Enable First-Party Sets.
 //
 // This policy is provided as a way to opt-out of the First-Party Sets feature
@@ -31293,6 +31328,7 @@ message ChromeSettingsSubProto1 {
   optional FeedbackSurveysEnabledProto FeedbackSurveysEnabled = 142;
   optional FileOrDirectoryPickerWithoutGestureAllowedForOriginsProto FileOrDirectoryPickerWithoutGestureAllowedForOrigins = 53;
   optional FilePickerChooseFromDriveSettingsProto FilePickerChooseFromDriveSettings = 277;
+  optional FindsSettingsProto FindsSettings = 399;
   optional FloatingSsoDomainBlocklistProto FloatingSsoDomainBlocklist = 158;
   optional FloatingSsoDomainBlocklistExceptionsProto FloatingSsoDomainBlocklistExceptions = 159;
   optional FloatingSsoEnabledProto FloatingSsoEnabled = 157;
