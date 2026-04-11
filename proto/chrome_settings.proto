@@ -5218,6 +5218,26 @@ message CorsMitigationListProto {
   optional StringList CorsMitigationList = 2;
 }
 
+// Override for the CPU performance tier
+//
+// Setting this policy allows enterprises to override the value returned by the
+// CPU Performance API (i.e.,
+// navigator.cpuPerformance,
+// please see https://github.com/WICG/cpu-performance for details).
+//
+// If this policy is set, the value of
+// navigator.cpuPerformance
+// will be overridden to the specified value. If the policy is not set, then
+// the default performance tier calculation is used.
+//
+// The possible values for this policy are 0 to 4.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message CpuPerformanceTierOverrideProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 CpuPerformanceTierOverride = 2;
+}
+
 // Control whether passkey creation will default to iCloud Keychain.
 //
 // Google Chrome may direct
@@ -31306,6 +31326,7 @@ message ChromeSettingsSubProto1 {
   optional ContextualGoogleIntegrationsEnabledProto ContextualGoogleIntegrationsEnabled = 214;
   optional ControlledFrameAllowedForUrlsProto ControlledFrameAllowedForUrls = 289;
   optional ControlledFrameBlockedForUrlsProto ControlledFrameBlockedForUrls = 290;
+  optional CpuPerformanceTierOverrideProto CpuPerformanceTierOverride = 402;
   optional CreatePasskeysInICloudKeychainProto CreatePasskeysInICloudKeychain = 110;
   optional CreateThemesSettingsProto CreateThemesSettings = 148;
   optional CredentialProviderPromoEnabledProto CredentialProviderPromoEnabled = 46;

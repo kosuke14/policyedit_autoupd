@@ -139,6 +139,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto ChromeDataRegionSetting = 213;
   optional StringListPolicyProto ContextualGoogleIntegrationsConfiguration = 215;
   optional BooleanPolicyProto ContextualGoogleIntegrationsEnabled = 214;
+  optional IntegerPolicyProto CpuPerformanceTierOverride = 402;
   optional StringPolicyProto DataControlsRules = 121;
   optional IntegerPolicyProto DeleteKeyModifier = 164;
   optional IntegerPolicyProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
