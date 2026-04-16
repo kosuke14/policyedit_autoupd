@@ -141,6 +141,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto ContextualGoogleIntegrationsEnabled = 214;
   optional IntegerPolicyProto CpuPerformanceTierOverride = 402;
   optional StringPolicyProto DataControlsRules = 121;
+  optional BooleanPolicyProto DataUrlInWebWorkerOpaqueOriginEnabled = 404;
   optional IntegerPolicyProto DeleteKeyModifier = 164;
   optional IntegerPolicyProto DevToolsGoogleDeveloperProgramProfileAvailability = 351;
   optional StringListPolicyProto DeveloperToolsAvailabilityAllowlist = 359;
