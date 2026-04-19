@@ -300,7 +300,7 @@ message AdditionalDnsQueryTypesEnabledProto {
 //   1: Allow ads on all sites
 //   2: Do not allow ads on sites with intrusive ads
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message AdsSettingForIntrusiveAdsSitesProto {
   optional PolicyOptions policy_options = 1;
   optional int64 AdsSettingForIntrusiveAdsSites = 2;
