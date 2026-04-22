@@ -115,6 +115,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto KioskActiveWiFiCredentialsScopeChangeEnabled = 257;
   optional BooleanPolicyProto KioskApplicationLogCollectionEnabled = 329;
   optional BooleanPolicyProto KioskChromeAppsForceAllowed = 304;
+  optional BooleanPolicyProto KioskPinchToZoomAllowed = 405;
   optional BooleanPolicyProto KioskTroubleshootingToolsEnabled = 16;
   optional BooleanPolicyProto KioskWebAppOfflineEnabled = 253;
   optional StringListPolicyProto LocalNetworkAccessAllowedForUrls = 331;

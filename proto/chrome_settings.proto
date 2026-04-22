@@ -14935,6 +14935,24 @@ message KioskChromeAppsForceAllowedProto {
   optional bool KioskChromeAppsForceAllowed = 2;
 }
 
+// Allow pinch-to-zoom in Kiosk mode
+//
+// Setting the policy to Enabled or leaving it unset means pinch-to-zoom is
+// allowed in a Kiosk session.
+//
+// Setting the policy to Disabled means pinch-to-zoom is not allowed in a Kiosk
+// session.
+//
+// Valid values:
+//   True: Allow pinch-to-zoom in Kiosk mode
+//   False: Disable pinch-to-zoom in Kiosk mode
+//
+// Supported on: chrome_os
+message KioskPinchToZoomAllowedProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool KioskPinchToZoomAllowed = 2;
+}
+
 // Enable Kiosk troubleshooting tools
 //
 // Setting the policy to Enabled means Kiosk troubleshooting tools are available
@@ -21648,9 +21666,6 @@ message PrintingSendUsernameAndFilenameEnabledProto {
 // If you set this policy to Enabled or keep it unset, your users will be able
 // to turn on or off the Privacy Sandbox Ad measurement setting on their device.
 //
-// Setting this policy requires setting the PrivacySandboxPromptEnabled policy
-// to Disabled.
-//
 // This policy is deprecated as of Google Chrome version 144 with the
 // deprecation of the Attribution Reporting API.
 //
@@ -21674,9 +21689,6 @@ message PrivacySandboxAdMeasurementEnabledProto {
 // off for your users.
 // If you set this policy to Enabled or keep it unset, your users will be able
 // to turn on or off the Privacy Sandbox Ad topics setting on their device.
-//
-// Setting this policy requires setting the PrivacySandboxPromptEnabled policy
-// to Disabled.
 //
 // This policy is deprecated as of Google Chrome version 144 with the
 // deprecation of Topics API.
@@ -21781,6 +21793,9 @@ message PrivacySandboxIpProtectionEnabledProto {
 
 // Choose whether the Privacy Sandbox prompt can be shown to your users
 //
+// This policy is deprecated because the Privacy Sandbox prompt configuration is
+// no longer supported.
+//
 // A policy to control whether your users see the Privacy Sandbox prompt.
 // The prompt is a user-blocking flow which informs your users of the Privacy
 // Sandbox settings. See https://privacysandbox.com for details about Chrome’s
@@ -21819,9 +21834,6 @@ message PrivacySandboxPromptEnabledProto {
 // If you set this policy to Enabled or keep it unset, your users will be able
 // to turn on or off the Privacy Sandbox Site-suggested ads setting on their
 // device.
-//
-// Setting this policy requires setting the PrivacySandboxPromptEnabled policy
-// to Disabled.
 //
 // This policy is deprecated as of Google Chrome version 144 with the
 // deprecation of the Protected Audience API.
@@ -31504,6 +31516,7 @@ message ChromeSettingsSubProto1 {
   optional KioskApplicationLogCollectionEnabledProto KioskApplicationLogCollectionEnabled = 329;
   optional KioskBrowserPermissionsAllowedForOriginsProto KioskBrowserPermissionsAllowedForOrigins = 233;
   optional KioskChromeAppsForceAllowedProto KioskChromeAppsForceAllowed = 304;
+  optional KioskPinchToZoomAllowedProto KioskPinchToZoomAllowed = 405;
   optional KioskTroubleshootingToolsEnabledProto KioskTroubleshootingToolsEnabled = 16;
   optional KioskWebAppOfflineEnabledProto KioskWebAppOfflineEnabled = 253;
   optional KrispNoiseCancellationEnabledProto KrispNoiseCancellationEnabled = 397;
