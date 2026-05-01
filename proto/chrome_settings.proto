@@ -25939,6 +25939,95 @@ message SecurityKeyPermitAttestationProto {
   optional StringList SecurityKeyPermitAttestation = 2;
 }
 
+// Automatically select client certificates matching filters for Google Chrome
+// security signal reports.
+//
+// Configures filters to select which client certificates are included in Google
+// Chrome security signal reports. These reports send browser and device posture
+// information to Google Workspace, which administrators can use to configure
+// Context-Aware Access (CAA) rules.
+//
+// This policy allows you to define filters based on client certificate
+// attributes, such as the ISSUER and/or SUBJECT distinguished names. Google
+// Chrome will only include certificates in the signal reports if they match at
+// least one of the filters specified.
+//
+// Examples for the usage of the $SELECTOR section:
+//
+// * When $SELECTOR is set to { "ISSUER": { "CN": "$ISSUER_CN" } }, only client
+// certificates issued by a certificate with the CommonName $ISSUER_CN are
+// selected.
+//
+// * When $SELECTOR contains both the "ISSUER" and the "SUBJECT" sections, only
+// client certificates that satisfy both conditions are selected.
+//
+// * When $SELECTOR contains a "SUBJECT" section with the "O" value, a
+// certificate needs at least one organization matching the specified value to
+// be selected.
+//
+// * When $SELECTOR contains a "SUBJECT" section with a "OU" value, a
+// certificate needs at least one organizational unit matching the specified
+// value to be selected.
+//
+// * When $SELECTOR is set to {}, empty details are ignored for this policy.
+//
+// Leaving the policy unset means there's no selection of client certificates
+// during signal reporting.
+//
+// *Important:* This policy only takes effect if the
+// UserSecuritySignalsReporting policy is enabled, which controls the overall
+// feature for sending security signals from Chrome.
+//
+// Value schema:
+// {
+//     "items": {
+//         "properties": {
+//             "ISSUER": {
+//                 "properties": {
+//                     "CN": {
+//                         "type": "string"
+//                     },
+//                     "L": {
+//                         "type": "string"
+//                     },
+//                     "O": {
+//                         "type": "string"
+//                     },
+//                     "OU": {
+//                         "type": "string"
+//                     }
+//                 },
+//                 "type": "object"
+//             },
+//             "SUBJECT": {
+//                 "properties": {
+//                     "CN": {
+//                         "type": "string"
+//                     },
+//                     "L": {
+//                         "type": "string"
+//                     },
+//                     "O": {
+//                         "type": "string"
+//                     },
+//                     "OU": {
+//                         "type": "string"
+//                     }
+//                 },
+//                 "type": "object"
+//             }
+//         },
+//         "type": "object"
+//     },
+//     "type": "array"
+// }
+//
+// Supported on: linux, mac, win
+message SecuritySignalsClientCertificatesSelectorsProto {
+  optional PolicyOptions policy_options = 1;
+  optional string SecuritySignalsClientCertificatesSelectors = 2;
+}
+
 // Action on security token removal (e.g., smart card) for Google ChromeOS.
 //
 // Specifies what happens when a user who is authenticating via a security token
@@ -31636,6 +31725,7 @@ message ChromeSettingsSubProto1 {
   optional ScreensaverLockScreenImageDisplayIntervalSecondsProto ScreensaverLockScreenImageDisplayIntervalSeconds = 21;
   optional ScreensaverLockScreenImagesProto ScreensaverLockScreenImages = 22;
   optional SearchContentSharingSettingsProto SearchContentSharingSettings = 376;
+  optional SecuritySignalsClientCertificatesSelectorsProto SecuritySignalsClientCertificatesSelectors = 406;
   optional SelectParserRelaxationEnabledProto SelectParserRelaxationEnabled = 266;
   optional ServiceWorkerAutoPreloadEnabledProto ServiceWorkerAutoPreloadEnabled = 340;
   optional ServiceWorkerToControlSrcdocIframeEnabledProto ServiceWorkerToControlSrcdocIframeEnabled = 293;
