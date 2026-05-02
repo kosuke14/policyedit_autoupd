@@ -11631,7 +11631,7 @@ message ForceForegroundPriorityForAllTabsProto {
   optional bool ForceForegroundPriorityForAllTabs = 2;
 }
 
-// Force foreground priority for specific origins
+// Force foreground priority for specific URLs
 //
 // This policy allows you to specify a list of URL patterns. Background web
 // content matching these patterns will be forced to run at foreground priority.
@@ -11645,16 +11645,13 @@ message ForceForegroundPriorityForAllTabsProto {
 // For detailed information on valid URL patterns, please see
 // https://support.google.com/chrome/a?p=url_blocklist_filter_format.
 //
-// This policy only matches based on origin, so any path or query parameter in
-// the pattern is ignored. Scheme, host, and port are supported.
-//
 // If this list is empty or not set, no background content is forced to
 // foreground priority.
 //
 // Supported on: chrome_os, linux, mac, win
-message ForceForegroundPriorityForOriginsProto {
+message ForceForegroundPriorityForUrlsProto {
   optional PolicyOptions policy_options = 1;
-  optional StringList ForceForegroundPriorityForOrigins = 2;
+  optional StringList ForceForegroundPriorityForUrls = 2;
 }
 
 // Force Google SafeSearch
@@ -31562,7 +31559,7 @@ message ChromeSettingsSubProto1 {
   optional FocusModeSoundsEnabledProto FocusModeSoundsEnabled = 230;
   optional ForceEnablePepperVideoDecoderDevAPIProto ForceEnablePepperVideoDecoderDevAPI = 17;
   optional ForceForegroundPriorityForAllTabsProto ForceForegroundPriorityForAllTabs = 391;
-  optional ForceForegroundPriorityForOriginsProto ForceForegroundPriorityForOrigins = 403;
+  optional ForceForegroundPriorityForUrlsProto ForceForegroundPriorityForUrls = 403;
   optional ForcePermissionPolicyUnloadDefaultEnabledProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional FullRestoreModeProto FullRestoreMode = 115;
   optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;

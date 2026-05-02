@@ -159,7 +159,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto FileOrDirectoryPickerWithoutGestureAllowedForOrigins = 53;
   optional StringPolicyProto FocusModeSoundsEnabled = 230;
   optional BooleanPolicyProto ForceForegroundPriorityForAllTabs = 391;
-  optional StringListPolicyProto ForceForegroundPriorityForOrigins = 403;
+  optional StringListPolicyProto ForceForegroundPriorityForUrls = 403;
   optional BooleanPolicyProto ForcePermissionPolicyUnloadDefaultEnabled = 97;
   optional IntegerPolicyProto FullRestoreMode = 115;
   optional IntegerPolicyProto GoogleLocationServicesEnabled = 174;
