@@ -48,6 +48,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto DefaultIdleDetectionSetting = 367;
   optional IntegerPolicyProto DefaultJavaScriptOptimizerSetting = 237;
   optional IntegerPolicyProto DefaultSmartCardConnectSetting = 315;
+  optional IntegerPolicyProto DefaultSubAppsWithoutPromptsSetting = 408;
   optional IntegerPolicyProto DefaultWebPrintingSetting = 179;
   optional IntegerPolicyProto DefaultWindowManagementSetting = 27;
   optional StringListPolicyProto DeviceAttributesBlockedForOrigins = 338;
@@ -66,6 +67,8 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto PreciseGeolocationAllowedForUrls = 370;
   optional StringListPolicyProto SmartCardConnectAllowedForUrls = 280;
   optional StringListPolicyProto SmartCardConnectBlockedForUrls = 281;
+  optional StringListPolicyProto SubAppsWithoutPromptsAllowedForOrigins = 409;
+  optional StringListPolicyProto SubAppsWithoutPromptsBlockedForOrigins = 410;
   optional StringListPolicyProto WebPrintingAllowedForUrls = 180;
   optional StringListPolicyProto WebPrintingBlockedForUrls = 181;
   optional StringListPolicyProto WindowManagementAllowedForUrls = 28;
@@ -96,6 +99,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto GeminiActOnWebAllowedForURLs = 380;
   optional StringListPolicyProto GeminiActOnWebBlockedForURLs = 381;
   optional IntegerPolicyProto GeminiActOnWebSettings = 362;
+  optional IntegerPolicyProto GeminiExperimentalTriggeringSettings = 412;
   optional IntegerPolicyProto GeminiSettings = 295;
   optional IntegerPolicyProto GenAIInlineImageSettings = 306;
   optional IntegerPolicyProto GenAILocalFoundationalModelSettings = 211;
@@ -109,6 +113,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto HelpMeWriteSettings = 147;
   optional IntegerPolicyProto HistorySearchSettings = 235;
   optional IntegerPolicyProto SearchContentSharingSettings = 376;
+  optional IntegerPolicyProto SmartTabSharingSettings = 413;
   optional IntegerPolicyProto TabCompareSettings = 251;
   optional BooleanPolicyProto ShowCastSessionsStartedByOtherDevices = 2;
   optional BooleanPolicyProto KerberosUseCustomPrefilledConfig = 13;
@@ -129,6 +134,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto LoopbackNetworkBlockedForUrls = 388;
   optional BooleanPolicyProto AllowBackForwardCacheForCacheControlNoStorePageEnabled = 74;
   optional BooleanPolicyProto AllowExcludeDisplayInMirrorMode = 259;
+  optional BooleanPolicyProto AllowSocketPoolSizeRandomizationForProxies = 407;
   optional StringListPolicyProto AllowedDomainsForAppsList = 172;
   optional BooleanPolicyProto AllowedInputMethodsForceEnabled = 283;
   optional StringListPolicyProto AlwaysOnVpnPreConnectUrlAllowlist = 150;
@@ -170,6 +176,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto IncognitoModeUrlAllowlist = 353;
   optional StringListPolicyProto IncognitoModeUrlBlocklist = 352;
   optional IntegerPolicyProto InsertKeyModifier = 167;
+  optional IntegerPolicyProto IsolatedModeSettings = 411;
   optional BooleanPolicyProto IsolatedWebAppUserInstallationEnabled = 393;
   optional StringListPolicyProto KioskBrowserPermissionsAllowedForOrigins = 233;
   optional BooleanPolicyProto KrispNoiseCancellationEnabled = 397;

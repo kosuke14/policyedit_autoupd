@@ -27,7 +27,7 @@ import "policy_common_definitions.proto";
 // To access this feature, Google must be set as the user's default search
 // engine.
 //
-// 0/unset = The feature will be available to users.
+// 0 = The feature will be available to users.
 //
 // 1 = The feature will not be available to users.
 //
@@ -618,6 +618,34 @@ message AllowScreenLockProto {
 message AllowScreenWakeLocksProto {
   optional PolicyOptions policy_options = 1;
   optional bool AllowScreenWakeLocks = 2;
+}
+
+// Allow socket pool size randomization for proxies
+//
+// Socket pool size randomization is a security mechanism that prevents
+// attackers from exploiting deterministic capacity limits to learn cross-site
+// information.
+// If the capacity for a pool is normally 128 sockets, this mechanism randomly
+// caps the pool between 128 and 256.
+// This can allow up to 2x as many connections to the proxy, but in practice the
+// expected value is more like 1.2x.
+//
+// This impacts the settings from MaxConnectionsPerProxy and
+// MaxConnectionsPerProxyForWebSocket.
+// Instead of them defining the upper limit, the upper limit is 2x their values
+// (though again, the expected value in practice is more like 1.2x them).
+//
+// This is enabled by default for all pools, but this policy allows the feature
+// to be disabled for proxy pools specifically.
+//
+// Valid values:
+//   True: Allow socket pool randomization for proxies
+//   False: Prevent socket pool randomization for proxies
+//
+// Supported on: android, chrome_os, linux, mac, win
+message AllowSocketPoolSizeRandomizationForProxiesProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool AllowSocketPoolSizeRandomizationForProxies = 2;
 }
 
 // Allows a page to perform synchronous XHR requests during page dismissal.
@@ -5592,8 +5620,8 @@ message DataCompressionProxyEnabledProto {
 //
 // If the policy is left not set, no restrictions will be applied.
 //
-// This policy is available only to users who have an assigned Chrome Enterprise
-// Premium license.
+// This policy is available only to users who have an assigned `Chrome
+// Enterprise Premium` license.
 //
 // Value schema:
 // {
@@ -5611,6 +5639,9 @@ message DataCompressionProxyEnabledProto {
 //                         },
 //                         "destinations": {
 //                             "properties": {
+//                                 "gemini_in_chrome": {
+//                                     "type": "boolean"
+//                                 },
 //                                 "incognito": {
 //                                     "type": "boolean"
 //                                 },
@@ -5640,6 +5671,9 @@ message DataCompressionProxyEnabledProto {
 //                         },
 //                         "sources": {
 //                             "properties": {
+//                                 "gemini_in_chrome": {
+//                                     "type": "boolean"
+//                                 },
 //                                 "incognito": {
 //                                     "type": "boolean"
 //                                 },
@@ -5668,6 +5702,9 @@ message DataCompressionProxyEnabledProto {
 //             },
 //             "destinations": {
 //                 "properties": {
+//                     "gemini_in_chrome": {
+//                         "type": "boolean"
+//                     },
 //                     "incognito": {
 //                         "type": "boolean"
 //                     },
@@ -5699,6 +5736,9 @@ message DataCompressionProxyEnabledProto {
 //                     },
 //                     "destinations": {
 //                         "properties": {
+//                             "gemini_in_chrome": {
+//                                 "type": "boolean"
+//                             },
 //                             "incognito": {
 //                                 "type": "boolean"
 //                             },
@@ -5728,6 +5768,9 @@ message DataCompressionProxyEnabledProto {
 //                     },
 //                     "sources": {
 //                         "properties": {
+//                             "gemini_in_chrome": {
+//                                 "type": "boolean"
+//                             },
 //                             "incognito": {
 //                                 "type": "boolean"
 //                             },
@@ -5760,6 +5803,9 @@ message DataCompressionProxyEnabledProto {
 //                         },
 //                         "destinations": {
 //                             "properties": {
+//                                 "gemini_in_chrome": {
+//                                     "type": "boolean"
+//                                 },
 //                                 "incognito": {
 //                                     "type": "boolean"
 //                                 },
@@ -5789,6 +5835,9 @@ message DataCompressionProxyEnabledProto {
 //                         },
 //                         "sources": {
 //                             "properties": {
+//                                 "gemini_in_chrome": {
+//                                     "type": "boolean"
+//                                 },
 //                                 "incognito": {
 //                                     "type": "boolean"
 //                                 },
@@ -5840,6 +5889,9 @@ message DataCompressionProxyEnabledProto {
 //             },
 //             "sources": {
 //                 "properties": {
+//                     "gemini_in_chrome": {
+//                         "type": "boolean"
+//                     },
 //                     "incognito": {
 //                         "type": "boolean"
 //                     },
@@ -7132,6 +7184,34 @@ message DefaultSerialGuardSettingProto {
 message DefaultSmartCardConnectSettingProto {
   optional PolicyOptions policy_options = 1;
   optional int64 DefaultSmartCardConnectSetting = 2;
+}
+
+// Control use of the Sub Apps Add API
+//
+// The policy controls whether Isolated Web Apps (IWAs) will by default be able
+// to add Sub Apps.
+//
+// Setting the policy to 1 allows IWA origins to add Sub Apps and bypass user
+// gesture or user confirmation requirements.
+//
+// Setting the policy to 2 blocks IWA origins from adding Sub Apps.
+//
+// Setting the policy to 3 or leaving it unset allows Isolated Web App origins
+// to add Sub Apps upon user confirmation.
+//
+// This policy can be overridden for specific Isolated Web App origins using the
+// SubAppsWithoutPromptsAllowedForOrigins and
+// SubAppsWithoutPromptsBlockedorOrigins policies.
+//
+// Valid values:
+//   1: Allow Isolated Web App origins to add Sub Apps without user prompt
+//   2: Block Isolated Web App origins from adding Sub Apps
+//   3: Allow Isolated Web App origins to add Sub Apps but require user prompt
+//
+// Supported on: chrome_os, linux, mac, win
+message DefaultSubAppsWithoutPromptsSettingProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DefaultSubAppsWithoutPromptsSetting = 2;
 }
 
 // Default third-party storage partitioning setting
@@ -12134,11 +12214,25 @@ message GeminiActOnWebSettingsProto {
   optional int64 GeminiActOnWebSettings = 2;
 }
 
+// Controls Gemini experimental triggering
+//
+// This is an experimental policy.
+//
+// Valid values:
+//   0: Allow Gemini experimental triggering.
+//   1: Disallow Gemini experimental triggering.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiExperimentalTriggeringSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 GeminiExperimentalTriggeringSettings = 2;
+}
+
 // Settings for Gemini integration
 //
 // This setting allows Gemini app integrations.
 //
-// 0/unset = Gemini integration will be available for users.
+// 0 = Gemini integration will be available for users.
 //
 // 1 = Gemini integration will not be available for users.
 //
@@ -12204,8 +12298,8 @@ message GenAIInlineImageSettingsProto {
 // When the policy is set to Disabled (1), the model will not be downloaded, and
 // the existing model (if already downloaded) will be deleted.
 //
-// On desktop platforms, model downloading can also be disabled by
-// ComponentUpdatesEnabled.
+// On desktop platforms, model downloading can also be disabled by setting
+// ComponentUpdatesEnabled to false.
 //
 // Valid values:
 //   0: Downloads model automatically
@@ -14158,6 +14252,34 @@ message IsolateOriginsProto {
 message IsolateOriginsAndroidProto {
   optional PolicyOptions policy_options = 1;
   optional string IsolateOriginsAndroid = 2;
+}
+
+// Replace Incognito Mode with Isolated Mode
+//
+// Specifies whether to replace Incognito Mode with Isolated Mode.
+//
+// Isolated Mode is an Enterprise-only ephemeral browsing mode which replaces
+// Incognito mode.
+// Unlike Incognito mode, Isolated mode supports DLP-related Enterprise policies
+// and force-installed extensions.
+//
+// Note that Incognito-related policies are not applied to Isolated Mode.
+//
+// If set to 1 - Enabled, Isolated Mode is enabled and replaces Incognito Mode.
+//
+// If set to 0 - Disabled or left unset, Isolated Mode is disabled, and standard
+// Incognito behavior is used.
+//
+// This policy requires a `Chrome Enterprise Premium` license to take effect.
+//
+// Valid values:
+//   0: Isolated mode disabled
+//   1: Isolated mode available
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message IsolatedModeSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 IsolatedModeSettings = 2;
 }
 
 // Configure list of force-installed Isolated Web Apps
@@ -16351,23 +16473,26 @@ message MandatoryExtensionsForIncognitoNavigationProto {
 //
 // To modify WebSocket request limits, see MaxConnectionsPerProxyForWebSocket.
 //
-// Leaving the policy unset means a default of 32 is used.
+// Leaving the policy unset means a default of 128 is used.
 //
 // Some web apps are known to consume many connections with hanging GETs, so
-// setting a value below 32 may lead to browser networking hangs if there are
+// setting a value below 128 may lead to browser networking hangs if there are
 // too many web apps with hanging connections open.
 // Some proxy servers can't handle a high number of concurrent connections per
 // client, which is solved by setting this policy to a lower value.
 //
 // The value should be equal to or higher than 6.
 // Setting a value below that limit will cause 6 to be used.
-// Lower below the default (32) at your own risk.
+// Lower below the default (128) at your own risk.
 //
 // The value should be equal to or lower than 256 (99 in Google Chrome 147 and
 // earlier).
 // Setting a value above that limit will cause 256 (99 in Google Chrome 147 and
 // earlier) to be used.
-// Raise above the default (32) at your own risk.
+// Raise above the default (128) at your own risk.
+//
+// Please note that the enforced limits are impacted by
+// AllowSocketPoolSizeRandomizationForProxies.
 //
 // Supported on: android, chrome_os, linux, mac, win
 message MaxConnectionsPerProxyProto {
@@ -16383,21 +16508,24 @@ message MaxConnectionsPerProxyProto {
 //
 // To modify non-WebSocket request limits, see MaxConnectionsPerProxy.
 //
-// Leaving the policy unset means a default of 32 is used.
+// Leaving the policy unset means a default of 128 is used.
 //
 // Some web apps are known to consume many connections with hanging GETs, so
-// setting a value below 32 may lead to browser networking hangs if there are
+// setting a value below 128 may lead to browser networking hangs if there are
 // too many web apps with hanging connections open.
 // Some proxy servers can't handle a high number of concurrent connections per
 // client, which is solved by setting this policy to a lower value.
 //
 // The value should be equal to or higher than 6.
 // Setting a value below that limit will cause 6 to be used.
-// Lower below the default (32) at your own risk.
+// Lower below the default (128) at your own risk.
 //
 // The value should be equal to or lower than 256.
 // Setting a value above that limit will cause 256 to be used.
-// Raise above the default (32) at your own risk.
+// Raise above the default (128) at your own risk.
+//
+// Please note that the enforced limits are impacted by
+// AllowSocketPoolSizeRandomizationForProxies.
 //
 // Supported on: android, chrome_os, linux, mac, win
 message MaxConnectionsPerProxyForWebSocketProto {
@@ -25810,7 +25938,7 @@ message ScrollToTextFragmentEnabledProto {
 // Note that this policy doesn't affect Google AI Mode on the web. It only
 // controls how users can share information with it when using Google Chrome.
 //
-// 0/unset = users can share page or file content with Google AI Mode.
+// 0 = users can share page or file content with Google AI Mode.
 //
 // 1 = users cannot share page or file content with Google AI Mode. The entry
 // points for sharing context and the side panel will be disabled or hidden.
@@ -27215,6 +27343,48 @@ message SmartLockSigninAllowedProto {
   optional bool SmartLockSigninAllowed = 2;
 }
 
+// Smart tab sharing settings
+//
+// This policy controls the smart tab sharing feature of Google AI Mode through
+// Google Chrome side panel or tabs.
+//
+// Note that this policy doesn't affect Google AI Mode on the web. It only
+// controls how users can share information with it when using Google Chrome.
+//
+// 0 = users can share page or file content with Google AI Mode.
+//
+// 1 = users cannot share page or file content with Google AI Mode. The entry
+// points for sharing context and the side panel will be disabled or hidden.
+//
+// This policy will be ignored when Google Search is not users' default search
+// engine as the feature is disabled.
+//
+// This policy is independent of the AIModeSettings policy. The AIModeSettings
+// policy only controls entry points on omnibox or NTP search box, while this
+// policy controls context sharing through side panel or tabs.
+//
+// This policy also doesn't control Google Gemini integration which can be
+// disabled by GeminiSettings.
+//
+// Note that if SearchContentSharingSettings is disabled, this policy will be
+// ignored.
+//
+// If this policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow smart tab sharing with Google AI Mode integrations.
+//   1: Do not allow smart tab sharing with Google AI Mode integrations.
+//
+// Supported on: chrome_os, linux, mac, win
+message SmartTabSharingSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 SmartTabSharingSettings = 2;
+}
+
 // Allow SMS Messages to be synced from phone to Chromebook.
 //
 // Setting the policy to Enabled lets users set up their devices to sync their
@@ -27582,6 +27752,40 @@ message StricterMixedContentTreatmentEnabledProto {
 message SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional StringList SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 2;
+}
+
+// Allow Isolated Web Apps to use Sub Apps Add API without user prompt
+//
+// By default, Isolated Web Apps (IWAs) can add Sub Apps provided the user
+// confirms the prompt interactively.
+//
+// This policy controls which IWA origins will be able to add Sub Apps without
+// having the user prompted.
+//
+// This policy overrides the behavior of DefaultSubAppsWithoutPromptsSetting and
+// is overridden by SubAppsWithoutPromptsBlockedForOrigins.
+//
+// Supported on: chrome_os, linux, mac, win
+message SubAppsWithoutPromptsAllowedForOriginsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SubAppsWithoutPromptsAllowedForOrigins = 2;
+}
+
+// Block Isolated Web Apps from using Sub Apps Add API without user prompt
+//
+// By default, Isolated Web Apps (IWAs) can add Sub Apps provided that user
+// confirms the prompt interactively.
+//
+// This policy controls which IWA origins will be blocked from adding Sub Apps
+// without having the user prompted interactively.
+//
+// This policy overrides the behavior of DefaultSubAppsWithoutPromptsSetting and
+// SubAppsWithoutPromptsAllowedForOrigins.
+//
+// Supported on: chrome_os, linux, mac, win
+message SubAppsWithoutPromptsBlockedForOriginsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList SubAppsWithoutPromptsBlockedForOrigins = 2;
 }
 
 // Display the logout confirmation dialog
@@ -31439,6 +31643,7 @@ message ChromeSettingsSubProto1 {
   optional AdHocCodeSigningForPWAsEnabledProto AdHocCodeSigningForPWAsEnabled = 252;
   optional AllowBackForwardCacheForCacheControlNoStorePageEnabledProto AllowBackForwardCacheForCacheControlNoStorePageEnabled = 74;
   optional AllowExcludeDisplayInMirrorModeProto AllowExcludeDisplayInMirrorMode = 259;
+  optional AllowSocketPoolSizeRandomizationForProxiesProto AllowSocketPoolSizeRandomizationForProxies = 407;
   optional AllowedDomainsForAppsListProto AllowedDomainsForAppsList = 172;
   optional AllowedInputMethodsForceEnabledProto AllowedInputMethodsForceEnabled = 283;
   optional AllowedLocalAuthFactorsProto AllowedLocalAuthFactors = 365;
@@ -31501,6 +31706,7 @@ message ChromeSettingsSubProto1 {
   optional DefaultIdleDetectionSettingProto DefaultIdleDetectionSetting = 367;
   optional DefaultJavaScriptOptimizerSettingProto DefaultJavaScriptOptimizerSetting = 237;
   optional DefaultSmartCardConnectSettingProto DefaultSmartCardConnectSetting = 315;
+  optional DefaultSubAppsWithoutPromptsSettingProto DefaultSubAppsWithoutPromptsSetting = 408;
   optional DefaultThirdPartyStoragePartitioningSettingProto DefaultThirdPartyStoragePartitioningSetting = 50;
   optional DefaultWebPrintingSettingProto DefaultWebPrintingSetting = 179;
   optional DefaultWindowManagementSettingProto DefaultWindowManagementSetting = 27;
@@ -31565,6 +31771,7 @@ message ChromeSettingsSubProto1 {
   optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;
   optional GeminiActOnWebBlockedForURLsProto GeminiActOnWebBlockedForURLs = 381;
   optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
+  optional GeminiExperimentalTriggeringSettingsProto GeminiExperimentalTriggeringSettings = 412;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GenAIInlineImageSettingsProto GenAIInlineImageSettings = 306;
   optional GenAILocalFoundationalModelSettingsProto GenAILocalFoundationalModelSettings = 211;
@@ -31593,6 +31800,7 @@ message ChromeSettingsSubProto1 {
   optional IncognitoModeUrlBlocklistProto IncognitoModeUrlBlocklist = 352;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
+  optional IsolatedModeSettingsProto IsolatedModeSettings = 411;
   optional IsolatedWebAppUserInstallationEnabledProto IsolatedWebAppUserInstallationEnabled = 393;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
   optional JavaScriptOptimizerBlockedForSitesProto JavaScriptOptimizerBlockedForSites = 239;
@@ -31739,9 +31947,12 @@ message ChromeSettingsSubProto1 {
   optional SiteSearchSettingsProto SiteSearchSettings = 136;
   optional SmartCardConnectAllowedForUrlsProto SmartCardConnectAllowedForUrls = 280;
   optional SmartCardConnectBlockedForUrlsProto SmartCardConnectBlockedForUrls = 281;
+  optional SmartTabSharingSettingsProto SmartTabSharingSettings = 413;
   optional StandardizedBrowserZoomEnabledProto StandardizedBrowserZoomEnabled = 246;
   optional StaticStorageQuotaEnabledProto StaticStorageQuotaEnabled = 377;
   optional SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOriginsProto SubAppsAPIsAllowedWithoutGestureAndAuthorizationForOrigins = 178;
+  optional SubAppsWithoutPromptsAllowedForOriginsProto SubAppsWithoutPromptsAllowedForOrigins = 409;
+  optional SubAppsWithoutPromptsBlockedForOriginsProto SubAppsWithoutPromptsBlockedForOrigins = 410;
   optional SystemShortcutBehaviorProto SystemShortcutBehavior = 244;
   optional TLS13EarlyDataEnabledProto TLS13EarlyDataEnabled = 323;
   optional TabCompareSettingsProto TabCompareSettings = 251;
