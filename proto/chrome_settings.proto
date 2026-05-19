@@ -1165,7 +1165,7 @@ message AppCacheForceEnabledProto {
 //     "type": "array"
 // }
 //
-// Supported on: chrome_os
+// Supported on:
 message AppLaunchAutomationProto {
   optional PolicyOptions policy_options = 1;
   optional string AppLaunchAutomation = 2;

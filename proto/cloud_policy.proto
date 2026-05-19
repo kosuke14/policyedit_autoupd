@@ -138,7 +138,6 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto AllowedDomainsForAppsList = 172;
   optional BooleanPolicyProto AllowedInputMethodsForceEnabled = 283;
   optional StringListPolicyProto AlwaysOnVpnPreConnectUrlAllowlist = 150;
-  optional StringPolicyProto AppLaunchAutomation = 54;
   optional IntegerPolicyProto ArcVmDataMigrationStrategy = 85;
   optional BooleanPolicyProto BuiltInAIAPIsEnabled = 317;
   optional BooleanPolicyProto CacheEncryptionEnabled = 356;
