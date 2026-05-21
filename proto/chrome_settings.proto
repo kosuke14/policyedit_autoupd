@@ -13174,6 +13174,85 @@ message HttpAllowlistProto {
   optional StringList HttpAllowlist = 2;
 }
 
+// Configure HTTP Header Injection for specific URL patterns
+//
+// This policy enables defining a list of rules to inject custom HTTP headers
+// into web requests matching specific URL patterns. Headers set by this policy
+// take precedence over those that initially were present in the request, as
+// well as modifications attempted by users or extensions.
+//
+// A common use case for this policy is to enforce tenant access controls by
+// injecting custom headers (e.g., X-Tenant-ID).
+//
+// The policy accepts a list of Rules. Each Rule contains:
+//
+// * patterns: A list of URL patterns to match. See how to format a URL pattern
+// ( https://support.google.com/chrome/a?p=url_blocklist_filter_format ).
+//
+// * headers: A list of objects representing headers to inject, each containing:
+//
+// * name: The name of the header to inject.
+//
+// * value: The value of the header to inject.
+//
+// If multiple rules match a request, headers from all matching rules will be
+// applied. In case there're multiple headers with the same name, the one with
+// the most specific URL pattern will be applied. If patterns are equally
+// specific, the one that appears last in the list will be applied.
+//
+// Header names must be compliant with RFC 2616 ( https://www.rfc-
+// editor.org/rfc/rfc2616 ). Header values must not contain NUL, CR or LF
+// symbols. Individual headers must not exceed 8KB in size. Invalid headers and
+// URL patterns will be ignored.
+//
+// This policy is limited to a total of 500 URL patterns across all rules. Each
+// rule can contain at most 20 headers. Patterns and headers beyond these
+// thresholds will be ignored.
+//
+// Value schema:
+// {
+//     "items": {
+//         "properties": {
+//             "headers": {
+//                 "items": {
+//                     "properties": {
+//                         "name": {
+//                             "type": "string"
+//                         },
+//                         "value": {
+//                             "type": "string"
+//                         }
+//                     },
+//                     "required": [
+//                         "name",
+//                         "value"
+//                     ],
+//                     "type": "object"
+//                 },
+//                 "type": "array"
+//             },
+//             "patterns": {
+//                 "items": {
+//                     "type": "string"
+//                 },
+//                 "type": "array"
+//             }
+//         },
+//         "required": [
+//             "patterns",
+//             "headers"
+//         ],
+//         "type": "object"
+//     },
+//     "type": "array"
+// }
+//
+// Supported on: chrome_os, linux, mac, win
+message HttpHeaderInjectionProto {
+  optional PolicyOptions policy_options = 1;
+  optional string HttpHeaderInjection = 2;
+}
+
 // Allow HTTPS-Only Mode to be enabled
 //
 // This policy controls whether users can enable HTTPS-Only Mode (Always Use
@@ -31792,6 +31871,7 @@ message ChromeSettingsSubProto1 {
   optional HistorySearchSettingsProto HistorySearchSettings = 235;
   optional HomeAndEndKeysModifierProto HomeAndEndKeysModifier = 165;
   optional HttpAllowlistProto HttpAllowlist = 42;
+  optional HttpHeaderInjectionProto HttpHeaderInjection = 414;
   optional HttpsUpgradesEnabledProto HttpsUpgradesEnabled = 43;
   optional IPv6ReachabilityOverrideEnabledProto IPv6ReachabilityOverrideEnabled = 132;
   optional IdleDetectionAllowedForUrlsProto IdleDetectionAllowedForUrls = 368;

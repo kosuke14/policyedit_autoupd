@@ -242,6 +242,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto DnsOverHttpsExcludedDomains = 242;
   optional StringListPolicyProto DnsOverHttpsIncludedDomains = 243;
   optional BooleanPolicyProto HappyEyeballsV3Enabled = 309;
+  optional StringPolicyProto HttpHeaderInjection = 414;
   optional BooleanPolicyProto IPv6ReachabilityOverrideEnabled = 132;
   optional IntegerPolicyProto AutomatedPasswordChangeSettings = 336;
   optional StringListPolicyProto PasswordManagerBlocklist = 322;
