@@ -94,13 +94,15 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto FloatingSsoSessionCookiesIncluded = 339;
   optional IntegerPolicyProto AIModeSettings = 327;
   optional IntegerPolicyProto AutofillPredictionSettings = 260;
+  optional IntegerPolicyProto ChromeSuggestionsSettings = 415;
   optional IntegerPolicyProto CreateThemesSettings = 148;
   optional IntegerPolicyProto DevToolsGenAiSettings = 188;
   optional StringListPolicyProto GeminiActOnWebAllowedForURLs = 380;
   optional StringListPolicyProto GeminiActOnWebBlockedForURLs = 381;
   optional IntegerPolicyProto GeminiActOnWebSettings = 362;
-  optional IntegerPolicyProto GeminiExperimentalTriggeringSettings = 412;
+  optional StringPolicyProto GeminiEnterpriseSettings = 417;
   optional IntegerPolicyProto GeminiSettings = 295;
+  optional IntegerPolicyProto GeminiSparkSettings = 412;
   optional IntegerPolicyProto GenAIInlineImageSettings = 306;
   optional IntegerPolicyProto GenAILocalFoundationalModelSettings = 211;
   optional IntegerPolicyProto GenAIPhotoEditingSettings = 285;
@@ -203,6 +205,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto QuickOfficeForceFileDownloadEnabled = 111;
   optional BooleanPolicyProto ReduceAcceptLanguageEnabled = 305;
   optional IntegerPolicyProto RelaunchFastIfOutdated = 298;
+  optional BooleanPolicyProto RestrictBackgroundFetchFromServiceWorkerEnabled = 416;
   optional StringPolicyProto RestrictPdfSaveToGoogleDriveAccountsToPattern = 384;
   optional StringPolicyProto ScreenCaptureLocation = 171;
   optional StringListPolicyProto ScreenCaptureWithoutGestureAllowedForOrigins = 52;
