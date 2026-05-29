@@ -12286,7 +12286,7 @@ message GeminiActOnWebSettingsProto {
 //     "type": "object"
 // }
 //
-// Supported on: chrome_os, mac, win
+// Supported on: chrome_os, linux, mac, win
 message GeminiEnterpriseSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional string GeminiEnterpriseSettings = 2;
@@ -29863,7 +29863,7 @@ message UserDisplayNameProto {
 //   True: Allow users to file feedback
 //   False: Prevent users from filing feedback
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message UserFeedbackAllowedProto {
   optional PolicyOptions policy_options = 1;
   optional bool UserFeedbackAllowed = 2;
