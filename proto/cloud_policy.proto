@@ -65,6 +65,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto LegacyCookieScopeEnabledForDomainList = 343;
   optional BooleanPolicyProto PartitionedBlobUrlUsage = 286;
   optional StringListPolicyProto PreciseGeolocationAllowedForUrls = 370;
+  optional BooleanPolicyProto RestrictYouTubeCookiesDeletion = 418;
   optional StringListPolicyProto SmartCardConnectAllowedForUrls = 280;
   optional StringListPolicyProto SmartCardConnectBlockedForUrls = 281;
   optional StringListPolicyProto SubAppsWithoutPromptsAllowedForOrigins = 409;

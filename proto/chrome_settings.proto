@@ -24903,6 +24903,35 @@ message RestrictSigninToPatternProto {
   optional string RestrictSigninToPattern = 2;
 }
 
+// Restrict YouTube cookies deletion
+//
+// Prevents the manual deletion of YouTube cookies.
+//
+// This policy is intended to prevent users from accessing unauthorized YouTube
+// after manually clearing their YouTube cookies from the site settings page.
+//
+// Setting the policy to Enabled prevents YouTube cookies from being manually
+// deleted.
+//
+// Setting the policy to Disabled or not set allows YouTube cookies to be
+// deleted normally.
+//
+// Note: This policy only prevents manual deletion from the site settings UI. It
+// does not prevent automated deletion by the ClearBrowsingDataOnExitList or
+// BrowsingDataLifetime policies. Furthermore, if the
+// AllowDeletingBrowserHistory policy is enabled, users can still clear all
+// their cookies via the Clear Browsing Data dialog.
+//
+// Valid values:
+//   True: Restrict YouTube cookies deletion
+//   False: Do not restrict YouTube cookies deletion
+//
+// Supported on: chrome_os, linux, mac, win
+message RestrictYouTubeCookiesDeletionProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool RestrictYouTubeCookiesDeletion = 2;
+}
+
 // Configure the list of extension IDs exempt from the restricted managed guest
 // session clean-up procedure
 //
@@ -32138,6 +32167,7 @@ message ChromeSettingsSubProto1 {
   optional RestrictBackgroundFetchFromServiceWorkerEnabledProto RestrictBackgroundFetchFromServiceWorkerEnabled = 416;
   optional RestrictCoreSharingOnRendererProto RestrictCoreSharingOnRenderer = 346;
   optional RestrictPdfSaveToGoogleDriveAccountsToPatternProto RestrictPdfSaveToGoogleDriveAccountsToPattern = 384;
+  optional RestrictYouTubeCookiesDeletionProto RestrictYouTubeCookiesDeletion = 418;
   optional SaasUsageReportingDomainUrlsForBrowsersProto SaasUsageReportingDomainUrlsForBrowsers = 378;
   optional SaasUsageReportingDomainUrlsForProfilesProto SaasUsageReportingDomainUrlsForProfiles = 379;
   optional SafeBrowsingDeepScanningEnabledProto SafeBrowsingDeepScanningEnabled = 117;
