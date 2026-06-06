@@ -18157,7 +18157,7 @@ message OffsetParentNewSpecBehaviorEnabledProto {
 //     "type": "array"
 // }
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: chrome_os, ios, linux, mac, win
 message OnBulkDataEntryEnterpriseConnectorProto {
   optional PolicyOptions policy_options = 1;
   optional string OnBulkDataEntryEnterpriseConnector = 2;
