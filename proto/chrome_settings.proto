@@ -7148,7 +7148,10 @@ message DefaultSearchProviderSuggestURLPostParamsProto {
 // Default sensors setting
 //
 // Setting the policy to 1 lets websites access and use sensors such as motion
-// and light. Setting the policy to 2 denies access to sensors.
+// and light. Setting the policy to 2 denies access to sensors. When the policy
+// is set to 3 it will ask the user when a site requests access to sensors if
+// the tri-state feature flag is enabled, otherwise it will default to allowing
+// access to sensors.
 //
 // Leaving it unset means AllowSensors applies, but users can change this
 // setting.
@@ -7156,6 +7159,7 @@ message DefaultSearchProviderSuggestURLPostParamsProto {
 // Valid values:
 //   1: Allow sites to access sensors
 //   2: Do not allow any site to access sensors
+//   3: Ask whenever a site wants to access sensors
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message DefaultSensorsSettingProto {
