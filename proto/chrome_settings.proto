@@ -2103,6 +2103,8 @@ message AutofillPredictionSettingsProto {
 // passport, drivers license, national id).
 // * "travel": Blocks filling and saving of travel information (e.g. flight
 // reservation, vehicle registration).
+// * "shopping": Blocks filling and saving of shopping information (e.g. online
+// orders, shipments).
 //
 // If a data type is blocked for a site, both the generation of suggestions and
 // the prompt to save/import new data of that type are disabled on that site.
@@ -2127,7 +2129,8 @@ message AutofillPredictionSettingsProto {
 //                         "contact_info",
 //                         "payments",
 //                         "identity_docs",
-//                         "travel"
+//                         "travel",
+//                         "shopping"
 //                     ],
 //                     "type": "string"
 //                 },
@@ -2146,7 +2149,7 @@ message AutofillPredictionSettingsProto {
 //     "type": "array"
 // }
 //
-// Supported on: android, chrome_os, ios, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, ios, linux, mac, win
 message AutofillSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional string AutofillSettings = 2;
@@ -2189,6 +2192,48 @@ message AutofillSettingsProto {
 message AutomatedPasswordChangeSettingsProto {
   optional PolicyOptions policy_options = 1;
   optional int64 AutomatedPasswordChangeSettings = 2;
+}
+
+// Allow automatic downloads on these sites
+//
+// Allows you to set a list of URL patterns that specify sites which are allowed
+// to download multiple files automatically.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns.
+//
+// If a URL matches both AutomaticDownloadsAllowedForUrls and
+// AutomaticDownloadsBlockedForUrls, AutomaticDownloadsBlockedForUrls takes
+// precedence.
+//
+// If this policy is not set, DefaultAutomaticDownloadsSetting applies for all
+// sites, if it is set. If not, the user's personal setting applies.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message AutomaticDownloadsAllowedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList AutomaticDownloadsAllowedForUrls = 2;
+}
+
+// Block automatic downloads on these sites
+//
+// Allows you to set a list of URL patterns that specify sites which are not
+// allowed to download multiple files automatically.
+//
+// For detailed information on valid URL patterns, please see
+// https://chromeenterprise.google/policies/url-patterns.
+//
+// If a URL matches both AutomaticDownloadsAllowedForUrls and
+// AutomaticDownloadsBlockedForUrls, AutomaticDownloadsBlockedForUrls takes
+// precedence.
+//
+// If this policy is not set, DefaultAutomaticDownloadsSetting applies for all
+// sites, if it is set. If not, the user's personal setting applies.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message AutomaticDownloadsBlockedForUrlsProto {
+  optional PolicyOptions policy_options = 1;
+  optional StringList AutomaticDownloadsBlockedForUrls = 2;
 }
 
 // Allow automatic fullscreen on these sites
@@ -6259,6 +6304,26 @@ message DataUrlInWebWorkerOpaqueOriginEnabledProto {
   optional bool DataUrlInWebWorkerOpaqueOriginEnabled = 2;
 }
 
+// Default automatic downloads setting
+//
+// Setting the policy to 1 lets websites download multiple files automatically.
+// Setting the policy to 2 denies this permission. You can set the policy to ask
+// whenever a website wants to download multiple files automatically.
+//
+// Leaving the policy unset means the AskAutomaticDownloads policy applies, but
+// users can change this setting.
+//
+// Valid values:
+//   1: Allow sites to download multiple files automatically
+//   2: Do not allow any site to download multiple files automatically
+//   3: Ask whenever a site wants to download multiple files automatically
+//
+// Supported on: android, chrome_os, linux, mac, win
+message DefaultAutomaticDownloadsSettingProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 DefaultAutomaticDownloadsSetting = 2;
+}
+
 // Set Google Chrome as Default Browser
 //
 // Setting the policy to True has Google Chrome always check whether it's the
@@ -7718,14 +7783,16 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 
 // Control where Developer Tools can be used
 //
-// Setting the policy to 0 (the default) means you can access the developer
-// tools and the JavaScript console, but not in the context of extensions
-// installed by enterprise policy or, since version 114 and if this is a managed
-// user, extensions built into the browser. Setting the policy to 1 means you
-// can access the developer tools and the JavaScript console in all contexts,
-// including that of extensions installed by enterprise policy. Setting the
-// policy to 2 means you can't access developer tools, and you can't inspect
-// website elements.
+// Setting 0 (Default): Dev tools are available for standard web browsing, but
+// restricted for enterprise-installed extensions and managed user built-in
+// extensions. Starting in version M150, they are also blocked on any page that
+// embeds these extensions, with the sole exception of the built-in PDF viewer.
+//
+// Setting 1: Dev tools and the console are completely unlocked and accessible
+// in all contexts, including within enterprise-policy extensions.
+//
+// Setting 2: Dev tools and element inspection are entirely disabled browser-
+// wide.
 //
 // This setting also turns off keyboard shortcuts and menu or context menu
 // entries to open developer tools or the JavaScript console.
@@ -7755,12 +7822,14 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 // (DeveloperToolsAvailability) is the fallback.
 //
 // Valid values:
-//   0: Disallow usage of the Developer Tools on apps and extensions installed
-// by enterprise policy or, since version 114 and if this is a managed user,
-// extensions built into the browser. Allow usage of the Developer Tools in
-// other contexts
-//   1: Allow usage of the Developer Tools
-//   2: Disallow usage of the Developer Tools
+//   0: Allow usage of the Developer Tools for standard web browsing, but
+// restrict the usage for enterprise-installed extensions and managed user
+// built-in extensions. Starting in version M150, they are also blocked on any
+// page that embeds these extensions, with the sole exception of the built-in
+// PDF viewer.
+//   1: Allow usage of the Developer Tools in all contexts, including within
+// enterprise-policy extensions
+//   2: Disallow usage of the Developer Tools entirely
 //
 // Supported on: android, chrome_os, fuchsia, linux, mac, win
 message DeveloperToolsAvailabilityProto {
@@ -12426,10 +12495,7 @@ message GeminiSettingsProto {
 // or all languages. Setting this policy to 0 - Enabled does not guarantee the
 // feature will be enabled; it remains subject to availability. For more info on
 // the roll-out, check the Enterprise Release Notes:
-// https://chromeenterprise.google/resources/release-notes/
-//
-// If the policy is unset, its behavior is determined by the
-// GenAiDefaultSettings policy.
+// https://chromeenterprise.google/resources/release-notes/.
 //
 // Valid values:
 //   0: Gemini Spark is allowed to connect to and use Google Chrome auto browse.
@@ -14124,6 +14190,30 @@ message IncognitoModeUrlBlocklistProto {
   optional StringList IncognitoModeUrlBlocklist = 2;
 }
 
+// Settings for Indigo.
+//
+// Controls if Indigo is allowed to transform images on the web.
+//
+// 0 = Enable Indigo with model improvement.
+//
+// 1 = Enable Indigo without model improvement.
+//
+// 2 = Disable Indigo.
+//
+// If this policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// Valid values:
+//   0: Enable Indigo with model improvement.
+//   1: Enable Indigo without model improvement.
+//   2: Disable Indigo.
+//
+// Supported on: chrome_os, linux, mac, win
+message IndigoProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 Indigo = 2;
+}
+
 // Allow insecure content on these sites
 //
 // Allows you to set a list of url patterns that specify sites which are allowed
@@ -14450,11 +14540,20 @@ message IntranetRedirectBehaviorProto {
 
 // Enable Site Isolation for specified origins
 //
-// Setting the policy means each of the named origins in a comma-separated list
-// runs in a dedicated process. Each named origin's process will only be allowed
-// to contain documents from that origin and its subdomains. For example,
-// specifying https://a1.example.com/ allows https://a2.a1.example.com/ in the
-// same process, but not https://example.com or https://b.example.com.
+// Specify a list of origins that run in a dedicated process.
+//
+// On Android, this policy only works on devices with sufficient memory
+// (strictly more than 3.2GB RAM), as isolating too many sites on resource-
+// constrained devices may cause performance problems. For resource-constrained
+// Android devices, please use IsolateOriginsShortlist instead.
+//
+// Devices with less than 1GB memory are not recommended to configure any
+// process isolation specifically.
+//
+// Each named origin's process will only be allowed to contain documents from
+// that origin and its subdomains. For example, specifying
+// https://a1.example.com/ allows https://a2.a1.example.com/ in the same
+// process, but not https://example.com or https://b.example.com.
 //
 // Since Google Chrome 77, you can also specify a range of origins to isolate
 // using a wildcard. For example, specifying https://[*.]corp.example.com will
@@ -14467,22 +14566,26 @@ message IntranetRedirectBehaviorProto {
 // SitePerProcess policy. This IsolateOrigins policy is useful to isolate
 // specific origins at a finer granularity (e.g., https://a.example.com).
 //
+// Note that Android isolates certain sensitive sites by default starting in
+// Google Chrome version 77, and this policy extends that mode to isolate
+// specific additional origins.
+//
 // Also note that origins isolated by this policy will be unable to script other
 // origins in the same site, which is otherwise possible if two same-site
 // documents modify their document.domain values to match. Administrators should
 // confirm this uncommon behavior is not used on an origin before isolating it.
 //
-// Setting the policy to off or leaving it unset lets users change this setting.
+// Setting the policy to an empty string or leaving it unset means site
+// isolation won't be required for any specific origins. Users can still turn on
+// process isolation manually, through the command line flag.
 //
-// Note: For Android, use the IsolateOriginsAndroid policy instead.
-//
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message IsolateOriginsProto {
   optional PolicyOptions policy_options = 1;
   optional string IsolateOrigins = 2;
 }
 
-// Enable Site Isolation for specified origins on Android devices
+// Enable Site Isolation for specified origins on Android devices (deprecated)
 //
 // Setting the policy means each of the named origins in a comma-separated list
 // runs in a dedicated process on Android. Each named origin's process will only
@@ -14504,23 +14607,62 @@ message IsolateOriginsProto {
 // documents modify their document.domain values to match. Administrators should
 // confirm this uncommon behavior is not used on an origin before isolating it.
 //
-// Setting the policy to Disabled turns off any form of site isolation,
-// including isolation of sensitive sites and field trials of
-// IsolateOriginsAndroid, SitePerProcessAndroid, and other site isolation modes.
-// Users can still turn on IsolateOrigins manually, through the command line
-// flag.
+// Setting the policy to an empty string or leaving it unset means site
+// isolation won't be required for any specific origins. Users can still turn on
+// process isolation manually, through the command line flag.
 //
-// Leaving the policy unset lets users change this setting.
-//
-// Note: Isolating too many sites on Android may cause performance problems,
-// especially on low-memory devices. This policy applies only to Chrome on
-// Android running on devices with strictly more than 1 GB of RAM. To apply the
-// policy on non-Android platforms, use IsolateOrigins.
+// Note: This policy is deprecated, use IsolateOrigins (for high-performance
+// devices) or IsolateOriginsShortlist instead. This policy applies only to
+// Chrome on Android running on devices with strictly more than 1 GB of RAM
+// which are not recommended to configure any process isolation specifically.
 //
 // Supported on: android
 message IsolateOriginsAndroidProto {
   optional PolicyOptions policy_options = 1;
   optional string IsolateOriginsAndroid = 2;
+}
+
+// Enable Site Isolation for specified origins on resource-constrained devices
+//
+// Specify a list of origins that run in a dedicated process on resource-
+// constrained platforms.
+//
+// This policy only works on devices with limited memory (between 1GB and 3.2GB
+// RAM), as isolating too many sites on resource-constrained devices may cause
+// performance problems. For high-performance environments (including high-end
+// Android devices), please use IsolateOrigins instead.
+//
+// Devices with less than 1GB memory are not recommended to configure any
+// process isolation specifically.
+//
+// Each named origin's process will only be allowed to contain documents from
+// that origin and its subdomains. For example, specifying
+// https://a1.example.com/ allows https://a2.a1.example.com/ in the same
+// process, but not https://example.com or https://b.example.com.
+//
+// You can also specify a range of origins to isolate using a wildcard. For
+// example, specifying https://[*.]corp.example.com will give every origin
+// underneath https://corp.example.com its own dedicated process, including
+// https://corp.example.com itself, https://a1.corp.example.com, and
+// https://a2.a1.corp.example.com.
+//
+// Note that Android isolates certain sensitive sites by default starting in
+// Google Chrome version 77, and this policy extends that mode to isolate
+// specific additional origins.
+//
+// Note that origins isolated by this policy will be unable to script other
+// origins in the same site, which is otherwise possible if two same-site
+// documents modify their document.domain values to match. Administrators should
+// confirm this uncommon behavior is not used on an origin before isolating it.
+//
+// Setting the policy to an empty string or leaving it unset means site
+// isolation won't be required for any specific origins. Users can still turn on
+// process isolation manually, through the command line flag.
+//
+// Supported on: android, linux, mac, win
+message IsolateOriginsShortlistProto {
+  optional PolicyOptions policy_options = 1;
+  optional string IsolateOriginsShortlist = 2;
 }
 
 // Replace Incognito Mode with Isolated Mode
@@ -16929,10 +17071,6 @@ message MemorySaverModeSavingsProto {
 //
 // (For Google ChromeOS, see DeviceMetricsReportingEnabled.)
 //
-// If the RestructureMetricsConsentSettings experiment is active on the device
-// and both this policy and the MetricsReportingLevel policy are set, the
-// MetricsReportingLevel policy takes precedence.
-//
 // On Microsoft® Windows®, this policy is only available on instances that are
 // joined to a Microsoft® Active Directory® domain, joined to Microsoft® Azure®
 // Active Directory® or enrolled in Chrome Enterprise Core.
@@ -16949,39 +17087,6 @@ message MemorySaverModeSavingsProto {
 message MetricsReportingEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool MetricsReportingEnabled = 2;
-}
-
-// Metrics reporting level
-//
-// Specifies the level of metrics reporting for Google Chrome.
-//
-// When this policy is set, it determines how much usage and crash-related data
-// is reported to Google:
-// * 0 = Disable reporting: No usage or crash-related data is sent to Google.
-// * 1 = Basic reporting: A limited set of usage and crash-related data is sent
-// to Google.
-// * 2 = Advanced reporting: A comprehensive set of usage and crash-related data
-// is sent to Google.
-//
-// If this policy is left not set, the user can choose the metrics reporting
-// behavior at installation or first run, and can change this setting later.
-//
-// This policy is only evaluated if the RestructureMetricsConsentSettings
-// experiment is active on the device.
-//
-// If the RestructureMetricsConsentSettings experiment is active on the device
-// and both this policy and the MetricsReportingEnabled policy are set, this
-// policy takes precedence.
-//
-// Valid values:
-//   0: Disable reporting
-//   1: Basic reporting
-//   2: Advanced reporting
-//
-// Supported on: android, ios, linux, mac, win
-message MetricsReportingLevelProto {
-  optional PolicyOptions policy_options = 1;
-  optional int64 MetricsReportingLevel = 2;
 }
 
 // Configures the Cloud Upload flow for Microsoft OneDrive and Microsoft 365
@@ -22293,6 +22398,43 @@ message PrivateNetworkAccessRestrictionsEnabledProto {
   optional bool PrivateNetworkAccessRestrictionsEnabled = 2;
 }
 
+// Enable Process Isolation
+//
+// This policy controls the Process Isolation settings for Google Chrome.
+//
+// Enabling Process Isolation improves the security of Google Chrome by
+// preventing authorized applications on the system from tampering with or
+// reading the contents of Google Chrome's running processes. This helps prevent
+// other applications on the system from gaining access to Google Chrome's
+// encrypted data.
+//
+// Enabling Process Isolation may cause incompatibilities with third party
+// applications that rely on being able to inject or tamper with Google Chrome's
+// processes, such as antivirus, screen reader or window manager applications.
+//
+// Setting the policy to Enabled turns on process isolation in Google Chrome.
+//
+// Setting the policy to Disabled turns off process isolation in Google Chrome.
+//
+// If this policy is unset, Google Chrome will follow the default rollout
+// process for the Process Isolation feature, which means that the feature will
+// be gradually rolled out to an increasing number of users.
+//
+// Note: This policy is applied when Google Chrome starts. If the policy is
+// changed while Google Chrome is running, the new setting will take effect on
+// the next restart.
+//
+// Valid values:
+//   True: Enable Process Isolation.
+//   False: Disable Process Isolation.
+//   None: Process Isolation may be used depending on feature launch process.
+//
+// Supported on: win
+message ProcessIsolationEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool ProcessIsolationEnabled = 2;
+}
+
 // Profile Label
 //
 // This policy controls a label used to identify a signed in profile. This label
@@ -22663,7 +22805,7 @@ message ProvisionManagedClientCertificateForBrowserProto {
 //   0: Disable client certificate provisioning
 //   1: Enable client certificate provisioning
 //
-// Supported on: android, ios, linux, mac, win
+// Supported on: android, chrome_os, ios, linux, mac, win
 message ProvisionManagedClientCertificateForUserProto {
   optional PolicyOptions policy_options = 1;
   optional int64 ProvisionManagedClientCertificateForUser = 2;
@@ -22888,6 +23030,112 @@ message ProxyOverrideRulesProto {
 message ProxyPacUrlProto {
   optional PolicyOptions policy_options = 1;
   optional string ProxyPacUrl = 2;
+}
+
+// Configure Proxy Provisioning Domains
+//
+// Configures a list of Provisioning Domains (PvDs) that Google Chrome will use
+// to fetch proxy configurations dynamically.
+//
+// This policy allows specifying a list of domain names or resource URIs
+// representing Provisioning Domains as defined in RFC 8801 ("Discovering
+// Provisioning Domain Names and Data"). For each PvD, the browser resolves the
+// corresponding JSON configuration by making an HTTPS request to the well-known
+// endpoint path: "https://[pvd_id]/.well-known/pvd".
+//
+// Each entry in the list specifies:
+//
+// * pvd_id: The identifier of the Provisioning Domain (a domain name).
+//
+// * auth_config: The optional authentication configuration. If unconfigured or
+// set to "none", no authentication is performed. When set to
+// "profile_bearer_token", the browser retrieves an OAuth2 access token with
+// provided scope for the signed-in primary account and attaches it in the
+// "Authorization" header as a "Bearer" token.
+//
+// * extra_headers: An optional list of custom HTTP headers to include when
+// querying the PvD endpoint. Dynamic values can be injected, such as
+// "profile_id" (which represents a stable, unique identifier of the browser
+// profile on the device, enabling per-profile configuration targeting) or
+// "accept_language" (representing the browser's preferred languages).
+//
+// The fetched configurations are parsed according to the RFC 8801 schema. Only
+// proxy configuration-related routing rules and proxies from the PvD's JSON
+// payload are applied. If this policy is unset, no Provisioning Domains will be
+// queried or used to fetch proxy configurations.
+//
+// Value schema:
+// {
+//     "items": {
+//         "properties": {
+//             "auth_config": {
+//                 "description": "Authentication configuration for the PvD.",
+//                 "properties": {
+//                     "scope": {
+//                         "description": "The OAuth scope or purpose
+// identifier. Only relevant when type is profile_bearer_token.",
+//                         "type": "string"
+//                     },
+//                     "type": {
+//                         "description": "The type of authentication.\n\n*
+// 'none': No authentication is performed.\n\n* 'profile_bearer_token':
+// Instructs the browser to fetch an OAuth2 access token for the signed-in
+// primary account and attach it in the \"Authorization\" header as a \"Bearer\"
+// token.",
+//                         "enum": [
+//                             "none",
+//                             "profile_bearer_token"
+//                         ],
+//                         "type": "string"
+//                     }
+//                 },
+//                 "type": "object"
+//             },
+//             "extra_headers": {
+//                 "items": {
+//                     "description": "Additional HTTP headers to include in the
+// fetch request.",
+//                     "properties": {
+//                         "key": {
+//                             "description": "The key of the header.",
+//                             "type": "string"
+//                         },
+//                         "value": {
+//                             "description": "The value of the header, which
+// can contain placeholders that the browser will expand dynamically:\n\n*
+// '${profile_id}': Expands to a stable, unique identifier representing the
+// specific browser profile on the device (as generated by the browser's Profile
+// ID Service).\n\n* '${accept_language}': Expands to the browser's current
+// preferred languages.",
+//                             "type": "string"
+//                         }
+//                     },
+//                     "required": [
+//                         "key",
+//                         "value"
+//                     ],
+//                     "type": "object"
+//                 },
+//                 "type": "array"
+//             },
+//             "pvd_id": {
+//                 "description": "The PvD ID of the Provisioning Domain. The
+// full URL of the PvD will be https://[PvD-ID]/.well-known/pvd.",
+//                 "type": "string"
+//             }
+//         },
+//         "required": [
+//             "pvd_id"
+//         ],
+//         "type": "object"
+//     },
+//     "type": "array"
+// }
+//
+// Supported on: android, linux, mac, win
+message ProxyProvisioningDomainsProto {
+  optional PolicyOptions policy_options = 1;
+  optional string ProxyProvisioningDomains = 2;
 }
 
 // Address or URL of proxy server
@@ -28712,6 +28960,32 @@ message TermsOfServiceURLProto {
   optional string TermsOfServiceURL = 2;
 }
 
+// Settings for 3rd party AI Mode integrations in the address bar and New Tab
+// page search box.
+//
+// This policy controls 3rd party AI Mode integrations in the address bar and
+// the New Tab page search box.
+//
+// To access this feature, a 3rd party search engine that supports AI Mode must
+// be set as the user's default search engine.
+//
+// 0 = The feature will be available to users.
+//
+// 1 = The feature will not be available to users.
+//
+// If the policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// Valid values:
+//   0: Allow 3rd party AI Mode integrations.
+//   1: Do not allow 3rd party AI Mode integrations.
+//
+// Supported on: android, chrome_os, ios, linux, mac, win
+message ThirdPartyAiChatSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 ThirdPartyAiChatSettings = 2;
+}
+
 // Enable third party software injection blocking
 //
 // This policy is deprecated.
@@ -30386,6 +30660,42 @@ message VoiceInteractionQuickAnswersEnabledProto {
   optional bool VoiceInteractionQuickAnswersEnabled = 2;
 }
 
+// Settings for Voice Typing
+//
+// Voice Typing is an AI-based feature that allows users to input and edit text
+// using their voice, powered by generative AI models to provide high-quality
+// transcription and formatting.
+//
+// 0 = Allow the feature to be used, while allowing Google to use relevant data
+// to improve its AI models. Relevant data may include prompts, inputs, outputs,
+// source materials, and written feedback, depending on the feature. It may also
+// be reviewed by humans to improve AI models. 0 is the default value, except
+// when noted below.
+//
+// 1 = Allow the feature to be used, but does not allow Google to improve models
+// using users' content (including prompts, inputs, outputs, source materials,
+// and written feedback). 1 is the default value for Enterprise users managed by
+// Google Admin console and for Education accounts managed by Google Workspace.
+//
+// 2 = Do not allow the feature.
+//
+// If the policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow Voice Typing.
+//   1: Allow Voice Typing without data collection.
+//   2: Do not allow Voice Typing.
+//
+// Supported on: chrome_os, linux, mac, win
+message VoiceTypingSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 VoiceTypingSettings = 2;
+}
+
 // Allow the user to manage VPN connections
 //
 // Setting the policy to Enabled or leaving it unset lets users manage
@@ -31983,6 +32293,8 @@ message ChromeSettingsSubProto1 {
   optional AutofillPredictionSettingsProto AutofillPredictionSettings = 260;
   optional AutofillSettingsProto AutofillSettings = 419;
   optional AutomatedPasswordChangeSettingsProto AutomatedPasswordChangeSettings = 336;
+  optional AutomaticDownloadsAllowedForUrlsProto AutomaticDownloadsAllowedForUrls = 423;
+  optional AutomaticDownloadsBlockedForUrlsProto AutomaticDownloadsBlockedForUrls = 424;
   optional AutomaticFullscreenAllowedForUrlsProto AutomaticFullscreenAllowedForUrls = 185;
   optional AutomaticFullscreenBlockedForUrlsProto AutomaticFullscreenBlockedForUrls = 186;
   optional BeforeunloadEventCancelByPreventDefaultEnabledProto BeforeunloadEventCancelByPreventDefaultEnabled = 71;
@@ -32026,6 +32338,7 @@ message ChromeSettingsSubProto1 {
   optional DataURLWhitespacePreservationEnabledProto DataURLWhitespacePreservationEnabled = 258;
   optional DataUrlInSvgUseEnabledProto DataUrlInSvgUseEnabled = 69;
   optional DataUrlInWebWorkerOpaqueOriginEnabledProto DataUrlInWebWorkerOpaqueOriginEnabled = 404;
+  optional DefaultAutomaticDownloadsSettingProto DefaultAutomaticDownloadsSetting = 422;
   optional DefaultControlledFrameSettingProto DefaultControlledFrameSetting = 288;
   optional DefaultDeviceAttributesSettingProto DefaultDeviceAttributesSetting = 337;
   optional DefaultDirectSocketsPrivateNetworkAccessSettingProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
@@ -32127,8 +32440,10 @@ message ChromeSettingsSubProto1 {
   optional IdleDetectionBlockedForUrlsProto IdleDetectionBlockedForUrls = 369;
   optional IncognitoModeUrlAllowlistProto IncognitoModeUrlAllowlist = 353;
   optional IncognitoModeUrlBlocklistProto IncognitoModeUrlBlocklist = 352;
+  optional IndigoProto Indigo = 429;
   optional InsecureHashesInTLSHandshakesEnabledProto InsecureHashesInTLSHandshakesEnabled = 55;
   optional InsertKeyModifierProto InsertKeyModifier = 167;
+  optional IsolateOriginsShortlistProto IsolateOriginsShortlist = 420;
   optional IsolatedModeSettingsProto IsolatedModeSettings = 411;
   optional IsolatedWebAppUserInstallationEnabledProto IsolatedWebAppUserInstallationEnabled = 393;
   optional JavaScriptOptimizerAllowedForSitesProto JavaScriptOptimizerAllowedForSites = 238;
@@ -32169,7 +32484,6 @@ message ChromeSettingsSubProto1 {
   optional MandatoryExtensionsForIncognitoNavigationProto MandatoryExtensionsForIncognitoNavigation = 45;
   optional MaxConnectionsPerProxyForWebSocketProto MaxConnectionsPerProxyForWebSocket = 396;
   optional MemorySaverModeSavingsProto MemorySaverModeSavings = 221;
-  optional MetricsReportingLevelProto MetricsReportingLevel = 400;
   optional MicrosoftOfficeCloudUploadProto MicrosoftOfficeCloudUpload = 105;
   optional MicrosoftOneDriveAccountRestrictionsProto MicrosoftOneDriveAccountRestrictions = 134;
   optional MicrosoftOneDriveMountProto MicrosoftOneDriveMount = 108;
@@ -32216,6 +32530,7 @@ message ChromeSettingsSubProto1 {
   optional PrivacySandboxPromptEnabledProto PrivacySandboxPromptEnabled = 8;
   optional PrivacySandboxSiteEnabledAdsEnabledProto PrivacySandboxSiteEnabledAdsEnabled = 10;
   optional PrivateNetworkAccessRestrictionsEnabledProto PrivateNetworkAccessRestrictionsEnabled = 137;
+  optional ProcessIsolationEnabledProto ProcessIsolationEnabled = 428;
   optional ProfileLabelProto ProfileLabel = 199;
   optional ProfileReauthPromptProto ProfileReauthPrompt = 124;
   optional ProfileSeparationDataMigrationSettingsProto ProfileSeparationDataMigrationSettings = 113;
@@ -32227,6 +32542,7 @@ message ChromeSettingsSubProto1 {
   optional ProvisionManagedClientCertificateForUserProto ProvisionManagedClientCertificateForUser = 175;
   optional ProvisionalNotificationsAllowedProto ProvisionalNotificationsAllowed = 311;
   optional ProxyOverrideRulesProto ProxyOverrideRules = 364;
+  optional ProxyProvisioningDomainsProto ProxyProvisioningDomains = 426;
   optional QRCodeGeneratorEnabledProto QRCodeGeneratorEnabled = 241;
   optional QuickOfficeForceFileDownloadEnabledProto QuickOfficeForceFileDownloadEnabled = 111;
   optional RSAKeyUsageForLocalAnchorsEnabledProto RSAKeyUsageForLocalAnchorsEnabled = 70;
@@ -32289,6 +32605,7 @@ message ChromeSettingsSubProto1 {
   optional TabCompareSettingsProto TabCompareSettings = 251;
   optional TabGroupSharingSettingsProto TabGroupSharingSettings = 318;
   optional TabOrganizerSettingsProto TabOrganizerSettings = 146;
+  optional ThirdPartyAiChatSettingsProto ThirdPartyAiChatSettings = 427;
   optional ThirdPartyPasswordManagersAllowedProto ThirdPartyPasswordManagersAllowed = 227;
   optional ThirdPartyStoragePartitioningBlockedForOriginsProto ThirdPartyStoragePartitioningBlockedForOrigins = 51;
   optional ToolbarAvatarLabelSettingsProto ToolbarAvatarLabelSettings = 168;
@@ -32304,6 +32621,7 @@ message ChromeSettingsSubProto1 {
   optional UserSecurityAuthenticatedReportingProto UserSecurityAuthenticatedReporting = 308;
   optional UserSecuritySignalsReportingProto UserSecuritySignalsReporting = 307;
   optional VirtualKeyboardSmartVisibilityEnabledProto VirtualKeyboardSmartVisibilityEnabled = 162;
+  optional VoiceTypingSettingsProto VoiceTypingSettings = 425;
   optional WallpaperGooglePhotosIntegrationEnabledProto WallpaperGooglePhotosIntegrationEnabled = 37;
   optional WatermarkStyleProto WatermarkStyle = 328;
   optional WebAnnotationsProto WebAnnotations = 163;

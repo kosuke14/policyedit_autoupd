@@ -35,12 +35,15 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto LegacyTechReportAllowlist = 61;
   optional StringPolicyProto GoogleWorkspaceCloudUpload = 106;
   optional StringPolicyProto MicrosoftOfficeCloudUpload = 105;
+  optional StringListPolicyProto AutomaticDownloadsAllowedForUrls = 423;
+  optional StringListPolicyProto AutomaticDownloadsBlockedForUrls = 424;
   optional StringListPolicyProto AutomaticFullscreenAllowedForUrls = 185;
   optional StringListPolicyProto AutomaticFullscreenBlockedForUrls = 186;
   optional BooleanPolicyProto ClearWindowNameForNewBrowsingContextGroup = 321;
   optional StringListPolicyProto ControlledFrameAllowedForUrls = 289;
   optional StringListPolicyProto ControlledFrameBlockedForUrls = 290;
   optional BooleanPolicyProto DataUrlInSvgUseEnabled = 69;
+  optional IntegerPolicyProto DefaultAutomaticDownloadsSetting = 422;
   optional IntegerPolicyProto DefaultControlledFrameSetting = 288;
   optional IntegerPolicyProto DefaultDeviceAttributesSetting = 337;
   optional IntegerPolicyProto DefaultDirectSocketsPrivateNetworkAccessSetting = 263;
@@ -115,9 +118,12 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto HelpMeReadSettings = 255;
   optional IntegerPolicyProto HelpMeWriteSettings = 147;
   optional IntegerPolicyProto HistorySearchSettings = 235;
+  optional IntegerPolicyProto Indigo = 429;
   optional IntegerPolicyProto SearchContentSharingSettings = 376;
   optional IntegerPolicyProto SmartTabSharingSettings = 413;
   optional IntegerPolicyProto TabCompareSettings = 251;
+  optional IntegerPolicyProto ThirdPartyAiChatSettings = 427;
+  optional IntegerPolicyProto VoiceTypingSettings = 425;
   optional BooleanPolicyProto ShowCastSessionsStartedByOtherDevices = 2;
   optional BooleanPolicyProto KerberosUseCustomPrefilledConfig = 13;
   optional BooleanPolicyProto KioskActiveWiFiCredentialsScopeChangeEnabled = 257;
@@ -203,6 +209,7 @@ message CloudPolicySubProto1 {
   optional BooleanPolicyProto PolicyTestPageEnabled = 72;
   optional BooleanPolicyProto PrefetchWithServiceWorkerEnabled = 325;
   optional BooleanPolicyProto PromotionsEnabled = 240;
+  optional IntegerPolicyProto ProvisionManagedClientCertificateForUser = 175;
   optional BooleanPolicyProto QRCodeGeneratorEnabled = 241;
   optional BooleanPolicyProto QuickOfficeForceFileDownloadEnabled = 111;
   optional BooleanPolicyProto ReduceAcceptLanguageEnabled = 305;
