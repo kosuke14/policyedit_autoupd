@@ -25549,7 +25549,7 @@ message SaasUsageReportingDomainUrlsForBrowsersProto {
 // This policy value is populated by the cloud policy infrastructure and admins
 // can't set it directly.
 //
-// Supported on: linux, mac, win
+// Supported on: chrome_os, linux, mac, win
 message SaasUsageReportingDomainUrlsForProfilesProto {
   optional PolicyOptions policy_options = 1;
   optional StringList SaasUsageReportingDomainUrlsForProfiles = 2;

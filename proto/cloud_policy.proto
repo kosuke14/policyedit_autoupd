@@ -33,6 +33,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto CADistrustedCertificates = 152;
   optional StringListPolicyProto CAHintCertificates = 153;
   optional StringListPolicyProto LegacyTechReportAllowlist = 61;
+  optional StringListPolicyProto SaasUsageReportingDomainUrlsForProfiles = 379;
   optional StringPolicyProto GoogleWorkspaceCloudUpload = 106;
   optional StringPolicyProto MicrosoftOfficeCloudUpload = 105;
   optional StringListPolicyProto AutomaticDownloadsAllowedForUrls = 423;
