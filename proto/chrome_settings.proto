@@ -7822,11 +7822,9 @@ message DevToolsGoogleDeveloperProgramProfileAvailabilityProto {
 // (DeveloperToolsAvailability) is the fallback.
 //
 // Valid values:
-//   0: Allow usage of the Developer Tools for standard web browsing, but
-// restrict the usage for enterprise-installed extensions and managed user
-// built-in extensions. Starting in version M150, they are also blocked on any
-// page that embeds these extensions, with the sole exception of the built-in
-// PDF viewer.
+//   0: Allow Developer Tools for standard web browsing, but restrict them for
+// enterprise-installed and managed user built-in extensions (blocked on pages
+// embedding these extensions since M150, except for the built-in PDF viewer).
 //   1: Allow usage of the Developer Tools in all contexts, including within
 // enterprise-policy extensions
 //   2: Disallow usage of the Developer Tools entirely
