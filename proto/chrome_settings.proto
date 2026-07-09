@@ -30859,7 +30859,7 @@ message WarnBeforeQuittingEnabledProto {
 //     "type": "object"
 // }
 //
-// Supported on: chrome_os, linux, mac, win
+// Supported on: chrome_os, ios, linux, mac, win
 message WatermarkStyleProto {
   optional PolicyOptions policy_options = 1;
   optional string WatermarkStyle = 2;
