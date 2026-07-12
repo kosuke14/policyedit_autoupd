@@ -2091,7 +2091,7 @@ message AutofillPredictionSettingsProto {
 //
 // The policy is structured as a list of dictionaries. Each dictionary must
 // contain:
-// * "url_pattern": A content setting URL pattern (e.g.,
+// * "url_pattern": A content setting URL pattern for the main frame (e.g.,
 // "https://[*.]example.com").
 // * "blocked_types": A list of strings representing the categories of Autofill
 // data to block.
@@ -2105,6 +2105,7 @@ message AutofillPredictionSettingsProto {
 // reservation, vehicle registration).
 // * "shopping": Blocks filling and saving of shopping information (e.g. online
 // orders, shipments).
+// * "all": Blocks filling and saving of all Autofill data types.
 //
 // If a data type is blocked for a site, both the generation of suggestions and
 // the prompt to save/import new data of that type are disabled on that site.
@@ -2130,7 +2131,8 @@ message AutofillPredictionSettingsProto {
 //                         "payments",
 //                         "identity_docs",
 //                         "travel",
-//                         "shopping"
+//                         "shopping",
+//                         "all"
 //                     ],
 //                     "type": "string"
 //                 },
@@ -29583,6 +29585,28 @@ message UnthrottledNestedTimeoutEnabledProto {
   optional bool UnthrottledNestedTimeoutEnabled = 2;
 }
 
+// Controls background automatic relaunch when all browser windows are closed
+//
+// Controls the background automatic restart behavior on macOS when a security
+// update is pending and all browser windows are closed.
+//
+// If this policy is set to True or left unset, Google Chrome is allowed to
+// automatically relaunch to apply pending updates when all browser windows are
+// closed.
+//
+// If this policy is set to False, automatic relaunches are disabled when all
+// browser windows are closed.
+//
+// Valid values:
+//   True: Enable automatic relaunches when all windows are closed
+//   False: Disable automatic relaunches when all windows are closed
+//
+// Supported on: mac
+message UpdateOnZeroWindowEnabledProto {
+  optional PolicyOptions policy_options = 1;
+  optional bool UpdateOnZeroWindowEnabled = 2;
+}
+
 // Enable URL-keyed anonymized data collection
 //
 // Setting the policy to Enabled means URL-keyed anonymized data collection,
@@ -32610,6 +32634,7 @@ message ChromeSettingsSubProto1 {
   optional TranslatorAPIAllowedProto TranslatorAPIAllowed = 269;
   optional UiAutomationProviderEnabledProto UiAutomationProviderEnabled = 205;
   optional UnaffiliatedDeviceArcAllowedProto UnaffiliatedDeviceArcAllowed = 127;
+  optional UpdateOnZeroWindowEnabledProto UpdateOnZeroWindowEnabled = 431;
   optional UrlKeyedMetricsAllowedProto UrlKeyedMetricsAllowed = 73;
   optional UsbDetectorNotificationEnabledProto UsbDetectorNotificationEnabled = 4;
   optional UseMojoVideoDecoderForPepperAllowedProto UseMojoVideoDecoderForPepperAllowed = 6;
