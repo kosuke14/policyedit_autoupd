@@ -150,6 +150,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto AlwaysOnVpnPreConnectUrlAllowlist = 150;
   optional IntegerPolicyProto ArcVmDataMigrationStrategy = 85;
   optional StringPolicyProto AutofillSettings = 419;
+  optional BooleanPolicyProto BackForwardCacheForWebSocketsAllowed = 432;
   optional BooleanPolicyProto BuiltInAIAPIsEnabled = 317;
   optional BooleanPolicyProto CacheEncryptionEnabled = 356;
   optional StringPolicyProto CameraSaveLocation = 373;
