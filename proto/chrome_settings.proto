@@ -20119,8 +20119,9 @@ message PdfUseSkiaRendererEnabledProto {
 // existing GuestView PDF viewer. It embeds a web page with a separate frame
 // tree into another web page.
 //
-// This policy will be removed in the future, after the OOPIF PDF viewer feature
-// has fully rolled out.
+// This policy is deprecated in M152 and will be removed in M155. The GuestView
+// PDF viewer is being removed, and the out-of-process iframe (OOPIF) PDF viewer
+// architecture will always be used.
 //
 // Valid values:
 //   True: PDF viewer uses the OOPIF architecture.
