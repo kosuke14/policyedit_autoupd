@@ -489,7 +489,6 @@ message CloudPolicySettings {
   optional BooleanPolicyProto ChromeOsLockOnIdleSuspend = 63;
   optional StringPolicyProto ChromeOsMultiProfileUserBehavior = 246;
   optional StringListPolicyProto ClearBrowsingDataOnExitList = 811;
-  optional BooleanPolicyProto ClickToCallEnabled = 647;
   optional IntegerPolicyProto ClientCertificateManagementAllowed = 520;
   optional StringListPolicyProto CoalesceH2ConnectionsWithClientCertificatesForHosts = 468;
   optional BooleanPolicyProto ComponentUpdatesEnabled = 344;
