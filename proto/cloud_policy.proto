@@ -105,6 +105,7 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto GeminiActOnWebAllowedForURLs = 380;
   optional StringListPolicyProto GeminiActOnWebBlockedForURLs = 381;
   optional IntegerPolicyProto GeminiActOnWebSettings = 362;
+  optional IntegerPolicyProto GeminiChromeFileUploadSettings = 433;
   optional StringPolicyProto GeminiEnterpriseSettings = 417;
   optional IntegerPolicyProto GeminiSettings = 295;
   optional IntegerPolicyProto GeminiSparkSettings = 412;

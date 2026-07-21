@@ -5821,6 +5821,18 @@ message DataCompressionProxyEnabledProto {
 //                                 "other_profile": {
 //                                     "type": "boolean"
 //                                 },
+//                                 "size_higher_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "size_lower_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "url_regexprs": {
+//                                     "items": {
+//                                         "type": "string"
+//                                     },
+//                                     "type": "array"
+//                                 },
 //                                 "urls": {
 //                                     "items": {
 //                                         "type": "string"
@@ -5853,6 +5865,18 @@ message DataCompressionProxyEnabledProto {
 //                                 "other_profile": {
 //                                     "type": "boolean"
 //                                 },
+//                                 "size_higher_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "size_lower_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "url_regexprs": {
+//                                     "items": {
+//                                         "type": "string"
+//                                     },
+//                                     "type": "array"
+//                                 },
 //                                 "urls": {
 //                                     "items": {
 //                                         "type": "string"
@@ -5883,6 +5907,12 @@ message DataCompressionProxyEnabledProto {
 //                     },
 //                     "other_profile": {
 //                         "type": "boolean"
+//                     },
+//                     "url_regexprs": {
+//                         "items": {
+//                             "type": "string"
+//                         },
+//                         "type": "array"
 //                     },
 //                     "urls": {
 //                         "items": {
@@ -5918,6 +5948,18 @@ message DataCompressionProxyEnabledProto {
 //                             "other_profile": {
 //                                 "type": "boolean"
 //                             },
+//                             "size_higher_than": {
+//                                 "type": "integer"
+//                             },
+//                             "size_lower_than": {
+//                                 "type": "integer"
+//                             },
+//                             "url_regexprs": {
+//                                 "items": {
+//                                     "type": "string"
+//                                 },
+//                                 "type": "array"
+//                             },
 //                             "urls": {
 //                                 "items": {
 //                                     "type": "string"
@@ -5949,6 +5991,18 @@ message DataCompressionProxyEnabledProto {
 //                             },
 //                             "other_profile": {
 //                                 "type": "boolean"
+//                             },
+//                             "size_higher_than": {
+//                                 "type": "integer"
+//                             },
+//                             "size_lower_than": {
+//                                 "type": "integer"
+//                             },
+//                             "url_regexprs": {
+//                                 "items": {
+//                                     "type": "string"
+//                                 },
+//                                 "type": "array"
 //                             },
 //                             "urls": {
 //                                 "items": {
@@ -5985,6 +6039,18 @@ message DataCompressionProxyEnabledProto {
 //                                 "other_profile": {
 //                                     "type": "boolean"
 //                                 },
+//                                 "size_higher_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "size_lower_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "url_regexprs": {
+//                                     "items": {
+//                                         "type": "string"
+//                                     },
+//                                     "type": "array"
+//                                 },
 //                                 "urls": {
 //                                     "items": {
 //                                         "type": "string"
@@ -6016,6 +6082,18 @@ message DataCompressionProxyEnabledProto {
 //                                 },
 //                                 "other_profile": {
 //                                     "type": "boolean"
+//                                 },
+//                                 "size_higher_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "size_lower_than": {
+//                                     "type": "integer"
+//                                 },
+//                                 "url_regexprs": {
+//                                     "items": {
+//                                         "type": "string"
+//                                     },
+//                                     "type": "array"
 //                                 },
 //                                 "urls": {
 //                                     "items": {
@@ -6070,6 +6148,20 @@ message DataCompressionProxyEnabledProto {
 //                     },
 //                     "other_profile": {
 //                         "type": "boolean"
+//                     },
+//                     "size_higher_than": {
+//                         "minimum": 0,
+//                         "type": "integer"
+//                     },
+//                     "size_lower_than": {
+//                         "minimum": 0,
+//                         "type": "integer"
+//                     },
+//                     "url_regexprs": {
+//                         "items": {
+//                             "type": "string"
+//                         },
+//                         "type": "array"
 //                     },
 //                     "urls": {
 //                         "items": {
@@ -12408,6 +12500,29 @@ message GeminiActOnWebSettingsProto {
   optional int64 GeminiActOnWebSettings = 2;
 }
 
+// Settings for Gemini in Chrome File Uploads
+//
+// This setting controls whether file uploads are allowed within Gemini in
+// Chrome (see https://support.google.com/chrome/a/answer/16291696).
+//
+// 0 = File uploads to Gemini in Chrome will be allowed for users.
+//
+// 1 = File uploads to Gemini in Chrome will not be allowed for users.
+//
+// If this policy is set, it overrides the GenAiDefaultSettings policy. If this
+// policy is unset, its behavior is determined by the GenAiDefaultSettings
+// policy. If both policies are unset, file uploads will be allowed by default.
+//
+// Valid values:
+//   0: Allow file uploads to Gemini in Chrome.
+//   1: Do not allow file uploads to Gemini in Chrome.
+//
+// Supported on: chrome_os, linux, mac, win
+message GeminiChromeFileUploadSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 GeminiChromeFileUploadSettings = 2;
+}
+
 // Configure Gemini Enterprise settings (BETA)
 //
 // Configures the connection settings for Gemini Enterprise to improve responses
@@ -12794,10 +12909,10 @@ message GenAiChromeOsSmartActionsSettingsProto {
 // feature will be enabled. If GenAiDefaultSettings is set to 2, this feature
 // will be disabled. The documentation for each feature contains more details
 // about how it interacts with values in this policy (e.g. Gemini in Chrome -
-// https://support.google.com/chrome/a/?p=gemini_in_chrome). This applies to the
-// following features: Gemini in Chrome, Google Lens, and AI Mode as they are
-// subject to their own guarantees and/or terms of service
-// (https://support.google.com/chrome/a/?p=genai_features_chrome).
+// https://support.google.com/chrome/a/answer/16291696). This applies to the
+// following features: Gemini in Chrome, Gemini in Chrome File Uploads, Google
+// Lens, and AI Mode as they are subject to their own guarantees and/or terms of
+// service (https://support.google.com/chrome/a/?p=genai_features_chrome).
 //
 // 0 = Allow the feature to be used, while allowing Google to use relevant data
 // to improve its AI models. Relevant data may include prompts, inputs, outputs,
@@ -32478,6 +32593,7 @@ message ChromeSettingsSubProto1 {
   optional GeminiActOnWebAllowedForURLsProto GeminiActOnWebAllowedForURLs = 380;
   optional GeminiActOnWebBlockedForURLsProto GeminiActOnWebBlockedForURLs = 381;
   optional GeminiActOnWebSettingsProto GeminiActOnWebSettings = 362;
+  optional GeminiChromeFileUploadSettingsProto GeminiChromeFileUploadSettings = 433;
   optional GeminiEnterpriseSettingsProto GeminiEnterpriseSettings = 417;
   optional GeminiSettingsProto GeminiSettings = 295;
   optional GeminiSparkSettingsProto GeminiSparkSettings = 412;
