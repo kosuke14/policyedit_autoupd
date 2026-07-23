@@ -34,6 +34,8 @@ message CloudPolicySubProto1 {
   optional StringListPolicyProto CAHintCertificates = 153;
   optional StringListPolicyProto LegacyTechReportAllowlist = 61;
   optional StringListPolicyProto SaasUsageReportingDomainUrlsForProfiles = 379;
+  optional BooleanPolicyProto UserSecurityAuthenticatedReporting = 308;
+  optional BooleanPolicyProto UserSecuritySignalsReporting = 307;
   optional StringPolicyProto GoogleWorkspaceCloudUpload = 106;
   optional StringPolicyProto MicrosoftOfficeCloudUpload = 105;
   optional StringListPolicyProto AutomaticDownloadsAllowedForUrls = 423;
@@ -102,6 +104,7 @@ message CloudPolicySubProto1 {
   optional IntegerPolicyProto ChromeSuggestionsSettings = 415;
   optional IntegerPolicyProto CreateThemesSettings = 148;
   optional IntegerPolicyProto DevToolsGenAiSettings = 188;
+  optional IntegerPolicyProto FindAndFillWithGeminiSettings = 434;
   optional StringListPolicyProto GeminiActOnWebAllowedForURLs = 380;
   optional StringListPolicyProto GeminiActOnWebBlockedForURLs = 381;
   optional IntegerPolicyProto GeminiActOnWebSettings = 362;

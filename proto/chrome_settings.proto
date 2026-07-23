@@ -958,12 +958,12 @@ message AlwaysAuthorizePluginsProto {
 // Allow user browser access to a list of URLs while Always-on VPN is active in
 // strict mode with lockdown enabled and the VPN is not connected
 //
-// This policy only applies to browser traffic; the Play Store, Android apps web
-// navigation and other user traffic like Linux VM traffic or print jobs, still
-// honor the restrictions imposed by the Always-on VPN. This policy is only
-// enforced while the VPN is not connected and only for user browser traffic.
-// While this policy is enforced, system traffic can also bypass the Always-on
-// VPN to perform tasks like policy fetches and synchronizing the system clock.
+// Warning: Configuring this policy relaxes the Always-on VPN lockdown before
+// the VPN connects. URL-level filtering is only guaranteed for Chrome browser
+// traffic and does not apply to internal system applications or other traffic
+// types. While this policy is enforced, system traffic can also bypass the
+// Always-on VPN to perform tasks like policy fetches and synchronizing the
+// system clock.
 //
 // Use this policy to open exceptions to certain schemes, subdomains of other
 // domains, ports, or specific paths, using the format specified at
@@ -4576,12 +4576,14 @@ message CloudAPAuthEnabledProto {
 // CloudManagementEnrollmentToken for Google Chrome.
 // This policy is always effective for Google ChromeOS.
 //
+// Note: This policy only applies to platforms that support extensions.
+//
 // Valid values:
 //   True: Create and upload extension install requests to the Admin console
 //   False: Do not create or upload extension install requests to the Admin
 // console
 //
-// Supported on: chrome_os, fuchsia, linux, mac, win
+// Supported on: android, chrome_os, fuchsia, linux, mac, win
 message CloudExtensionRequestEnabledProto {
   optional PolicyOptions policy_options = 1;
   optional bool CloudExtensionRequestEnabled = 2;
@@ -5821,12 +5823,6 @@ message DataCompressionProxyEnabledProto {
 //                                 "other_profile": {
 //                                     "type": "boolean"
 //                                 },
-//                                 "size_higher_than": {
-//                                     "type": "integer"
-//                                 },
-//                                 "size_lower_than": {
-//                                     "type": "integer"
-//                                 },
 //                                 "url_regexprs": {
 //                                     "items": {
 //                                         "type": "string"
@@ -5948,12 +5944,6 @@ message DataCompressionProxyEnabledProto {
 //                             "other_profile": {
 //                                 "type": "boolean"
 //                             },
-//                             "size_higher_than": {
-//                                 "type": "integer"
-//                             },
-//                             "size_lower_than": {
-//                                 "type": "integer"
-//                             },
 //                             "url_regexprs": {
 //                                 "items": {
 //                                     "type": "string"
@@ -6038,12 +6028,6 @@ message DataCompressionProxyEnabledProto {
 //                                 },
 //                                 "other_profile": {
 //                                     "type": "boolean"
-//                                 },
-//                                 "size_higher_than": {
-//                                     "type": "integer"
-//                                 },
-//                                 "size_lower_than": {
-//                                     "type": "integer"
 //                                 },
 //                                 "url_regexprs": {
 //                                     "items": {
@@ -11488,6 +11472,43 @@ message FileSystemWriteBlockedForUrlsProto {
   optional StringList FileSystemWriteBlockedForUrls = 2;
 }
 
+// Settings for Find and Fill with Gemini
+//
+// Controls whether users can use the "Find and Fill with Gemini" feature in
+// Google Chrome.
+//
+// 0 = Allow the feature to be used, while allowing Google to use relevant data
+// to improve its AI models. Relevant data may include prompts, inputs, outputs,
+// source materials, and written feedback, depending on the feature. 0 is the
+// default value, except when noted below.
+//
+// 1 = Allow the feature to be used, but does not allow Google to improve models
+// using users' content (including prompts, inputs, outputs, source materials,
+// and written feedback). 1 is the default value for Enterprise users managed by
+// Google Admin console and for Education accounts managed by Google Workspace.
+//
+// 2 = Do not allow the feature.
+//
+// This policy has no effect when the Gemini app is disabled. For example, the
+// Gemini app can be disabled by GeminiSettings policy.
+//
+// If the policy is unset, its behavior is determined by the
+// GenAiDefaultSettings policy.
+//
+// For more information on data handling for generative AI features, please see
+// https://support.google.com/chrome/a?p=generative_ai_settings.
+//
+// Valid values:
+//   0: Allow Find and Fill with Gemini and improve AI models.
+//   1: Allow Find and Fill with Gemini without improving AI models.
+//   2: Do not allow Find and Fill with Gemini.
+//
+// Supported on: android, chrome_os, linux, mac, win
+message FindAndFillWithGeminiSettingsProto {
+  optional PolicyOptions policy_options = 1;
+  optional int64 FindAndFillWithGeminiSettings = 2;
+}
+
 // Settings for Chrome Finds
 //
 // Chrome Finds is an AI-based feature that helps users search for and
@@ -12505,13 +12526,9 @@ message GeminiActOnWebSettingsProto {
 // This setting controls whether file uploads are allowed within Gemini in
 // Chrome (see https://support.google.com/chrome/a/answer/16291696).
 //
-// 0 = File uploads to Gemini in Chrome will be allowed for users.
+// 0/unset = File uploads to Gemini in Chrome will be allowed for users.
 //
 // 1 = File uploads to Gemini in Chrome will not be allowed for users.
-//
-// If this policy is set, it overrides the GenAiDefaultSettings policy. If this
-// policy is unset, its behavior is determined by the GenAiDefaultSettings
-// policy. If both policies are unset, file uploads will be allowed by default.
 //
 // Valid values:
 //   0: Allow file uploads to Gemini in Chrome.
@@ -12910,9 +12927,9 @@ message GenAiChromeOsSmartActionsSettingsProto {
 // will be disabled. The documentation for each feature contains more details
 // about how it interacts with values in this policy (e.g. Gemini in Chrome -
 // https://support.google.com/chrome/a/answer/16291696). This applies to the
-// following features: Gemini in Chrome, Gemini in Chrome File Uploads, Google
-// Lens, and AI Mode as they are subject to their own guarantees and/or terms of
-// service (https://support.google.com/chrome/a/?p=genai_features_chrome).
+// following features: Gemini in Chrome, Google Lens, and AI Mode as they are
+// subject to their own guarantees and/or terms of service
+// (https://support.google.com/chrome/a/?p=genai_features_chrome).
 //
 // 0 = Allow the feature to be used, while allowing Google to use relevant data
 // to improve its AI models. Relevant data may include prompts, inputs, outputs,
@@ -30530,7 +30547,7 @@ message UserPrintersAllowedProto {
 //   False: Disable first-party authentication when reporting user security
 // signals
 //
-// Supported on: android, ios, linux, mac, win
+// Supported on: android, chrome_os, ios, linux, mac, win
 message UserSecurityAuthenticatedReportingProto {
   optional PolicyOptions policy_options = 1;
   optional bool UserSecurityAuthenticatedReporting = 2;
@@ -30557,7 +30574,7 @@ message UserSecurityAuthenticatedReportingProto {
 //   True: Enable user security signals cloud reporting
 //   False: Disable user security signals cloud reporting
 //
-// Supported on: android, ios, linux, mac, win
+// Supported on: android, chrome_os, ios, linux, mac, win
 message UserSecuritySignalsReportingProto {
   optional PolicyOptions policy_options = 1;
   optional bool UserSecuritySignalsReporting = 2;
@@ -32579,6 +32596,7 @@ message ChromeSettingsSubProto1 {
   optional FeedbackSurveysEnabledProto FeedbackSurveysEnabled = 142;
   optional FileOrDirectoryPickerWithoutGestureAllowedForOriginsProto FileOrDirectoryPickerWithoutGestureAllowedForOrigins = 53;
   optional FilePickerChooseFromDriveSettingsProto FilePickerChooseFromDriveSettings = 277;
+  optional FindAndFillWithGeminiSettingsProto FindAndFillWithGeminiSettings = 434;
   optional FindsSettingsProto FindsSettings = 399;
   optional FloatingSsoDomainBlocklistProto FloatingSsoDomainBlocklist = 158;
   optional FloatingSsoDomainBlocklistExceptionsProto FloatingSsoDomainBlocklistExceptions = 159;
