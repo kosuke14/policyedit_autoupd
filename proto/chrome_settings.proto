@@ -16531,7 +16531,7 @@ message LocalNetworkAccessRestrictionsEnabledProto {
 // See https://wicg.github.io/local-network-access/ for Local Network Access
 // restrictions.
 //
-// This enterprise policy is temporary, and will be removed after M152.
+// This enterprise policy is temporary, and will be removed after M156.
 //
 // Long term, the policy LocalNetworkAccessAllowedForUrls
 // can be used to allowlist URL patterns that should be automatically granted
